@@ -29,6 +29,7 @@ int main()
 	printf("input_file_1.csv input_file_2.csv ");
 	put_random_array();
 
+	/* Lines in table */
 	int lenth = 10 + rand() %5;
 
 	/* Create a temporary data struct */
