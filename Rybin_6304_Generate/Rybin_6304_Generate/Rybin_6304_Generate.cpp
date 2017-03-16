@@ -25,16 +25,8 @@ int main()
 
 	for (int i = 0; i < lenth; i++)
 	{
-		Table1_obj->Email = generate_token();
-		Table1_obj->GitHub_account = generate_token();
-		Table1_obj->name = generate_token();
-		Table1_obj->surname = generate_token();
-		Table1_obj->patronymic = generate_token();
-		Table1_obj->group = *generate_number(0);
 
-		Table2_obj->name = generate_token();
-		Table2_obj->surname = generate_token();
-		Table2_obj->exam_result = *generate_number(1);
+		generate_field(Table1_obj, Table2_obj);
 
 		fprintf(Random_Table1, "%s,%s,%s,%s,%s,%d\n",
 			Table1_obj->Email,

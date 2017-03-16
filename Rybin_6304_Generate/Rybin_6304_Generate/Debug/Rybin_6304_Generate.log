@@ -1,4 +1,6 @@
 ﻿  Rybin_6304_Generate.cpp
+c:\users\vfiby\desktop\учеба\github\advanced_course_work\rybin_6304_generate\rybin_6304_generate\table.h(88): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\vfiby\desktop\учеба\github\advanced_course_work\rybin_6304_generate\rybin_6304_generate\table.h(94): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 c:\users\vfiby\desktop\учеба\github\advanced_course_work\rybin_6304_generate\rybin_6304_generate\table.h(56): warning C4172: returning address of local variable or temporary: random
 c:\users\vfiby\desktop\учеба\github\advanced_course_work\rybin_6304_generate\rybin_6304_generate\table.h(61): warning C4172: returning address of local variable or temporary: random
   Rybin_6304_Generate.vcxproj -> C:\Users\vfiby\Desktop\Учеба\GitHub\advanced_course_work\Rybin_6304_Generate\Debug\Rybin_6304_Generate.exe

@@ -52,12 +52,12 @@ int* generate_number(int a)
 
 	if (a == 0)
 	{
-		random = 1 + rand() %1000;
+		random = 1 + rand() % 1000;
 		return &random;
 	}
 	else if (a == 1)
 	{
-		random = 1 + rand() %5;
+		random = 1 + rand() % 5;
 		return &random;
 	}
 	else
@@ -65,12 +65,12 @@ int* generate_number(int a)
 
 		int lenth = rand() % 10 + 1;
 		int* random_array = (int*)malloc(sizeof(int) * lenth);
-		
+
 		for (int i = 0; i < lenth - 1; i++)
 		{
 			srand(clock());
 
-			random_array[i] = 1 + rand() %5;
+			random_array[i] = 1 + rand() % 5;
 		}
 		random_array[lenth] = 5;
 
@@ -85,16 +85,36 @@ int* generate_number(int a)
 */
 char* generate_token()
 {
-	srand(clock());
-	int lenth = 1 + rand() %20;
+	srand(clock() | time(NULL));
+
+	int lenth = 1 + rand() % 15;
 	char* random_token = (char*)malloc(sizeof(char) * lenth);
 
 	for (int i = 0; i < lenth; i++)
 	{
-		srand(clock());
+		srand(clock() | time(NULL));
 
-		random_token[i] = (char)(65 + rand() %58);
+		random_token[i] = (char)(65 + rand() % 58);
 	}
 	return random_token;
 
+}
+
+/*!
+\brief Generates table field 1 and 2
+\return nothing
+\ingroup Random
+*/
+void generate_field(Table1* Table1_obj, Table2* Table2_obj)
+{
+	Table1_obj->Email = generate_token();
+	Table1_obj->GitHub_account = generate_token();
+	Table1_obj->name = generate_token();
+	Table1_obj->surname = generate_token();
+	Table1_obj->patronymic = generate_token();
+	Table1_obj->group = *generate_number(0);
+
+	Table2_obj->name = generate_token();
+	Table2_obj->surname = generate_token();
+	Table2_obj->exam_result = *generate_number(1);
 }
