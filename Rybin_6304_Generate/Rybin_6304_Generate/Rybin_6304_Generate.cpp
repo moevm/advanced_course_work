@@ -17,7 +17,7 @@ int main()
 	FILE* Random_Table1 = fopen("input_file_1.csv", "w");
 	FILE* Random_Table2 = fopen("input_file_2.csv", "w");
 
-	fprintf(Random_Table1, "Name,Surname,Patronymic,GitHub_account,Email,Group\n");
+	fprintf(Random_Table1, "Name,Surname,Patronymic,GitHub,Email,Group\n");
 	fprintf(Random_Table2, "Name,Surname,Exam_mark\n");
 
 	srand(clock());
@@ -32,11 +32,11 @@ int main()
 		generate_field(Table1_obj, Table2_obj);
 
 		fprintf(Random_Table1, "%s,%s,%s,%s,%s,%d\n",
-			Table1_obj->Email,
-			Table1_obj->GitHub_account,
 			Table1_obj->name,
 			Table1_obj->surname,
 			Table1_obj->patronymic,
+			Table1_obj->GitHub_account,
+			Table1_obj->Email,
 			Table1_obj->group);
 
 		fprintf(Random_Table2, "%s,%s,%d\n",

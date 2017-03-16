@@ -13,6 +13,7 @@ This file contains structs and functions for generate data.
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 /*!
 \struct
@@ -77,19 +78,31 @@ int* generate_number(int a)
 
 /*!
 \brief Generates random integer[1-10000]
+\param[in] a Type of random, 0 if just token, 1 if Email token, 2 if GitHub token
 \return random_token Random integer value of group or mark
 \ingroup Random
 */
-char* generate_token()
+char* generate_token(int a)
 {
 	int lenth = 5 + rand() %10;
-	char* random_token = (char*)malloc(sizeof(char) * lenth);
+	char* random_token = (char*)malloc(sizeof(char) * (lenth + 9));
 
 	for (int i = 0; i < lenth - 1; i++)
 	{
 		random_token[i] = (char)(97 + rand() %25);
 	}
 	random_token[lenth - 1] = '\0';
+
+	if (a == 1)
+	{
+		strncat(random_token, "@Email", 6);
+		random_token[lenth + 8] = '\0';
+	}
+	if (a == 2)
+	{
+		strncat(random_token, "@GitHub", 7);
+		random_token[lenth + 8] = '\0';
+	}
 	return random_token;
 
 }
@@ -101,14 +114,14 @@ char* generate_token()
 */
 void generate_field(Table1* Table1_obj, Table2* Table2_obj)
 {
-	Table1_obj->Email = generate_token();
-	Table1_obj->GitHub_account = generate_token();
-	Table1_obj->name = generate_token();
-	Table1_obj->surname = generate_token();
-	Table1_obj->patronymic = generate_token();
+	Table1_obj->Email = generate_token(1);
+	Table1_obj->GitHub_account = generate_token(2);
+	Table1_obj->name = generate_token(0);
+	Table1_obj->surname = generate_token(0);
+	Table1_obj->patronymic = generate_token(0);
 	Table1_obj->group = *generate_number(0);
 
-	Table2_obj->name = generate_token();
-	Table2_obj->surname = generate_token();
+	Table2_obj->name = generate_token(0);
+	Table2_obj->surname = generate_token(0);
 	Table2_obj->exam_result = *generate_number(1);
 }
