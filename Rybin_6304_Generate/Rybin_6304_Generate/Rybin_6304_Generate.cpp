@@ -17,8 +17,11 @@ int main()
 	FILE* Random_Table1 = fopen("input_file_1.csv", "w");
 	FILE* Random_Table2 = fopen("input_file_2.csv", "w");
 
+	fprintf(Random_Table1, "Name,Surname,Patronymic,GitHub_account,Email,Group\n");
+	fprintf(Random_Table2, "Name,Surname,Exam_mark\n");
+
 	srand(clock());
-	int lenth = 1 + rand() %20;
+	int lenth = 10 + rand() %5;
 
 	Table1* Table1_obj = (Table1*)malloc(sizeof(Table1));
 	Table2* Table2_obj = (Table2*)malloc(sizeof(Table2));

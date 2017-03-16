@@ -48,7 +48,6 @@ typedef struct Table2
 int* generate_number(int a)
 {
 	int random;
-	srand(clock());
 
 	if (a == 0)
 	{
@@ -68,8 +67,6 @@ int* generate_number(int a)
 
 		for (int i = 0; i < lenth - 1; i++)
 		{
-			srand(clock());
-
 			random_array[i] = 1 + rand() % 5;
 		}
 		random_array[lenth] = 5;
@@ -85,16 +82,20 @@ int* generate_number(int a)
 */
 char* generate_token()
 {
-	srand(clock() | time(NULL));
-
-	int lenth = 1 + rand() % 15;
+	int lenth = 1 + rand() %15;
 	char* random_token = (char*)malloc(sizeof(char) * lenth);
 
 	for (int i = 0; i < lenth; i++)
 	{
-		srand(clock() | time(NULL));
-
-		random_token[i] = (char)(65 + rand() % 58);
+		random_token[i] = (char)(97 + rand() %25);
+		while (true)
+			if ((random_token[i] == '\n') || 
+				(random_token[i] == '\0') || 
+				(random_token[i] == '\t') ||
+				(random_token[i] == ' '))
+				random_token[i] = (char)(97 + rand() %25);
+			else
+				break;
 	}
 	return random_token;
 
