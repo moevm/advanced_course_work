@@ -30,7 +30,7 @@ int main()
 	put_random_array();
 
 	/* Lines in table */
-	int lenth = 10 + rand() %5;
+	int lenth = 5 + rand() %15;
 
 	/* Create a temporary data struct */
 	Table* Table_obj = (Table*)malloc(sizeof(Table));
