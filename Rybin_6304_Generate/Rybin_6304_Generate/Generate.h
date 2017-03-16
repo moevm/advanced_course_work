@@ -2,7 +2,7 @@
 \file
 \brief Includes for generate data
 
-This file contains structs and functions for generate data.
+This file contains struct and functions for generate data.
 
 \author Rybin Aleksandr 1 course 2 half
 \date 15.03.2017
@@ -17,7 +17,7 @@ This file contains structs and functions for generate data.
 
 /*!
 \struct
-\brief Struct Table for generating data for first table
+\brief Struct Table for generating temporary data for tables
 */
 typedef struct Table
 {
@@ -32,9 +32,8 @@ typedef struct Table
 
 /*!
 \brief Generates random integer[1-1000]
-\param[in] a Type of random, 0 if [1,1000], 1 if [0,5]
-\return random Random integer value of group or mark or array
-\ingroup Random
+\param[in] a Type of random, 0 if need [1,1000], 1 if need [0,5]
+\return random Random integer value of group or mark 
 */
 int generate_number(int a)
 {
@@ -55,7 +54,6 @@ int generate_number(int a)
 \brief Generates random integer[1-10000]
 \param[in] a Type of random, 0 if just token, 1 if Email token, 2 if GitHub token
 \return random_token Random token(char*)
-\ingroup Random
 */
 char* generate_token(int a)
 {
@@ -93,7 +91,6 @@ char* generate_token(int a)
 \brief Generates table field 
 \param[in] Table_obj struct to write data
 \return nothing
-\ingroup Random
 */
 void generate_field(Table* Table_obj)
 {
@@ -109,7 +106,6 @@ void generate_field(Table* Table_obj)
 /*!
 \brief Generates array of integers [0,4] end is always 5
 \return nothing
-\ingroup Random
 */
 void put_random_array()
 {

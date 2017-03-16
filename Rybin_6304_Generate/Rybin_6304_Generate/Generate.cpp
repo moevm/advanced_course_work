@@ -14,17 +14,21 @@ This file contains code for generate 2 random tables(csv format)  and integer ar
 
 int main()
 {
+	/* Create new files */
 	FILE* Random_Table1 = fopen("input_file_1.csv", "w");
 	FILE* Random_Table2 = fopen("input_file_2.csv", "w");
 
+	/* Create table header */
 	fprintf(Random_Table1, "Name,Surname,Patronymic,GitHub,Email,Group\n");
 	fprintf(Random_Table2, "Name,Surname,Exam_mark\n");
 
 	srand(clock());
 	int lenth = 10 + rand() %5;
 
+	/* Create a temporary data struct */
 	Table* Table_obj = (Table*)malloc(sizeof(Table));
 
+	/* Put a fields in table */
 	for (int i = 0; i < lenth; i++)
 	{
 
@@ -43,6 +47,7 @@ int main()
 			Table_obj->surname,
 			Table_obj->exam_result);
 
+		/* Delete temporary data */
 		free(Table_obj->Email);
 		free(Table_obj->GitHub_account);
 		free(Table_obj->name);
@@ -53,6 +58,7 @@ int main()
 	
 	free(Table_obj);
 
+	/* Put a random array of commands(0-4) in the end is 5 */
 	put_random_array();
 
 	fclose(Random_Table1);
