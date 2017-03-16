@@ -145,10 +145,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Rybin_6304_Generate.cpp" />
+    <ClCompile Include="Generate.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Table.h" />
+    <ClInclude Include="Generate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

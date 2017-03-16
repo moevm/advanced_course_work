@@ -18,12 +18,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Rybin_6304_Generate.cpp">
+    <ClCompile Include="Generate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Table.h">
+    <ClInclude Include="Generate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
