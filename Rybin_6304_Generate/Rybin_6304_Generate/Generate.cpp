@@ -14,6 +14,9 @@ This file contains code for generate 2 random tables(csv format)  and integer ar
 
 int main()
 {
+	/* Initialize a seed for rand() */
+	srand(clock());
+
 	/* Create new files */
 	FILE* Random_Table1 = fopen("input_file_1.csv", "w");
 	FILE* Random_Table2 = fopen("input_file_2.csv", "w");
@@ -26,7 +29,6 @@ int main()
 	printf("input_file_1.csv input_file_2.csv ");
 	put_random_array();
 
-	srand(clock());
 	int lenth = 10 + rand() %5;
 
 	/* Create a temporary data struct */
@@ -60,8 +62,8 @@ int main()
 		
 	}
 	
+	/* Delete temporary data */
 	free(Table_obj);
-
 	fclose(Random_Table1);
 	fclose(Random_Table2);
 

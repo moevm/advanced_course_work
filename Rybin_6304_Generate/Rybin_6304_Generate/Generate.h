@@ -41,13 +41,10 @@ int generate_number(int a)
 	int random;
 
 	if (a == 0)
-		{
 			random = 1 + rand() % 1000;
-		}
 	else
-		{
 			random = 1 + rand() % 5;
-		}
+
 	 return random;
 }
 
