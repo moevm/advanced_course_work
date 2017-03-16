@@ -34,6 +34,7 @@ typedef struct Table
 \brief Generates random integer[1-1000]
 \param[in] a Type of random, 0 if need [1,1000], 1 if need [0,5]
 \return random Random integer value of group or mark 
+\ingroup Generate_Random_Data
 */
 int generate_number(int a)
 {
@@ -51,9 +52,10 @@ int generate_number(int a)
 }
 
 /*!
-\brief Generates random integer[1-10000]
+\brief Generates random integer[1-1000]
 \param[in] a Type of random, 0 if just token, 1 if Email token, 2 if GitHub token
 \return random_token Random token(char*)
+\ingroup Generate_Random_Data
 */
 char* generate_token(int a)
 {
@@ -90,7 +92,8 @@ char* generate_token(int a)
 /*!
 \brief Generates table field 
 \param[in] Table_obj struct to write data
-\return nothing
+\return void 
+\ingroup Generate_Random_Data
 */
 void generate_field(Table* Table_obj)
 {
@@ -105,7 +108,8 @@ void generate_field(Table* Table_obj)
 
 /*!
 \brief Generates array of integers [0,4] end is always 5
-\return nothing
+\return void 
+\ingroup Generate_Random_Data
 */
 void put_random_array()
 {
