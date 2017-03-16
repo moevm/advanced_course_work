@@ -15,7 +15,7 @@ This file contains code for generate 2 random tables(csv format)  and integer ar
 int main()
 {
 	/* Initialize a seed for rand() */
-	srand(clock());
+	srand(time(NULL));
 
 	/* Create new files */
 	FILE* Random_Table1 = fopen("input_file_1.csv", "w");
