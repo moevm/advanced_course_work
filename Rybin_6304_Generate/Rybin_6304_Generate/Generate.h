@@ -52,9 +52,9 @@ int generate_number(int a)
 }
 
 /*!
-\brief Generates random integer[1-1000]
+\brief Generates random token(char*) 
 \param[in] a Type of random, 0 if just token, 1 if Email token, 2 if GitHub token
-\return random_token Random token(char*)
+\return random_token Pointer to random token
 \ingroup Generate_Random_Data
 */
 char* generate_token(int a)
@@ -87,7 +87,6 @@ char* generate_token(int a)
 
 	return random_token;
 }
-
 
 /*!
 \brief Generates table field 

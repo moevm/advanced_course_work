@@ -22,7 +22,9 @@ int main()
 	fprintf(Random_Table1, "Name,Surname,Patronymic,GitHub,Email,Group\n");
 	fprintf(Random_Table2, "Name,Surname,Exam_mark\n");
 
+	/* Put a name of created tables and array of commands to stdout*/
 	printf("input_file_1.csv input_file_2.csv ");
+	put_random_array();
 
 	srand(clock());
 	int lenth = 10 + rand() %5;
@@ -59,9 +61,6 @@ int main()
 	}
 	
 	free(Table_obj);
-
-	/* Put a random array of commands(0-4) in the end is 5 */
-	put_random_array();
 
 	fclose(Random_Table1);
 	fclose(Random_Table2);
