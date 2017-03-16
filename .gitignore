@@ -40,8 +40,14 @@ local.properties
 *.suo
 *.user
 *.sln.docstates
-*.VC
+*.VC*
 *.tlog
+*.log
+*.obj
+*.idb
+*.pdb
+*.lastbuildstate
+*.vc*
 
 
 # Build results
