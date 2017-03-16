@@ -117,5 +117,5 @@ void put_random_array()
 	
 	for (int i = 0; i < lenth; i++)
 		printf("%d ", rand() %5);
-	printf("5");
+	printf("5\n");
 }

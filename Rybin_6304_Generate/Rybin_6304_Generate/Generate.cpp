@@ -22,6 +22,8 @@ int main()
 	fprintf(Random_Table1, "Name,Surname,Patronymic,GitHub,Email,Group\n");
 	fprintf(Random_Table2, "Name,Surname,Exam_mark\n");
 
+	printf("input_file_1.csv input_file_2.csv ");
+
 	srand(clock());
 	int lenth = 10 + rand() %5;
 
