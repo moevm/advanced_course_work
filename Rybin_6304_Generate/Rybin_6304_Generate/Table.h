@@ -82,21 +82,14 @@ int* generate_number(int a)
 */
 char* generate_token()
 {
-	int lenth = 1 + rand() %15;
+	int lenth = 5 + rand() %10;
 	char* random_token = (char*)malloc(sizeof(char) * lenth);
 
-	for (int i = 0; i < lenth; i++)
+	for (int i = 0; i < lenth - 1; i++)
 	{
 		random_token[i] = (char)(97 + rand() %25);
-		while (true)
-			if ((random_token[i] == '\n') || 
-				(random_token[i] == '\0') || 
-				(random_token[i] == '\t') ||
-				(random_token[i] == ' '))
-				random_token[i] = (char)(97 + rand() %25);
-			else
-				break;
 	}
+	random_token[lenth - 1] = '\0';
 	return random_token;
 
 }
