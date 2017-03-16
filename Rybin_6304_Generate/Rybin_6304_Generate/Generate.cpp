@@ -53,6 +53,8 @@ int main()
 	
 	free(Table_obj);
 
+	put_random_array();
+
 	fclose(Random_Table1);
 	fclose(Random_Table2);
 

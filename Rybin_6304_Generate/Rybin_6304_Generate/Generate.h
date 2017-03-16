@@ -32,44 +32,23 @@ typedef struct Table
 
 /*!
 \brief Generates random integer[1-1000]
-\param[in] a Type of random, 0 if group number, 1 if mark for exam, 2 if array of random integer[0-5]
-\return pointer Random integer(pointer) value of group or mark or array
+\param[in] a Type of random, 0 if [1,1000], 1 if [0,5]
+\return random Random integer value of group or mark or array
 \ingroup Random
 */
-int* generate_number(int a)
+int generate_number(int a)
 {
 	int random;
 
-	switch (a)
-	{
-
-	case 0:
-	{
-		random = 1 + rand() % 1000;
-		return &random;
-		break;
-	}
-	case 1:
-	{
-		random = 1 + rand() % 5;
-		return &random;
-		break;
-	}
-	case 2:
-	{
-
-		int lenth = rand() % 10 + 1;
-		int* random_array = (int*)malloc(sizeof(int) * lenth);
-
-		for (int i = 0; i < lenth - 1; i++)
+	if (a == 0)
 		{
-			random_array[i] = 1 + rand() % 5;
+			random = 1 + rand() % 1000;
 		}
-		random_array[lenth] = 5;
-
-		return random_array;
-	}
-	}
+	else
+		{
+			random = 1 + rand() % 5;
+		}
+	 return random;
 }
 
 /*!
@@ -123,6 +102,20 @@ void generate_field(Table* Table_obj)
 	Table_obj->name = generate_token(0);
 	Table_obj->surname = generate_token(0);
 	Table_obj->patronymic = generate_token(0);
-	Table_obj->group = *generate_number(0);
-	Table_obj->exam_result = *generate_number(1);
+	Table_obj->group = generate_number(0);
+	Table_obj->exam_result = generate_number(1);
+}
+
+/*!
+\brief Generates array of integers [0,4] end is always 5
+\return nothing
+\ingroup Random
+*/
+void put_random_array()
+{
+	int lenth = 2 + rand() % 8;
+	
+	for (int i = 0; i < lenth; i++)
+		printf("%d ", rand() %5);
+	printf("5");
 }
