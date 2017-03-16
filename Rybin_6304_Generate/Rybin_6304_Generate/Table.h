@@ -109,19 +109,24 @@ char* generate_token(int a)
 
 /*!
 \brief Generates table field 1 and 2
+\param[in] Table1_obj struct to write data
+\param[in] Table2_obj struct to write data
 \return nothing
 \ingroup Random
 */
 void generate_field(Table1* Table1_obj, Table2* Table2_obj)
 {
+	char* name = generate_token(0);
+	char * surname = generate_token(0);
+
 	Table1_obj->Email = generate_token(1);
 	Table1_obj->GitHub_account = generate_token(2);
-	Table1_obj->name = generate_token(0);
-	Table1_obj->surname = generate_token(0);
+	Table1_obj->name = name;
+	Table1_obj->surname = surname;
 	Table1_obj->patronymic = generate_token(0);
 	Table1_obj->group = *generate_number(0);
 
-	Table2_obj->name = generate_token(0);
-	Table2_obj->surname = generate_token(0);
+	Table2_obj->name = name;
+	Table2_obj->surname = surname;
 	Table2_obj->exam_result = *generate_number(1);
 }

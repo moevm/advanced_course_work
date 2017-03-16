@@ -50,8 +50,6 @@ int main()
 		free(Table1_obj->surname);
 		free(Table1_obj->patronymic);
 		
-		free(Table2_obj->name);
-		free(Table2_obj->surname);
 	}
 
 	free(Table1_obj);
