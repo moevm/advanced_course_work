@@ -31,24 +31,6 @@ typedef struct Table
 } Table;
 
 /*!
-\brief Generates random integer[1-1000]
-\param[in] a Type of random, 0 if need [1,1000], 1 if need [0,5]
-\return random Random integer value of group or mark 
-\ingroup Generate_Random_Data
-*/
-int generate_number(int a)
-{
-	int random;
-
-	if (a == 0)
-			random = 1 + rand() % 1000;
-	else
-			random = 1 + rand() % 5;
-
-	 return random;
-}
-
-/*!
 \brief Generates random token(char*) 
 \param[in] a Type of random, 0 if just token, 1 if Email token, 2 if GitHub token
 \return random_token Pointer to random token
@@ -98,8 +80,8 @@ void generate_field(Table* Table_obj)
 	Table_obj->name = generate_token(0);
 	Table_obj->surname = generate_token(0);
 	Table_obj->patronymic = generate_token(0);
-	Table_obj->group = generate_number(0);
-	Table_obj->exam_result = generate_number(1);
+	Table_obj->group = 1 + rand() %1000;
+	Table_obj->exam_result = 1 + rand() % 6;
 }
 
 /*!
