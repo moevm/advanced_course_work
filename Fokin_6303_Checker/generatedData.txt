@@ -1,4 +1,4 @@
-/ImagesBMP/BMP2.bmp
-128 24
-366 257
-2 1 3 1 2 3 1 4
+/ImagesBMP/BMP4.bmp
+188 143
+398 460
+1 1 3 2 3 1 4

@@ -1,6 +1,6 @@
 /*
-    Программа generate.c генерирует входные данные для программы refsol.c,
-    которая является эталонным решением поставленной задачи.
+    Программа generate.c генерирует в txt-файл входные данные для
+    эталонного(refsol.c) и пользовательского решений поставленной задачи.
 
     By foksen98 17.03.2017.
 */
@@ -43,8 +43,6 @@ int main ()
     char* commands = (char*)malloc(commandsLength * sizeof(char));
     for (char i = 0; i < commandsLength; ++i)
         commands[i] = generateAll(amountElements);
-
-//  вывод сгенерированных данных на консоль
 
 //  вывод сгенерированных данных в txt-файл
     FILE* generatedData = fopen("generatedData.txt", "w");
