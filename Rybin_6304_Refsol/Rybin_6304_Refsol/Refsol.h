@@ -15,23 +15,23 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 	while ((buf = fgetc(stream_1)) != '\n');
 	while ((buf = fgetc(stream_2)) != '\n');
 
-
-	int count = 0; // Just test
 	do
 	{
 		int i = 0;
 
 		while ((buf = fgetc(stream_1)) != ',')
 		{
+			if (feof(stream_1))
+				return;
 			input1_head->name[i++] = buf;
 		}
 		input1_head->name[i] = '\0';
-		printf(" %d ", count++);
-
 		i = 0;
 
 		while ((buf = fgetc(stream_1)) != ',')
 		{
+			if (feof(stream_1))
+				return;
 			input1_head->surname[i++] = buf;
 		}
 		input1_head->surname[i] = '\0';
@@ -39,6 +39,8 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 		
 		while ((buf = fgetc(stream_1)) != ',')
 		{
+			if (feof(stream_1))
+				return;
 			input1_head->patronymic[i++] = buf;
 		}
 		input1_head->patronymic[i] = '\0';
@@ -47,6 +49,8 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 
 		while ((buf = fgetc(stream_1)) != ',')
 		{
+			if (feof(stream_1))
+				return;
 			input1_head->GitHub_account[i++] = buf;
 		}
 		input1_head->GitHub_account[i] = '\0';
@@ -55,6 +59,8 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 
 		while ((buf = fgetc(stream_1)) != ',')
 		{
+			if (feof(stream_1))
+				return;
 			input1_head->Email[i++] = buf;
 		}
 		input1_head->Email[i] = '\0';
@@ -68,6 +74,8 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 
 		while ((buf = fgetc(stream_2)) != ',')
 		{
+			if (feof(stream_2))
+				return;
 			input2_head->name[i++] = buf;
 		}
 		input2_head->name[i] = '\0';
@@ -76,6 +84,8 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 		
 		while ((buf = fgetc(stream_2)) != ',')
 		{
+			if (feof(stream_2))
+				return;
 			input2_head->surname[i++] = buf;
 		}
 		input2_head->surname[i] = '\0';
@@ -90,7 +100,6 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 		while ((buf = fgetc(stream_1)) != '\n');
 		while ((buf = fgetc(stream_2)) != '\n');
 
-	} while (!feof(stream_1));
-
+	} while (true);
 
 }

@@ -92,7 +92,7 @@ input2* create_input2_element()
 */
 void free_input1(input1* input1_head)
 {
-	while (input1_head)
+	while (true)
 	{
 		if (input1_head->next == NULL)
 		{
@@ -102,6 +102,7 @@ void free_input1(input1* input1_head)
 			free(input1_head->GitHub_account);
 			free(input1_head->patronymic);
 			free(input1_head);
+			return;
 		}
 
 		input1_head = input1_head->next;
@@ -124,13 +125,14 @@ void free_input1(input1* input1_head)
 */
 void free_input2(input2* input2_head)
 {
-	while (input2_head)
+	while (true)
 	{
 		if (input2_head->next == NULL)
 		{
 			free(input2_head->name);
 			free(input2_head->surname);
 			free(input2_head);
+			return;
 		}
 
 		input2_head = input2_head->next;
