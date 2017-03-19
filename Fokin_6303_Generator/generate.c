@@ -9,12 +9,12 @@
 #include <time.h>
 
 //  размер диапазона чисел для функции rand()
-#define amountBMP 10
+#define amountBMP 6
 #define amountPixels 500
 #define amountLength 7
 #define amountElements 3
 
-// количество сгенерированных тестов
+//  количество сгенерированных тестов
 #define amountTests 50
 
 //  функция генерирует индекс BMP-файла для обработки, размер и элементы последовательности функций для обработки BMP-файла
