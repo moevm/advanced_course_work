@@ -2,7 +2,7 @@
 \file
 
 \brief Includes struct data for right solution
-This file contains struct and functions for to solve task.
+This file contains struct and functions to work with data.
 
 \author Rybin Aleksandr 1 course 2 half
 \date 17.03.2017
@@ -54,11 +54,11 @@ input1* create_input1_element()
 {
 	input1* element = (input1*)malloc(sizeof(input1));
 
-	element->Email = (char*)malloc(sizeof(char) * 100);
-	element->GitHub_account = (char*)malloc(sizeof(char) * 100);
-	element->name = (char*)malloc(sizeof(char) * 100);
-	element->surname = (char*)malloc(sizeof(char) * 100);
-	element->patronymic = (char*)malloc(sizeof(char) * 100);
+	element->Email = (char*)malloc(sizeof(char) *50);
+	element->GitHub_account = (char*)malloc(sizeof(char) *50);
+	element->name = (char*)malloc(sizeof(char) *50);
+	element->surname = (char*)malloc(sizeof(char) *50);
+	element->patronymic = (char*)malloc(sizeof(char) *50);
 
 	element->next = NULL;
 	element->prev = NULL;
@@ -75,8 +75,8 @@ input2* create_input2_element()
 {
 	input2* element = (input2*)malloc(sizeof(input2));
 
-	element->name = (char*)malloc(sizeof(char) * 100);
-	element->surname = (char*)malloc(sizeof(char) * 100);
+	element->name = (char*)malloc(sizeof(char) *50);
+	element->surname = (char*)malloc(sizeof(char) *50);
 
 	element->next = NULL;
 	element->prev = NULL;

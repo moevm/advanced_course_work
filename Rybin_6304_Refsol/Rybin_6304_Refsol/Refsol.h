@@ -9,7 +9,7 @@
 \return void
 \ingroup Refsol_Data
 */
-void Read_Data(FILE* stream_1, FILE* stream_2, input2* input2_head, input1* input1_head)
+void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* input2_head)
 {
 	int buf;
 	while ((buf = fgetc(stream_1)) != '\n');

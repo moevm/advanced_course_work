@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 	input1* input1_head = create_input1_element();
 	input2* input2_head = create_input2_element();
 
-	Read_Data(Table1, Table2, input2_head, input1_head);
+	Read_Data(Table1, Table2, input1_head, input2_head);
 	
 	
 	
