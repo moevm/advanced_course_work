@@ -1,72 +1,92 @@
+#include "Refsol_Data.h"
+
 /*!
-\file
-
-\brief Includes for right solution 
-This file contains struct and functions for to solve task.
-
-\author Rybin Aleksandr 1 course 2 half
-\date 17.03.2017
-\version 1.0
+\brief Read data from tables
+\param[in] stream_1 pointer to first table
+\param[in] stream_2 pointer to second table
+\param[in] input1_head pointer to begin of list input1
+\param[in] input2_head pinter to begin of lust input2
+\return void
+\ingroup Refsol_Data
 */
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-typedef struct input1
+void Read_Data(FILE* stream_1, FILE* stream_2, input2* input2_head, input1* input1_head)
 {
-	char* name;				//!< Name of student
-	char* surname;			//!< Surame of student
-	char* patronymic;		//!< Patronymic of student
-	char* GitHub_account;	//!< GitHub account of student
-	char* Email;			//!< Student's email
-	int group;				//!< Student's group
+	int buf;
+	while ((buf = fgetc(stream_1)) != '\n');
+	while ((buf = fgetc(stream_2)) != '\n');
 
-	input1* next;			//!< Pointer to next member in list of fields of table
-	input1* prev;			//!< Pointer to previous member in list of fields of table
-}input1;
-
-typedef struct input2
-{
-	char* name;				//!< Name of student
-	char* surname;			//!< Surame of student
-	int exam_result;		//!< Mark for exam
-	input2* next;			//!< Pointer to next member in list of fields of table
-	input2* prev;			//!< //!< Pointer to previous member in list of fields of table
-}input2;
-
-
-input1* create_input1_element()
-{
-	input1* element = (input1*)malloc(sizeof(input1));
-	
-	element->Email = (char*)malloc(sizeof(char) * 100);
-	element->GitHub_account = (char*)malloc(sizeof(char) * 100);
-	element->name = (char*)malloc(sizeof(char) * 100);
-	element->surname = (char*)malloc(sizeof(char) * 100);
-	element->patronymic = (char*)malloc(sizeof(char) * 100);
-
-	element->next = NULL;
-	element->prev = NULL;
-}
-
-input2* create_input2_element()
-{
-	input2* element = (input2*)malloc(sizeof(input2));
-
-	element->name = (char*)malloc(sizeof(char) * 100);
-	element->surname = (char*)malloc(sizeof(char) * 100);
-
-	element->next = NULL;
-	element->prev = NULL;
-}
-
-void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* input2_head)
-{
 	do
 	{
+		int i = 0;
+
+		while ((buf = fgetc(stream_1)) != ',')
+		{
+			input1_head->name[i++] = buf;
+		}
+		input1_head->name[++i] = '\0';
+
+		i = 0;
+
+		while ((buf = fgetc(stream_1)) != ',')
+		{
+			input1_head->surname[i++] = buf;
+		}
+		input1_head->surname[++i] = '\0';
+		i = 0;
 		
+		while ((buf = fgetc(stream_1)) != ',')
+		{
+			input1_head->patronymic[i++] = buf;
+		}
+
+		i = 0;
+
+		while ((buf = fgetc(stream_1)) != ',')
+		{
+			input1_head->GitHub_account[i++] = buf;
+		}
+		input1_head->GitHub_account[++i] = '\0';
+
+		i = 0;
+
+		while ((buf = fgetc(stream_1)) != ',')
+		{
+			input1_head->Email[i++] = buf;
+		}
+		input1_head->Email[++i] = '\0';
+
+		i = 0;
+
+		fscanf(stream_1, "%d", &input1_head->group);
+
+		push_input1(input1_head, create_input1_element());
+		input1_head = input1_head->next;
+
+		while ((buf = fgetc(stream_2)) != ',')
+		{
+			input2_head->name[i++] = buf;
+		}
+		input2_head->name[++i] = '\0';
+
+		i = 0;
+		
+		while ((buf = fgetc(stream_2)) != ',')
+		{
+			input2_head->surname[i++] = buf;
+		}
+		input1_head->surname[++i] = '\0';
+
+		i = 0;
+
+		fscanf(stream_2, "%d", &input2_head->exam_result);
+
+		push_input2(input2_head, create_input2_element());
+		input2_head = input2_head->next;
+
+		while ((buf = fgetc(stream_1)) != '\n');
+		while ((buf = fgetc(stream_2)) != '\n');
 
 	} while (!feof(stream_1));
+
 
 }

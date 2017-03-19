@@ -12,13 +12,15 @@ This file contains code for checker task on right way for compare with user solv
 #include "Refsol.h"
 
 int main(int argc, char* argv[])
-{
+{	
+	/* Arguments should be: input_file_1 input_file_2 comand[0-4] 5 ... */
 	if (argc < 4)
 	{
 		printf("Failed with arguments");
 		return 1;
 	}
 
+	/* Open files */
 	FILE* Table1 = fopen(argv[1], "r");
 	FILE* Table2 = fopen(argv[2], "r");
 	if (Table1 == NULL)
@@ -32,15 +34,20 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	do
-	{
+	/* Create lists */
+	input1* input1_head = create_input1_element();
+	input2* input2_head = create_input2_element();
 
-	} while (!feof(Table1));
+	Read_Data(Table1, Table2, input2_head, input1_head);
+	
+	
+	
+	
+	free_input1(input1_head);
+	free_input2(input2_head);
 
-
-
-
-
+	fclose(Table1);
+	fclose(Table2);
     return 0;
 }
 
