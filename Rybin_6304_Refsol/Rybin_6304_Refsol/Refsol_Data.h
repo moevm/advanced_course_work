@@ -62,6 +62,8 @@ input1* create_input1_element()
 
 	element->next = NULL;
 	element->prev = NULL;
+
+	return element;
 }
 
 /*!
@@ -78,6 +80,8 @@ input2* create_input2_element()
 
 	element->next = NULL;
 	element->prev = NULL;
+
+	return element;
 }
 
 /*!

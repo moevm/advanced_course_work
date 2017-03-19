@@ -23,7 +23,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input2* input2_head, input1* inpu
 		{
 			input1_head->name[i++] = buf;
 		}
-		input1_head->name[++i] = '\0';
+		input1_head->name[i] = '\0';
 
 		i = 0;
 
@@ -31,13 +31,14 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input2* input2_head, input1* inpu
 		{
 			input1_head->surname[i++] = buf;
 		}
-		input1_head->surname[++i] = '\0';
+		input1_head->surname[i] = '\0';
 		i = 0;
 		
 		while ((buf = fgetc(stream_1)) != ',')
 		{
 			input1_head->patronymic[i++] = buf;
 		}
+		input1_head->patronymic[i] = '\0';
 
 		i = 0;
 
@@ -45,7 +46,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input2* input2_head, input1* inpu
 		{
 			input1_head->GitHub_account[i++] = buf;
 		}
-		input1_head->GitHub_account[++i] = '\0';
+		input1_head->GitHub_account[i] = '\0';
 
 		i = 0;
 
@@ -53,7 +54,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input2* input2_head, input1* inpu
 		{
 			input1_head->Email[i++] = buf;
 		}
-		input1_head->Email[++i] = '\0';
+		input1_head->Email[i] = '\0';
 
 		i = 0;
 
@@ -66,7 +67,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input2* input2_head, input1* inpu
 		{
 			input2_head->name[i++] = buf;
 		}
-		input2_head->name[++i] = '\0';
+		input2_head->name[i] = '\0';
 
 		i = 0;
 		
@@ -74,7 +75,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input2* input2_head, input1* inpu
 		{
 			input2_head->surname[i++] = buf;
 		}
-		input1_head->surname[++i] = '\0';
+		input1_head->surname[i] = '\0';
 
 		i = 0;
 
