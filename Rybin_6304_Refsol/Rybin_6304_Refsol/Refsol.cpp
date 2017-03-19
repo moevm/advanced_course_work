@@ -10,11 +10,12 @@ This file contains code for checker task on right way for compare with user solv
 */
 
 #include "Refsol.h"
+#include <Windows.h>
 
 int main(int argc, char* argv[])
 {	
 	/* Arguments should be: input_file_1 input_file_2 comand[0-4] 5 ... */
-	if (argc < 4)
+	if (argc < 5)
 	{
 		printf("Fail with arguments");
 		return 1;
@@ -45,15 +46,21 @@ int main(int argc, char* argv[])
 	{	
 		switch (*argv[i])
 		{
-		case 3 :
+		case 3:
+		{
 			Check_max_mark(input2_head);
 			break;
-		case 4 :
-			Check_bad_results(input2_head);
-			break;
+		}
+		case 4:
+		{
+		Check_bad_results(input2_head);
+		break;
+		}
 		default:
-			printf("Fail with comand %d",i);
+		{
+			printf("Fail with comand %d", i);
 			return 1;
+		}
 		}
 	}
 	
@@ -64,7 +71,6 @@ int main(int argc, char* argv[])
 	fclose(Table1);
 	fclose(Table2);
 
-	system("pause");//test
     return 0;
 }
 
