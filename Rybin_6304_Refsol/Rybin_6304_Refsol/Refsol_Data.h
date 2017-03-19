@@ -54,11 +54,11 @@ input1* create_input1_element()
 {
 	input1* element = (input1*)malloc(sizeof(input1));
 
-	element->Email = (char*)malloc(sizeof(char) *50);
-	element->GitHub_account = (char*)malloc(sizeof(char) *50);
-	element->name = (char*)malloc(sizeof(char) *50);
-	element->surname = (char*)malloc(sizeof(char) *50);
-	element->patronymic = (char*)malloc(sizeof(char) *50);
+	element->Email = (char*)malloc(sizeof(char) *30);
+	element->GitHub_account = (char*)malloc(sizeof(char) *30);
+	element->name = (char*)malloc(sizeof(char) *30);
+	element->surname = (char*)malloc(sizeof(char) *30);
+	element->patronymic = (char*)malloc(sizeof(char) *30);
 
 	element->next = NULL;
 	element->prev = NULL;
@@ -75,8 +75,8 @@ input2* create_input2_element()
 {
 	input2* element = (input2*)malloc(sizeof(input2));
 
-	element->name = (char*)malloc(sizeof(char) *50);
-	element->surname = (char*)malloc(sizeof(char) *50);
+	element->name = (char*)malloc(sizeof(char) *30);
+	element->surname = (char*)malloc(sizeof(char) *30);
 
 	element->next = NULL;
 	element->prev = NULL;

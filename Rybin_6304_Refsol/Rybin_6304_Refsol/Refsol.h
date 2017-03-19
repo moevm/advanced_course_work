@@ -5,7 +5,7 @@
 \param[in] stream_1 pointer to first table
 \param[in] stream_2 pointer to second table
 \param[in] input1_head pointer to begin of list input1
-\param[in] input2_head pinter to begin of lust input2
+\param[in] input2_head pointer to begin of list input2
 \return void
 \ingroup Refsol_Data
 */
@@ -15,6 +15,8 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 	while ((buf = fgetc(stream_1)) != '\n');
 	while ((buf = fgetc(stream_2)) != '\n');
 
+
+	int count = 0; // Just test
 	do
 	{
 		int i = 0;
@@ -24,6 +26,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 			input1_head->name[i++] = buf;
 		}
 		input1_head->name[i] = '\0';
+		printf(" %d ", count++);
 
 		i = 0;
 
@@ -75,7 +78,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 		{
 			input2_head->surname[i++] = buf;
 		}
-		input1_head->surname[i] = '\0';
+		input2_head->surname[i] = '\0';
 
 		i = 0;
 
