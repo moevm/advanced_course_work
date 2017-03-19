@@ -60,6 +60,8 @@ input1* create_input1_element()
 	element->surname = (char*)malloc(sizeof(char) *30);
 	element->patronymic = (char*)malloc(sizeof(char) *30);
 
+	element->group = 0;
+
 	element->next = NULL;
 	element->prev = NULL;
 
@@ -77,6 +79,8 @@ input2* create_input2_element()
 
 	element->name = (char*)malloc(sizeof(char) *30);
 	element->surname = (char*)malloc(sizeof(char) *30);
+
+	element->exam_result = 0;
 
 	element->next = NULL;
 	element->prev = NULL;

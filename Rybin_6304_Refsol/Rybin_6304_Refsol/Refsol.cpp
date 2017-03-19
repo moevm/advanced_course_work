@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 	/* Arguments should be: input_file_1 input_file_2 comand[0-4] 5 ... */
 	if (argc < 4)
 	{
-		printf("Failed with arguments");
+		printf("Fail with arguments");
 		return 1;
 	}
 
@@ -25,12 +25,12 @@ int main(int argc, char* argv[])
 	FILE* Table2 = fopen(argv[2], "r");
 	if (Table1 == NULL)
 	{
-		printf("Failed with input_file_1");
+		printf("Fail with input_file_1");
 		return 1;
 	}
 	if (Table2 == NULL)
 	{
-		printf("Failed with input_file_2");
+		printf("Fail with input_file_2");
 		return 1;
 	}
 
@@ -40,7 +40,22 @@ int main(int argc, char* argv[])
 
 	Read_Data(Table1, Table2, input1_head, input2_head);
 	
-	
+
+	for (int i = 3; i <= argc;i++)
+	{	
+		switch (*argv[i])
+		{
+		case 3 :
+			Check_max_mark(input2_head);
+			break;
+		case 4 :
+			Check_bad_results(input2_head);
+			break;
+		default:
+			printf("Fail with comand %d",i);
+			return 1;
+		}
+	}
 	
 	
 	free_input1(input1_head);
@@ -48,6 +63,8 @@ int main(int argc, char* argv[])
 
 	fclose(Table1);
 	fclose(Table2);
+
+	system("pause");//test
     return 0;
 }
 

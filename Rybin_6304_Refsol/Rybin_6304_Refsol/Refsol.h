@@ -12,9 +12,11 @@
 void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* input2_head)
 {
 	int buf;
+	/* Skip headers of tables */
 	while ((buf = fgetc(stream_1)) != '\n');
 	while ((buf = fgetc(stream_2)) != '\n');
 
+	/* First table */
 	do
 	{
 		int i = 0;
@@ -75,6 +77,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 		while ((buf = fgetc(stream_1)) != '\n');
 	} while (true);
 
+	/* Second table */
 	do
 	{
 		int i = 0;
@@ -106,4 +109,26 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 
 		while ((buf = fgetc(stream_2)) != '\n');
 	} while (true);
+}
+
+void Check_max_mark(input2* input2_head)
+{
+	int count = 0;
+	while (input2_head->next)
+	{
+		if (input2_head->exam_result == 5)
+			count++;
+	}
+	printf("%d", count);
+}
+
+void Check_bad_results(input2* input2_head)
+{
+	int count = 0;
+	while (input2_head->next)
+	{
+		if (input2_head->exam_result < 3)
+			count++;
+	}
+	printf("%d", count);
 }
