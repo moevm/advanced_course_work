@@ -10,7 +10,6 @@ This file contains code for checker task on right way for compare with user solv
 */
 
 #include "Refsol.h"
-#include <Windows.h>
 
 int main(int argc, char* argv[])
 {	
@@ -41,7 +40,6 @@ int main(int argc, char* argv[])
 
 	Read_Data(Table1, Table2, input1_head, input2_head);
 	
-
 	for (int i = 3; i <= argc;i++)
 	{	
 		switch (*argv[i])

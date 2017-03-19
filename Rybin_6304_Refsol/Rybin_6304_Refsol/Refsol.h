@@ -74,14 +74,6 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 		push_input1(input1_head, create_input1_element());
 		input1_head = input1_head->next;
 
-		while ((buf = fgetc(stream_1)) != '\n');
-	} while (true);
-
-	/* Second table */
-	do
-	{
-		int i = 0;
-
 		while ((buf = fgetc(stream_2)) != ',')
 		{
 			if (feof(stream_2))
@@ -107,6 +99,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input1* input1_head, input2* inpu
 		push_input2(input2_head, create_input2_element());
 		input2_head = input2_head->next;
 
+		while ((buf = fgetc(stream_1)) != '\n');
 		while ((buf = fgetc(stream_2)) != '\n');
 	} while (true);
 }
