@@ -148,15 +148,16 @@ void free_input2(input2* input2_head)
 \return void
 \ingroup Refsol_Data
 */
-void push_input1(input1* head, input1* push_element)
+void push_input1(input1* input1_head, input1* push_element)
 {
-	while (head->next)
+	while (input1_head->next)
 	{
-		head = head->next;
+		input1_head = input1_head->next;
 	}
 
-	head->next = push_element;
-	push_element->prev = head;
+	input1_head->next = push_element;
+	push_element->prev = input1_head;
+
 }
 
 /*!
@@ -166,13 +167,13 @@ void push_input1(input1* head, input1* push_element)
 \return void
 \ingroup Refsol_Data
 */
-void push_input2(input2* head, input2* push_element)
+void push_input2(input2* input2_head, input2* push_element)
 {
-	while (head->next)
+	while (input2_head->next)
 	{
-		head = head->next;
+		input2_head = input2_head->next;
 	}
 
-	head->next = push_element;
-	push_element->prev = head;
+	input2_head->next = push_element;
+	push_element->prev = input2_head;
 }
