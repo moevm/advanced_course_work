@@ -35,10 +35,9 @@ int main(int argc, char* argv[])
 	}
 
 	/* Create lists */
-	input1* input1_head = create_input1_element();
-	input2* input2_head = create_input2_element();
+	input* input_head = create_input_element();
 
-	Read_Data(Table1, Table2, input1_head, input2_head);
+	Read_Data(Table1, Table2, input_head);
 	
 	for (int i = 3; i <= argc;i++)
 	{	
@@ -46,12 +45,12 @@ int main(int argc, char* argv[])
 		{
 		case 3:
 		{
-			Check_max_mark(input2_head);
+			Check_max_mark(input_head);
 			break;
 		}
 		case 4:
 		{
-		Check_bad_results(input2_head);
+		Check_bad_results(input_head);
 		break;
 		}
 		default:
@@ -63,8 +62,7 @@ int main(int argc, char* argv[])
 	}
 	
 	
-	free_input1(input1_head);
-	free_input2(input2_head);
+	free_input(input_head);
 
 	fclose(Table1);
 	fclose(Table2);
