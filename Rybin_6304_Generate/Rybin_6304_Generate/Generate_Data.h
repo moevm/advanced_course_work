@@ -52,6 +52,8 @@ Table* generate_field(int number)
 
 	Table_obj->next = NULL;
 	Table_obj->prev = NULL;
+
+	return Table_obj;
 }
 
 /*!

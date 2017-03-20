@@ -10,7 +10,6 @@ This file contains code for generate 2 random tables(csv format)  and integer ar
 
 */
 
-#include "Generate.h"
 #include "Generate_Data.h"
 
 int main()
@@ -42,7 +41,7 @@ int main()
 		print_field(head, rand() % lenth, Random_Table1, Random_Table2);
 	}
 	
-	free_list(head);
+	//free_list(head);
 	fclose(Random_Table1);
 	fclose(Random_Table2);
 
