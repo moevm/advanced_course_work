@@ -33,10 +33,11 @@ typedef struct Table
 
 /*!
 \brief Generates table field
+\param[in] number Number of creating element
 \return Table_obj Pointer to new object
 \ingroup Generate_Random_Data
 */
-Table* generate_field()
+Table* generate_field(int number)
 {
 	Table* Table_obj = (Table*)malloc(sizeof(Table));
 
@@ -47,7 +48,7 @@ Table* generate_field()
 	Table_obj->patronymic = generate_token(0);
 	Table_obj->group = 1 + rand() % 1000;
 	Table_obj->exam_result = 1 + rand() % 6;
-	Table_obj->number = 0;
+	Table_obj->number = number;
 
 	Table_obj->next = NULL;
 	Table_obj->prev = NULL;
@@ -69,6 +70,46 @@ void push(Table* head, Table* new_element)
 
 	head->next = new_element;
 	new_element->prev = head;
+}
+
+/*!
+\brief Crate list of random fields
+\param[in] head Pointer to begin of list
+\param[in] count number of elements that wiil be generate
+\return void
+\ingroup Generate_Random_Data
+*/
+void create_random_list(Table* head,int count)
+{
+	for (int i = 0; i < count; i++)
+	{
+		push(head, generate_field(i));
+	}
+}
+
+void print_field(Table* head, int number,FILE* table1,FILE*table2)
+{
+	while (head->next)
+	{
+		if (head->number == number)
+		{
+			fprintf(table1, "%s,%s,%s,%s,%s,%d\n",
+				head->name,
+				head->surname,
+				head->patronymic,
+				head->Email,
+				head->GitHub_account,
+				head->group);
+			fprintf(table2, "%s,%s,%d\n",
+				head->name,
+				head->surname,
+				head->exam_result);
+
+			return;
+		}
+		else
+			head = head->next;
+	}
 }
 
 /*!

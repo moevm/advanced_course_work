@@ -32,13 +32,14 @@ int main()
 	/* Lines in table */
 	int lenth = 5 + rand() %15;
 
-	/* Create a temporary data list  */
-	Table* head = generate_field();
+	/* Create a first element of data list */
+	Table* head = generate_field(0);
+	create_random_list(head, lenth);
 
 	/* Put a fields in table */
 	for (int i = 0; i < lenth; i++)
 	{
-	
+		print_field(head, rand() % lenth, Random_Table1, Random_Table2);
 	}
 	
 	free_list(head);

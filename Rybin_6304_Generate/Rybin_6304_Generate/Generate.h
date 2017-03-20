@@ -17,7 +17,7 @@
 \brief Generates array of integers
 \param[in] commands_list Pointer to file to write commands
 \return void 
-\ingroup Generate_Random_Data
+\ingroup Generate
 */
 void put_random_array(FILE* commands_list)
 {
@@ -31,7 +31,7 @@ void put_random_array(FILE* commands_list)
 \brief Generates random token(char*)
 \param[in] a Type of random, 0 if just token, 1 if Email token, 2 if GitHub token
 \return random_token Pointer to random token
-\ingroup Generate_Random_Data
+\ingroup Generate
 */
 char* generate_token(int a)
 {
