@@ -1,6 +1,6 @@
 /*!
 \file
-\brief Random functions
+\brief common random functions to generate
 
 \author Rybin Aleksandr 1 course 2 half
 \date 15.03.2017

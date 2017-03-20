@@ -89,6 +89,15 @@ void create_random_list(Table* head,int count)
 	}
 }
 
+/*!
+\brief Printf field by number
+\param[in] head Pointer to begin of list
+\param[in] number number of element that need to print
+\param[in] table1 Pointer to first file
+\param[in] table 2 Pointer to second file
+\return void
+\ingroup Generate_Random_Data
+*/
 void print_field(Table* head, int number,FILE* table1,FILE*table2)
 {
 	while (head->next)
@@ -124,7 +133,7 @@ void free_list(Table* head)
 {
 	while (head)
 	{
-		if (head->next = NULL)
+		if (head->next == NULL)
 		{
 			free(head->Email);
 			free(head->surname);

@@ -41,7 +41,7 @@ int main()
 		print_field(head, rand() % lenth, Random_Table1, Random_Table2);
 	}
 	
-	//free_list(head);
+	free_list(head);
 	fclose(Random_Table1);
 	fclose(Random_Table2);
 
