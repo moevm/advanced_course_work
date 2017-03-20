@@ -108,8 +108,8 @@ void print_field(Table* head, int number,FILE* table1,FILE*table2)
 				head->name,
 				head->surname,
 				head->patronymic,
-				head->Email,
 				head->GitHub_account,
+				head->Email,
 				head->group);
 			fprintf(table2, "%s,%s,%d\n",
 				head->name,
