@@ -47,7 +47,7 @@ Table* generate_field(int number)
 	Table_obj->surname = generate_token(0);
 	Table_obj->patronymic = generate_token(0);
 	Table_obj->group = 1 + rand() % 1000;
-	Table_obj->exam_result = 1 + rand() % 6;
+	Table_obj->exam_result = 1 + rand() % 5;
 	Table_obj->number = number;
 
 	Table_obj->next = NULL;
