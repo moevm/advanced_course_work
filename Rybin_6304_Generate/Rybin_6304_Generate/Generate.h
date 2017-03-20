@@ -1,8 +1,6 @@
 /*!
 \file
-\brief Includes for generate data
-
-This file contains struct and functions for generate data.
+\brief Random functions
 
 \author Rybin Aleksandr 1 course 2 half
 \date 15.03.2017
@@ -16,22 +14,21 @@ This file contains struct and functions for generate data.
 #include <string.h>
 
 /*!
-\struct
-\brief Struct Table for generating temporary data for tables
+\brief Generates array of integers
+\param[in] commands_list Pointer to file to write commands
+\return void 
+\ingroup Generate_Random_Data
 */
-typedef struct Table
+void put_random_array(FILE* commands_list)
 {
-	char* name;				//!< Name of student
-	char* surname;			//!< Surame of student
-	char* patronymic;		//!< Patronymic of student
-	char* GitHub_account;	//!< GitHub account of student
-	char* Email;			//!< Student's email
-	int group;				//!< Student's group
-	int exam_result;		//!< Mark for exam
-} Table;
+	int lenth = rand() % 10;
+	
+	for (int i = 0; i < lenth; i++)
+		fprintf(commands_list, "%d ", -1 + rand() % 7);
+}
 
 /*!
-\brief Generates random token(char*) 
+\brief Generates random token(char*)
 \param[in] a Type of random, 0 if just token, 1 if Email token, 2 if GitHub token
 \return random_token Pointer to random token
 \ingroup Generate_Random_Data
@@ -50,50 +47,19 @@ char* generate_token(int a)
 	switch (a)
 	{
 	case 1:
-		{
-			strncat(random_token, "@Email", 6);
-			random_token[lenth + 8] = '\0';
-			break;
-		}
+	{
+		strncat(random_token, "@Email", 6);
+		random_token[lenth + 8] = '\0';
+		break;
+	}
 	case 2:
-		{
-			strncat(random_token, "@GitHub", 7);
-			random_token[lenth + 8] = '\0';
-			break;
-		}
+	{
+		strncat(random_token, "@GitHub", 7);
+		random_token[lenth + 8] = '\0';
+		break;
+	}
 	default: break;
 	}
 
 	return random_token;
-}
-
-/*!
-\brief Generates table field 
-\param[in] Table_obj struct to write data
-\return void 
-\ingroup Generate_Random_Data
-*/
-void generate_field(Table* Table_obj)
-{
-	Table_obj->Email = generate_token(1);
-	Table_obj->GitHub_account = generate_token(2);
-	Table_obj->name = generate_token(0);
-	Table_obj->surname = generate_token(0);
-	Table_obj->patronymic = generate_token(0);
-	Table_obj->group = 1 + rand() %1000;
-	Table_obj->exam_result = 1 + rand() % 6;
-}
-
-/*!
-\brief Generates array of integers [0,4] end is always 5
-\return void 
-\ingroup Generate_Random_Data
-*/
-void put_random_array()
-{
-	int lenth = 2 + rand() % 8;
-	
-	for (int i = 0; i < lenth; i++)
-		printf("%d ", rand() %5);
-	printf("5\n");
 }
