@@ -12,6 +12,10 @@ This file contains struct and functions for save and work with generated data.
 
 #include "Generate.h"
 
+#define Max_Lenth_field 30	//!< Max lenth of created fields in struct Table
+#define Max_Group 1000		//!< Max generating group number
+#define Max_Exam_result 5	//!< Max generating exam result
+
 /*!
 \struct
 \brief Struct Table for generating temporary data, or read data from tables
@@ -46,8 +50,8 @@ Table* generate_field(int number)
 	Table_obj->name = generate_token(0);
 	Table_obj->surname = generate_token(0);
 	Table_obj->patronymic = generate_token(0);
-	Table_obj->group = 1 + rand() % 1000;
-	Table_obj->exam_result = 1 + rand() % 5;
+	Table_obj->group = 1 + rand() % Max_Group;
+	Table_obj->exam_result = 1 + rand() % Max_Exam_result;
 	Table_obj->number = number;
 
 	Table_obj->next = NULL;
@@ -165,11 +169,11 @@ Table* create_input_element()
 {
 	Table* element = (Table*)malloc(sizeof(Table));
 
-	element->Email = (char*)malloc(sizeof(char) * 30);
-	element->GitHub_account = (char*)malloc(sizeof(char) * 30);
-	element->name = (char*)malloc(sizeof(char) * 30);
-	element->surname = (char*)malloc(sizeof(char) * 30);
-	element->patronymic = (char*)malloc(sizeof(char) * 30);
+	element->Email = (char*)malloc(sizeof(char) * Max_Lenth_field);
+	element->GitHub_account = (char*)malloc(sizeof(char) * Max_Lenth_field);
+	element->name = (char*)malloc(sizeof(char) * Max_Lenth_field);
+	element->surname = (char*)malloc(sizeof(char) * Max_Lenth_field);
+	element->patronymic = (char*)malloc(sizeof(char) * Max_Lenth_field);
 
 	element->group = 0;
 	element->exam_result = 0;
