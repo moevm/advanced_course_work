@@ -21,16 +21,23 @@ int main(int argc, char* argv[])
 	//}
 
 	/* Open files */
-	FILE* Table1 = fopen(argv[1], "r");
-	FILE* Table2 = fopen(argv[2], "r");
+	FILE* Table1 = fopen(argv[1], "r+t");
+	FILE* Table2 = fopen(argv[2], "r+t");
+	FILE* Commands = fopen(argv[3], "r");
+
 	if (Table1 == NULL)
 	{
 		printf("Fail with input_file_1");
 		return 1;
 	}
-	if (Table2 == NULL)
+	else if (Table2 == NULL)
 	{
 		printf("Fail with input_file_2");
+		return 1;
+	}
+	else if (Commands == NULL)
+	{
+		printf("Fail with Commands");
 		return 1;
 	}
 
