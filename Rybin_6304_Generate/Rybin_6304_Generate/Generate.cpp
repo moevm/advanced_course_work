@@ -10,7 +10,7 @@ This file contains code for generate 2 random tables(csv format)  and integer ar
 
 */
 
-#include "Generate_Data.h"
+#include "Data.h"
 
 int main()
 {
