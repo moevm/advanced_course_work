@@ -13,6 +13,10 @@
 #include <time.h>
 #include <string.h>
 
+#define Max_Lenth_array 10		//!< Max lenth of generating array of commands
+#define Max_Lenth_token 15		//!< Max lenth of generating random token
+#define Min_Lenth_token 5		//!< Min lenth of generating random token
+
 /*!
 \brief Generates array of integers
 \param[in] commands_list Pointer to file to write commands
@@ -21,7 +25,7 @@
 */
 void put_random_array(FILE* commands_list)
 {
-	int lenth = rand() % 10;
+	int lenth = rand() % Max_Lenth_array ;
 	
 	for (int i = 0; i < lenth; i++)
 		fprintf(commands_list, "%d ", -1 + rand() % 7);
@@ -35,7 +39,7 @@ void put_random_array(FILE* commands_list)
 */
 char* generate_token(int a)
 {
-	int lenth = 5 + rand() % 10;
+	int lenth = Min_Lenth_token + rand() % Max_Lenth_token;
 	char* random_token = (char*)malloc(sizeof(char) * (lenth + 9));
 
 	for (int i = 0; i < lenth - 1; i++)
