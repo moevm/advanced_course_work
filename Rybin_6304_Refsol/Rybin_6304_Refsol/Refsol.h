@@ -92,7 +92,7 @@ void Check_max_mark(Table* input_head)
 	int count = 0;
 	while (input_head->next)
 	{
-		if (input_head->exam_result == 5)
+		if (input_head->exam_result == Max_Exam_result)
 			count++;
 	}
 	printf("%d", count);
@@ -103,7 +103,7 @@ void Check_bad_results(Table* input_head)
 	int count = 0;
 	while (input_head->next)
 	{
-		if (input_head->exam_result < 3)
+		if (input_head->exam_result < (int)(0,6 * Max_Exam_result))
 			count++;
 	}
 	printf("%d", count);
