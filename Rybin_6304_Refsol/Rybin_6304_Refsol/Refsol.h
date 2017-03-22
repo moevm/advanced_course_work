@@ -1,14 +1,14 @@
-#include "Refsol_Data.h"
+#include "Data.h"
 
 /*!
 \brief Read data from tables
 \param[in] stream_1 pointer to first table
 \param[in] stream_2 pointer to second table
-\param[in] input_head pointer to begin of list input
+\param[in] input_head pointer to begin of list Table
 \return void
-\ingroup Refsol_Data
+\ingroup Refsol
 */
-void Read_Data(FILE* stream_1, FILE* stream_2, input* input_head)
+void Read_Data(FILE* stream_1, FILE* stream_2, Table* input_head)
 {	
 	int buf;
 
@@ -17,7 +17,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input* input_head)
 	while ((buf = fgetc(stream_2)) != '\n');
 
 	int number = 1;
-	/* First table */
+
 	do
 	{
 		int i = 0;
@@ -77,9 +77,9 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input* input_head)
 
 		fscanf(stream_2, "%d", &input_head->exam_result);
 
-		input_head->line = ++number;
+		input_head->number = ++number;
 
-		push_input(input_head, create_input_element());
+		push(input_head, create_input_element());
 		input_head = input_head->next;
 
 		while ((buf = fgetc(stream_1)) != '\n');
@@ -87,7 +87,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, input* input_head)
 	} while (true);
 }
 
-void Check_max_mark(input* input_head)
+void Check_max_mark(Table* input_head)
 {
 	int count = 0;
 	while (input_head->next)
@@ -98,7 +98,7 @@ void Check_max_mark(input* input_head)
 	printf("%d", count);
 }
 
-void Check_bad_results(input* input_head)
+void Check_bad_results(Table* input_head)
 {
 	int count = 0;
 	while (input_head->next)

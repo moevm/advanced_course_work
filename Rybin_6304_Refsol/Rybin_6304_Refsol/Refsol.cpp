@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 	}
 
 	/* Create lists */
-	input* input_head = create_input_element();
+	Table* input_head = create_input_element();
 
 	Read_Data(Table1, Table2, input_head);
 	
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 	}
 	
 	
-	free_input(input_head);
+	free_list(input_head);
 
 	fclose(Table1);
 	fclose(Table2);
