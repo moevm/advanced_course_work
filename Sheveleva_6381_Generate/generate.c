@@ -5,6 +5,7 @@
  * Generate code
  * <annetalashi@mail.ru>
  * 
+ * 23.03.2017
  */
 
 #include <stdio.h>
@@ -21,15 +22,17 @@
 int main (int argc, char **argv)
 {
 	srand (time (NULL));
-	FILE * input_file;
+	FILE * input_file,
+		 * commands;
 	int quantity_symbol = rand() % 10000 + 10000,
 		actual_quantity_symbol = 0,
 		quantity_options = rand() % 12 + 1,
 		actual_quantity_options = quantity_options,
-		* options = (int *) malloc (sizeof (int) * quantity_options),
+		options = 0,
 		use_second_command_2 = 0,
 		length_paragraph;
 	input_file = fopen ("input_file.txt", "w");
+	commands = fopen ("commands.txt", "w");
 	while (actual_quantity_symbol < quantity_symbol)
 	{
 		length_paragraph = GenerateParagraph (input_file, 20);
@@ -37,20 +40,16 @@ int main (int argc, char **argv)
 	}
 	while (actual_quantity_options > 0) {
 		if (actual_quantity_options  == 1) {
-			options[quantity_options - 1] = 5;
+			fputs("5", commands);
 		}
 		else {
-			if (use_second_command_2 == 0) {
-				options[quantity_options - actual_quantity_options] = GenerateOption(25, 25, 25, 25);
-				if (options[quantity_options - actual_quantity_options] == 2) {
+			if ((use_second_command_2 == 0) && (GenerateOption(25, 25, 25, 25, commands) == 2)) {
 					use_second_command_2 = 1;
-				}
 			}
 			else {
-				options[quantity_options - actual_quantity_options] = GenerateOption(32, 4, 32, 32);
+				options = GenerateOption(32, 4, 32, 32, commands);
 			}
 		}
-		//printf ("%d ", options[quantity_options - actual_quantity_options]);
 		actual_quantity_options--;
 	}
 	return 0;
