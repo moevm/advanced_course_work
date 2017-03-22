@@ -138,23 +138,11 @@ void Check_bad_results(Table* input_head)
 int Read_commands(FILE* commands)
 {
 	int buf;
-	/* Static counter of commands */
-	static int count_commands = 0;
-
 	while ((buf = fgetc(commands))||(buf != EOF))
 	{
 		if (buf != ' ')
-		{
-			count_commands++;
-			if ((buf < 0) || (buf > 5))
-			{
-				printf("Fail with command %d", count_commands);
-				return -1;
-			}
-			else
 				return buf;
-		}
 	}
 
-	return 0;
+	return EOF;
 }
