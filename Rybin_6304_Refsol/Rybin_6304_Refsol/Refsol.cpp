@@ -13,12 +13,12 @@ This file contains code for checker task on right way for compare with user solv
 
 int main(int argc, char* argv[])
 {	
-	///* Arguments should be: input_file_1 input_file_2 comand[0-4] 5 ... */
-	//if (argc < 5)
-	//{
-	//	printf("Fail with arguments");
-	//	return 1;
-	//}
+	/* Arguments should be: input_file_1 input_file_2 commands_file */
+	if (argc < 4)
+	{
+		printf("Fail with arguments");
+		return 1;
+	}
 
 	/* Open files */
 	FILE* Table1 = fopen(argv[1], "r+t");
@@ -46,29 +46,7 @@ int main(int argc, char* argv[])
 
 	Read_Data(Table1, Table2, input_head);
 	
-	//for (int i = 3; i <= argc;i++)
-	//{	
-	//	switch (*argv[i])
-	//	{
-	//	case 3:
-	//	{
-	//		Check_max_mark(input_head);
-	//		break;
-	//	}
-	//	case 4:
-	//	{
-	//	Check_bad_results(input_head);
-	//	break;
-	//	}
-	//	default:
-	//	{
-	//		printf("Fail with comand %d", i);
-	//		return 1;
-	//	}
-	//	}
-	//}
-	
-	
+
 	free_list(input_head);
 
 	fclose(Table1);
