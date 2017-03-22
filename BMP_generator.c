@@ -80,7 +80,7 @@ void create_BMP(int nx, int ny)
 	info_BMP.biClrUsed = 0;
 	info_BMP.biClrImportant = 0;
 
-	FILE * pFile = fopen("input_file_test.bmp", "wb");		// открытие файла в поток
+	FILE * pFile = fopen("input_file.bmp", "wb");		// открытие файла в поток
 
 	fwrite(&header_BMP, sizeof(BITMAPFILEHEADER), 1, pFile); // запись заголовочных структур в начало файла
 	fwrite(&info_BMP, sizeof(BITMAPINFOHEADER), 1, pFile);
@@ -105,7 +105,7 @@ void create_BMP(int nx, int ny)
 
 void create_TXT(int nx, int ny, int number_of_commands)
 {
-	FILE* pFile = fopen("input.txt", "w");					// открытие текстового файла для записи
+	FILE* pFile = fopen("commands.txt", "w");					// открытие текстового файла для записи
 
 	fprintf(pFile, "%d\n%d\n%d\n%d\n",						// запись в файл набора координат и команд
 		(rand() % ((nx + (nx / 4))) - rand() % (nx / 2)),	// для последующего взаимодействия эталонной программы
