@@ -12,6 +12,9 @@ This file contains code for generate 2 random tables(csv format)  and integer ar
 
 #include "Data.h"
 
+#define Max_lines 15		//!< Max lines in generating table
+#define Min_lines 5			//!< Min lines in generating table
+
 int main()
 {
 	/* Initialize a seed for rand() */
@@ -29,7 +32,7 @@ int main()
 	fprintf(Random_Table2, "Name,Surname,Exam_mark\n");
 
 	/* Lines in table */
-	int lenth = 5 + rand() %15;
+	int lenth = Min_lines + rand() %Max_lines;
 
 	/* Create a first element of data list */
 	Table* head = generate_field(0);
