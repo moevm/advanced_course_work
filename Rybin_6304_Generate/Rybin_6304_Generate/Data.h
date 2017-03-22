@@ -14,7 +14,7 @@ This file contains struct and functions for save and work with generated data.
 
 /*!
 \struct
-\brief Struct Table for generating temporary data for tables
+\brief Struct Table for generating temporary data, or read data from tables
 */
 typedef struct Table
 {
@@ -25,17 +25,17 @@ typedef struct Table
 	char* Email;			//!< Student's email
 	int group;				//!< Student's group
 	int exam_result;		//!< Mark for exam
-	int number;				//!< Number of element in list
+	int number;				//!< Number of element in list, or number of line in table
 
 	Table* next;			//!< Pointer to next element
 	Table* prev;			//!< Pointer to previous element
 } Table;
 
 /*!
-\brief Generates table field
+\brief Generates random table field
 \param[in] number Number of creating element
 \return Table_obj Pointer to new object
-\ingroup Generate_Random_Data
+\ingroup Data
 */
 Table* generate_field(int number)
 {
@@ -61,7 +61,7 @@ Table* generate_field(int number)
 \param[in] head Pointer to begin of list
 \param[in] new_element Pointer to object to push
 \return void
-\ingroup Generate_Random_Data
+\ingroup Data
 */
 void push(Table* head, Table* new_element)
 {
@@ -79,7 +79,7 @@ void push(Table* head, Table* new_element)
 \param[in] head Pointer to begin of list
 \param[in] count number of elements that wiil be generate
 \return void
-\ingroup Generate_Random_Data
+\ingroup Data
 */
 void create_random_list(Table* head,int count)
 {
@@ -127,7 +127,7 @@ void print_field(Table* head, int number,FILE* table1,FILE*table2)
 \brief Free list
 \param[in] head Pointer to begin of list
 \return void
-\ingroup Generate_Random_Data
+\ingroup Data
 */
 void free_list(Table* head)
 {
@@ -154,4 +154,29 @@ void free_list(Table* head)
 
 
 	}
+}
+
+/*!
+\brief creates object of strcut Table
+\return pointer to new object
+\ingroup Data
+*/
+Table* create_input_element()
+{
+	Table* element = (Table*)malloc(sizeof(Table));
+
+	element->Email = (char*)malloc(sizeof(char) * 30);
+	element->GitHub_account = (char*)malloc(sizeof(char) * 30);
+	element->name = (char*)malloc(sizeof(char) * 30);
+	element->surname = (char*)malloc(sizeof(char) * 30);
+	element->patronymic = (char*)malloc(sizeof(char) * 30);
+
+	element->group = 0;
+	element->exam_result = 0;
+	element->number = 0;
+
+	element->next = NULL;
+	element->prev = NULL;
+
+	return element;
 }
