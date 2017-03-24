@@ -193,8 +193,6 @@ Table* create_input_element()
 */
 void Remove_element(Table* head)
 {
-	while (head)
-	{
 		if (head->next == NULL)
 		{
 			head->prev->next = NULL;
@@ -215,5 +213,4 @@ void Remove_element(Table* head)
 		free(head->patronymic);
 		free(head->GitHub_account);
 		free(head);
-	}
 }
