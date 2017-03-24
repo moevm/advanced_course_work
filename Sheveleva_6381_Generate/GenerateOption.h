@@ -11,19 +11,19 @@ int GenerateOption (int percent_command_1,
 {
 	int option = rand() % 100 + 1;
 	if (option < (percent_command_1 + 1)) {
-		fputs("1 ", commands);
+		fputs("1\n", commands);
 		return 1;
 	}
 	if ((option > (percent_command_1 - 1)) && (option < (percent_command_1 + percent_command_2 + 1))) {
-		fputs("2 ", commands);
+		fputs("2\n", commands);
 		return 2;
 	}
 		if ((option > (percent_command_1 + percent_command_2 - 1)) && (option < (percent_command_1 + percent_command_2 + percent_command_3 + 1))) {
-			fputs("3 ", commands);
+			fputs("3\n", commands);
 		return 3;
 	}
 		if (option > (percent_command_1 + percent_command_2 + percent_command_3 - 1)) {
-			fputs("4 ", commands);
+			fputs("4\n", commands);
 		return 4;
 	}	
 }
