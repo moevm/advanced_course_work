@@ -46,20 +46,17 @@ int main(int argc, char* argv[])
 
 	/* Read commands */
 	int* commands_vector = NULL;
-	Read_Commands(Commands_File, commands_vector);
+	int lenth_command = Read_Commands(Commands_File, commands_vector);
 	
 	/* Work with commands */
-
-	//while (true)
-	//{
-	//	{
-	//		switch ()
-	//		{
-	//		default:
-	//			break;
-	//		}
-	//	}
-	//}
+	for (int i = 0; i < lenth_command; i++)
+	{
+		switch (commands_vector[i])
+		{
+		default:
+			break;
+		}
+	}
 
 	free_list(input_head);
 

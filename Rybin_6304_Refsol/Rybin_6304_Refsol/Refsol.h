@@ -137,7 +137,7 @@ void Check_bad_results(Table* input_head)
 \brief Read commands from file
 \param[in] commands Pointer to file with commands
 \param[in] commands_vector vector to write readed commands
-\return -1 if any error, or 0 if read correctly
+\return -1 if any error, or lenth of commands_vector if read correctly
 \ingroup Refsol
 */
 int Read_Commands(FILE* commands,int* commands_vector)
@@ -147,8 +147,8 @@ int Read_Commands(FILE* commands,int* commands_vector)
 	int buf = 0;
 	int counter_commands = 0;
 
-	while ((buf = fgetc(commands)))
-	{
+	while (fscanf(commands,"%d",&buf))
+	{	
 		/* Check if file ends */
 		if (feof(commands))
 		{
@@ -163,7 +163,7 @@ int Read_Commands(FILE* commands,int* commands_vector)
 				return -1;
 			}
 			else
-				return 0;
+				return ++counter_commands;
 		}
 		
 		/* If commands exists yet */
@@ -179,7 +179,7 @@ int Read_Commands(FILE* commands,int* commands_vector)
 		}
 		else
 		{
-			commands_vector[counter_commands] = buf;
+			commands_vector[counter_commands++] = buf;
 		}
 	}
 }
