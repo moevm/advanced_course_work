@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 	}
 
 	/* Open files */
-	FILE* Table1 = fopen(argv[1], "r"); //TODO "r+t" ?
+	FILE* Table1 = fopen(argv[1], "r"); 
 	FILE* Table2 = fopen(argv[2], "r");
 	FILE* Commands_File = fopen(argv[3], "r");
 
