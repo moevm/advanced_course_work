@@ -47,6 +47,10 @@ int main(int argc, char* argv[])
 	/* Read commands */
 	int* commands_vector = NULL;
 	int lenth_command = Read_Commands(Commands_File, &commands_vector);
+
+	/* Lenth of array there commands */
+	if (lenth_command < 0)
+		return -1;
 	
 	/* Work with commands */
 	for (int i = 0; i < lenth_command; i++)

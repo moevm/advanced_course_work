@@ -184,3 +184,21 @@ Table* create_input_element()
 
 	return element;
 }
+
+/*!
+\brief Counts elements
+\param[in] input_head Pointer to begin of list
+\return count Number of elements in list
+\ingroup Refsol
+*/
+int Counter(Table* input_head)
+{
+	int count = 0;
+	while (input_head->next)
+	{
+		count++;
+		input_head = input_head->next;
+	}
+
+	return count;
+}

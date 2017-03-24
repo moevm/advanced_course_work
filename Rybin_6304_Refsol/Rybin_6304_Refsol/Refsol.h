@@ -181,3 +181,8 @@ int Read_Commands(FILE* commands,int** commands_vector)
 		else
 			return counter_commands;
 }
+
+void Remove_Repeats(Table* input_head)
+{
+	int count = Counter(input_head);
+}
