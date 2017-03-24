@@ -140,7 +140,7 @@ void Check_bad_results(Table* input_head)
 int Read_commands(FILE* commands)
 {
 	int buf;
-	while ((buf = fgetc(commands))||(buf != EOF))
+	while ((buf = fgetc(commands))&&(buf != EOF))
 	{
 		if (buf != ' ')
 				return buf;

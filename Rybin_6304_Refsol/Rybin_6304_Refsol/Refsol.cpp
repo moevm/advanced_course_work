@@ -54,8 +54,6 @@ int main(int argc, char* argv[])
 		/* Check */
 		if ((command < 0) || (command > 5))
 		{
-			if (command == EOF)
-				return 0;
 			printf("Fail with command %d", counter_commands);
 		}
 		else
