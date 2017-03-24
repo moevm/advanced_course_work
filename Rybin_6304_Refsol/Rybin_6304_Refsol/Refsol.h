@@ -182,6 +182,12 @@ int Read_Commands(FILE* commands,int** commands_vector)
 			return counter_commands;
 }
 
+/*!
+\brief Removes same fields
+\param[in] input_head Pointer to begin of list
+\return void
+\ingroup Refsol
+*/
 void Remove_Repeats(Table* input_head)
 {
 	while (input_head->next)
@@ -189,16 +195,20 @@ void Remove_Repeats(Table* input_head)
 		Table* obj = input_head->next;
 		while (obj->next)
 		{
-			if ((strcmp(input_head->name, obj->name) == 0)&&
-				(strcmp(input_head->surname, obj->surname) == 0)&&
-				(strcmp(input_head->Email, obj->Email) == 0)&&
-				(strcmp(input_head->GitHub_account, obj->GitHub_account) == 0)&&
-				(strcmp(input_head->patronymic, obj->patronymic) == 0)&&
-				(input_head->exam_result == obj->exam_result)&&
+			if ((strcmp(input_head->name, obj->name) == 0) &&
+				(strcmp(input_head->surname, obj->surname) == 0) &&
+				(strcmp(input_head->Email, obj->Email) == 0) &&
+				(strcmp(input_head->GitHub_account, obj->GitHub_account) == 0) &&
+				(strcmp(input_head->patronymic, obj->patronymic) == 0) &&
+				(input_head->exam_result == obj->exam_result) &&
 				(input_head->group == obj->group))
-				Remove_element(obj);
-
-			obj = obj->next;
+			{
+				Table* tmp_obj = obj;
+				obj = obj->next;
+				Remove_element(tmp_obj);
+			}
+			else
+				obj = obj->next;
 		}
 		input_head = input_head->next;
 	}
