@@ -136,7 +136,7 @@ void Check_bad_results(Table* input_head)
 /*!
 \brief Read commands from file
 \param[in] commands Pointer to file with commands
-\param[in] commands_vector vector to write readed commands
+\param[in]\[out] commands_vector vector to write readed commands
 \return -1 if any error, or lenth of commands_vector if read correctly
 \ingroup Refsol
 */
@@ -147,25 +147,8 @@ int Read_Commands(FILE* commands,int* commands_vector)
 	int buf = 0;
 	int counter_commands = 0;
 
-	while (fscanf(commands,"%d",&buf))
+	while (fscanf(commands,"%d",&buf) != EOF)
 	{	
-		/* Check if file ends */
-		if (feof(commands))
-		{
-			if (counter_commands < 1)
-			{
-				printf("Too few commands");
-				return -1;
-			}
-			else if (commands_vector[counter_commands] != 5)
-			{
-				printf("Fail with last command");
-				return -1;
-			}
-			else
-				return ++counter_commands;
-		}
-		
 		/* If commands exists yet */
 		if ((buf < 0) || (buf > 5))
 		{
@@ -182,4 +165,17 @@ int Read_Commands(FILE* commands,int* commands_vector)
 			commands_vector[counter_commands++] = buf;
 		}
 	}
+	/* Check when file ends */
+		if (counter_commands < 1)
+		{
+			printf("Too few commands");
+			return -1;
+		}
+		else if (commands_vector[counter_commands - 1] != 5)
+		{
+			printf("Fail with last command");
+			return -1;
+		}
+		else
+			return counter_commands;
 }

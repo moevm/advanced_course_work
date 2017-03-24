@@ -51,9 +51,9 @@ int main(int argc, char* argv[])
 	/* Work with commands */
 	for (int i = 0; i < lenth_command; i++)
 	{
-		switch (commands_vector[i])
+	//	switch (commands_vector[i])
 		{
-		default:
+		//default:
 			break;
 		}
 	}
