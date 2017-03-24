@@ -1,5 +1,9 @@
 #include "Data.h"
 
+#define Sizeof_Commands 10
+#define EOF_Commands 100
+#define Eror_command -100
+
 /*!
 \brief Read data from tables
 \param[in] stream_1 pointer to first table
@@ -137,14 +141,31 @@ void Check_bad_results(Table* input_head)
 \return buf command
 \ingroup Refsol
 */
-int Read_commands(FILE* commands)
+int Read_commands(FILE* commands,int* commands_vector)
 {
-	int buf;
-	while ((buf = fgetc(commands))&&(buf != EOF))
-	{
-		if (buf != ' ')
-				return buf;
-	}
+	commands_vector = (int*)malloc(sizeof(int) * Sizeof_Commands);
+	int size_commands = Sizeof_Commands;
+	int buf = 0;
+	int counter_commands = 0;
 
-	return EOF;
+	while ((buf = fgetc(commands)))
+	{
+		if (feof(commands))
+			return EOF_Commands;
+		
+		if ((buf < 0) || (buf > 5))
+		{
+			printf("Fail with command %d", counter_commands);
+			return Eror_command;
+		}
+		else if(counter_commands > size_commands - 1)
+		{
+			size_commands *= 2;
+			commands_vector = (int*)realloc(commands_vector,size_commands);
+		}
+		else
+		{
+			commands_vector[counter_commands] = buf;
+		}
+	}
 }

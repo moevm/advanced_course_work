@@ -45,26 +45,17 @@ int main(int argc, char* argv[])
 	Table* input_head = Read_Data(Table1, Table2);
 	
 	/* Work with commands */
-	int counter_commands = 0;		
-	while (true)
-	{
-		int command = Read_commands(Commands);
-		counter_commands++;
 
-		/* Check */
-		if ((command < 0) || (command > 5))
-		{
-			printf("Fail with command %d", counter_commands);
-		}
-		else
-		{
-			switch (command)
-			{
-			default:
-				break;
-			}
-		}
-	}
+	//while (true)
+	//{
+	//	{
+	//		switch ()
+	//		{
+	//		default:
+	//			break;
+	//		}
+	//	}
+	//}
 
 	free_list(input_head);
 
