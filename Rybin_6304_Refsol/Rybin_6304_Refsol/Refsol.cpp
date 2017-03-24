@@ -28,17 +28,17 @@ int main(int argc, char* argv[])
 	if (Table1 == NULL)
 	{
 		printf("Fail with input_file_1");
-		return 1;
+		return -1;
 	}
 	else if (Table2 == NULL)
 	{
 		printf("Fail with input_file_2");
-		return 1;
+		return -1;
 	}
 	else if (Commands_File == NULL)
 	{
 		printf("Fail with Commands");
-		return 1;
+		return -1;
 	}
 
 	/* Read tables to list */
@@ -57,6 +57,9 @@ int main(int argc, char* argv[])
 	{
 		switch (commands_vector[i])
 		{
+		case 1:
+			Remove_Repeats(input_head);
+			break;
 		case 3:
 			Check_max_mark(input_head);
 			break;

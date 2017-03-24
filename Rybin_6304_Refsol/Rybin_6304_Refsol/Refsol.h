@@ -152,7 +152,7 @@ int Read_Commands(FILE* commands,int** commands_vector)
 	while (fscanf(commands,"%d",&buf) != EOF)
 	{	
 		/* If commands exists yet */
-		if ((buf < 0) || (buf > 5))
+		if ((buf < 1) || (buf > 5))
 		{
 			printf("Fail with command %d", counter_commands + 1);
 			return -1;
@@ -184,5 +184,23 @@ int Read_Commands(FILE* commands,int** commands_vector)
 
 void Remove_Repeats(Table* input_head)
 {
-	int count = Counter(input_head);
+	while (input_head->next)
+	{
+		Table* obj = input_head;
+		while (obj->next)
+		{
+			if (strcmp(input_head->name, obj->name) ||
+				strcmp(input_head->surname, obj->surname) ||
+				strcmp(input_head->Email, obj->Email) ||
+				strcmp(input_head->GitHub_account, obj->GitHub_account) ||
+				strcmp(input_head->patronymic, obj->patronymic) ||
+				(input_head->exam_result == obj->exam_result)||
+				(input_head->group == obj->group))
+			{
+				Remove_element(obj);
+			}
+			obj = obj->next;
+		}
+		input_head = input_head->next;
+	}
 }
