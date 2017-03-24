@@ -1,8 +1,8 @@
 /*!
 \file
-\brief Data functions to generate
+\brief Funsctions to work with Readed or Generated Data
 
-This file contains struct and functions for save and work with generated data.
+This file contains struct and functions for save and work with generated data or readed data.
 
 \author Rybin Aleksandr 1 course 2 half
 \date 15.03.2017
@@ -39,7 +39,7 @@ typedef struct Table
 \brief Generates random table field
 \param[in] number Number of creating element
 \return Table_obj Pointer to new object
-\ingroup Data
+\ingroup Generate
 */
 Table* generate_field(int number)
 {
@@ -83,7 +83,7 @@ void push(Table* head, Table* new_element)
 \param[in] head Pointer to begin of list
 \param[in] count number of elements that wiil be generate
 \return void
-\ingroup Data
+\ingroup Generate
 */
 void create_random_list(Table* head,int count)
 {
@@ -100,7 +100,7 @@ void create_random_list(Table* head,int count)
 \param[in] table1 Pointer to first file
 \param[in] table 2 Pointer to second file
 \return void
-\ingroup Generate_Random_Data
+\ingroup Data
 */
 void print_field(Table* head, int number,FILE* table1,FILE*table2)
 {
@@ -186,19 +186,34 @@ Table* create_input_element()
 }
 
 /*!
-\brief Counts elements
+\brief Remove element
 \param[in] input_head Pointer to begin of list
-\return count Number of elements in list
-\ingroup Refsol
+\return void
+\ingroup Data
 */
-int Counter(Table* input_head)
+void Remove_element(Table* head)
 {
-	int count = 0;
-	while (input_head->next)
+	while (head)
 	{
-		count++;
-		input_head = input_head->next;
-	}
+		if (head->next == NULL)
+		{
+			head->prev->next = NULL;
+			free(head->Email);
+			free(head->surname);
+			free(head->name);
+			free(head->patronymic);
+			free(head->GitHub_account);
+			free(head);
+		}
 
-	return count;
+		head->prev->next = head->next;
+		head->next->prev = head->prev;
+
+		free(head->Email);
+		free(head->surname);
+		free(head->name);
+		free(head->patronymic);
+		free(head->GitHub_account);
+		free(head);
+	}
 }
