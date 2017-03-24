@@ -46,14 +46,20 @@ int main(int argc, char* argv[])
 
 	/* Read commands */
 	int* commands_vector = NULL;
-	int lenth_command = Read_Commands(Commands_File, commands_vector);
+	int lenth_command = Read_Commands(Commands_File, &commands_vector);
 	
 	/* Work with commands */
 	for (int i = 0; i < lenth_command; i++)
 	{
-	//	switch (commands_vector[i])
+		switch (commands_vector[i])
 		{
-		//default:
+		case 3:
+			Check_max_mark(input_head);
+			break;
+		case 4:
+			Check_bad_results(input_head);
+			break;
+		default:
 			break;
 		}
 	}

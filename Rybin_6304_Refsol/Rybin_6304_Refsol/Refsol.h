@@ -110,8 +110,9 @@ void Check_max_mark(Table* input_head)
 	{
 		if (input_head->exam_result == Max_Exam_result)
 			count++;
+		input_head = input_head->next;
 	}
-	printf("%d", count);
+	printf("%d ", count);
 }
 
 /*!
@@ -127,22 +128,23 @@ void Check_bad_results(Table* input_head)
 	int count = 0;
 	while (input_head->next)
 	{
-		if (input_head->exam_result < (int)(0,6 * Max_Exam_result))
+		if (input_head->exam_result < (int)(0.6 * Max_Exam_result))
 			count++;
+		input_head = input_head->next;
 	}
-	printf("%d", count);
+	printf("%d ", count);
 }
 
 /*!
 \brief Read commands from file
 \param[in] commands Pointer to file with commands
-\param[in]\[out] commands_vector vector to write readed commands
+\param[in]\[out] commands_vector Pointer to vector to write commands
 \return -1 if any error, or lenth of commands_vector if read correctly
 \ingroup Refsol
 */
-int Read_Commands(FILE* commands,int* commands_vector)
+int Read_Commands(FILE* commands,int** commands_vector)
 {
-	commands_vector = (int*)malloc(sizeof(int) * Sizeof_Commands);
+	*commands_vector = (int*)malloc(sizeof(int) * Sizeof_Commands);
 	int size_commands = Sizeof_Commands;
 	int buf = 0;
 	int counter_commands = 0;
@@ -158,11 +160,11 @@ int Read_Commands(FILE* commands,int* commands_vector)
 		else if(counter_commands > size_commands - 1)
 		{
 			size_commands *= 2;
-			commands_vector = (int*)realloc(commands_vector,size_commands);
+			*commands_vector = (int*)realloc(commands_vector,size_commands);
 		}
 		else
 		{
-			commands_vector[counter_commands++] = buf;
+			*(*commands_vector + counter_commands++) = buf;
 		}
 	}
 	/* Check when file ends */
@@ -171,7 +173,7 @@ int Read_Commands(FILE* commands,int* commands_vector)
 			printf("Too few commands");
 			return -1;
 		}
-		else if (commands_vector[counter_commands - 1] != 5)
+		else if (*(*commands_vector + counter_commands - 1) != 5)
 		{
 			printf("Fail with last command");
 			return -1;
