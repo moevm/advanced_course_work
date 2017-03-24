@@ -16,14 +16,14 @@ int main(int argc, char* argv[])
 	/* Arguments should be: input_file_1 input_file_2 commands_file */
 	if (argc < 4)
 	{
-		printf("Fail with arguments");
+		printf("Too few arguments");
 		return 1;
 	}
 
 	/* Open files */
 	FILE* Table1 = fopen(argv[1], "r"); //TODO "r+t" ?
 	FILE* Table2 = fopen(argv[2], "r");
-	FILE* Commands = fopen(argv[3], "r");
+	FILE* Commands_File = fopen(argv[3], "r");
 
 	if (Table1 == NULL)
 	{
@@ -35,14 +35,18 @@ int main(int argc, char* argv[])
 		printf("Fail with input_file_2");
 		return 1;
 	}
-	else if (Commands == NULL)
+	else if (Commands_File == NULL)
 	{
 		printf("Fail with Commands");
 		return 1;
 	}
 
-	/* Create lists */
+	/* Read tables to list */
 	Table* input_head = Read_Data(Table1, Table2);
+
+	/* Read commands */
+	int* commands_vector = NULL;
+	Read_Commands(Commands_File, commands_vector);
 	
 	/* Work with commands */
 

@@ -1,8 +1,6 @@
 #include "Data.h"
 
 #define Sizeof_Commands 10
-#define EOF_Commands 100
-#define Eror_command -100
 
 /*!
 \brief Read data from tables
@@ -138,10 +136,11 @@ void Check_bad_results(Table* input_head)
 /*!
 \brief Read commands from file
 \param[in] commands Pointer to file with commands
-\return buf command
+\param[in] commands_vector vector to write readed commands
+\return -1 if any error, or 0 if read correctly
 \ingroup Refsol
 */
-int Read_commands(FILE* commands,int* commands_vector)
+int Read_Commands(FILE* commands,int* commands_vector)
 {
 	commands_vector = (int*)malloc(sizeof(int) * Sizeof_Commands);
 	int size_commands = Sizeof_Commands;
@@ -150,13 +149,28 @@ int Read_commands(FILE* commands,int* commands_vector)
 
 	while ((buf = fgetc(commands)))
 	{
+		/* Check if file ends */
 		if (feof(commands))
-			return EOF_Commands;
+		{
+			if (counter_commands < 1)
+			{
+				printf("Too few commands");
+				return -1;
+			}
+			else if (commands_vector[counter_commands] != 5)
+			{
+				printf("Fail with last command");
+				return -1;
+			}
+			else
+				return 0;
+		}
 		
+		/* If commands exists yet */
 		if ((buf < 0) || (buf > 5))
 		{
-			printf("Fail with command %d", counter_commands);
-			return Eror_command;
+			printf("Fail with command %d", counter_commands + 1);
+			return -1;
 		}
 		else if(counter_commands > size_commands - 1)
 		{
