@@ -21,8 +21,8 @@ int main(int argc, char* argv[])
 	}
 
 	/* Open files */
-	FILE* Table1 = fopen(argv[1], "r+t");
-	FILE* Table2 = fopen(argv[2], "r+t");
+	FILE* Table1 = fopen(argv[1], "r"); //TODO "r+t" ?
+	FILE* Table2 = fopen(argv[2], "r");
 	FILE* Commands = fopen(argv[3], "r");
 
 	if (Table1 == NULL)
@@ -42,9 +42,7 @@ int main(int argc, char* argv[])
 	}
 
 	/* Create lists */
-	Table* input_head = create_input_element();
-
-	Read_Data(Table1, Table2, input_head);
+	Table* input_head = Read_Data(Table1, Table2);
 	
 	/* Work with commands */
 	int counter_commands = 0;		

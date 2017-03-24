@@ -4,11 +4,10 @@
 \brief Read data from tables
 \param[in] stream_1 pointer to first table
 \param[in] stream_2 pointer to second table
-\param[in] input_head pointer to begin of list Table
-\return void
+\return first_element pointer to begin of readed list
 \ingroup Refsol
 */
-void Read_Data(FILE* stream_1, FILE* stream_2, Table* input_head)
+Table* Read_Data(FILE* stream_1, FILE* stream_2)
 {	
 	int buf;
 
@@ -18,6 +17,9 @@ void Read_Data(FILE* stream_1, FILE* stream_2, Table* input_head)
 
 	/* Number of line in table */
 	int number = 1;
+	/* Create first element that will be return */
+	Table* first_element = create_input_element();
+	Table* input_head = first_element;
 
 	do
 	{
@@ -26,7 +28,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, Table* input_head)
 		while ((buf = fgetc(stream_1)) != ',')
 		{
 			if (feof(stream_1))
-				return;
+				return first_element;
 			input_head->name[i++] = buf;
 		}
 		input_head->name[i] = '\0';
@@ -35,7 +37,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, Table* input_head)
 		while ((buf = fgetc(stream_1)) != ',')
 		{
 			if (feof(stream_1))
-				return;
+				return first_element;
 			input_head->surname[i++] = buf;
 		}
 		input_head->surname[i] = '\0';
@@ -44,7 +46,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, Table* input_head)
 		while ((buf = fgetc(stream_1)) != ',')
 		{
 			if (feof(stream_1))
-				return;
+				return first_element;
 			input_head->patronymic[i++] = buf;
 		}
 		input_head->patronymic[i] = '\0';
@@ -54,7 +56,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, Table* input_head)
 		while ((buf = fgetc(stream_1)) != ',')
 		{
 			if (feof(stream_1))
-				return;
+				return first_element;
 			input_head->GitHub_account[i++] = buf;
 		}
 		input_head->GitHub_account[i] = '\0';
@@ -64,7 +66,7 @@ void Read_Data(FILE* stream_1, FILE* stream_2, Table* input_head)
 		while ((buf = fgetc(stream_1)) != ',')
 		{
 			if (feof(stream_1))
-				return;
+				return first_element;
 			input_head->Email[i++] = buf;
 		}
 		input_head->Email[i] = '\0';
