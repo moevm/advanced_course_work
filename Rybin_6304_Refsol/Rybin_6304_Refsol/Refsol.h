@@ -213,3 +213,29 @@ void Remove_Repeats(Table* input_head)
 		input_head = input_head->next;
 	}
 }
+
+/*!
+\brief Save results at new file
+\param[in] input_head Pointer to begin of list
+\return void
+\ingroup Refsol
+*/
+void save_results(Table* input_head)
+{
+	FILE* new_file = fopen("new.csv", "w");
+	fprintf(new_file, "Group,Name,Surname,Patronymic,Email,GitHub,Exam\n");
+
+	while (input_head->next)
+	{
+		fprintf(new_file, "%d,%s,%s,%s,%s,%s,%d\n",
+			input_head->group,
+			input_head->name,
+			input_head->surname,
+			input_head->patronymic,
+			input_head->Email,
+			input_head->GitHub_account,
+			input_head->exam_result);
+
+		input_head = input_head->next;
+	}
+}

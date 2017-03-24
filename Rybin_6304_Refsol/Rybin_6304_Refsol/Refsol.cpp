@@ -66,6 +66,9 @@ int main(int argc, char* argv[])
 		case 4:
 			Check_bad_results(input_head);
 			break;
+		case 5:
+			save_results(input_head);
+			break;
 		default:
 			break;
 		}
