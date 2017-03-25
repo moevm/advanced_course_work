@@ -1,3 +1,14 @@
+/*!
+\file
+\brief Solving checker task header file
+
+This file contains functions to solve task correctly
+
+\author Rybin Aleksandr 1 course 2 half
+\date 17.03.2017
+\version 1.0
+*/
+
 #include "Data.h"
 
 #define Sizeof_Commands 10
@@ -214,30 +225,21 @@ void Remove_Repeats(Table* input_head)
 	}
 }
 
-void Get_new_table(Table* input_head)
+void Get_new_tables(Table* input_head)
 {
 	while (input_head->next)
 	{
-		Table* obj = input_head->next;
+		Table* obj = input_head;
 		while (obj->next)
 		{
-			if (input_head->group == obj->group)
+			if (obj->group > obj->next->group)
 			{
-				Table* tmp_obj = obj;
-				while (tmp_obj->next)
-				{
-					if (obj->group == tmp_obj->group)
-					{
-						obj = tmp_obj;
-						break;
-					}
-					else
-					tmp_obj = tmp_obj->next;
-				}
+				Table* tmp = obj;
+
 			}
-			obj = obj->next;
+			else
+				obj = obj->next;
 		}
-		obj->number = 0;
 		input_head = input_head->next;
 	}
 }
@@ -250,12 +252,20 @@ void Get_new_table(Table* input_head)
 */
 void save_results(Table* input_head)
 {
+	/* Create new file*/
 	FILE* new_file = fopen("new.csv", "w");
 	fprintf(new_file, "Group,Name,Surname,Patronymic,Email,GitHub,Exam\n");
 
 	while (input_head->next)
 	{
-		fprintf(new_file, "%d,%s,%s,%s,%s,%s,%d\n",
+		/* If number 0 it means new table so \n\n*/
+		char* print;
+		if (input_head->number == 0)
+			print = "%d,%s,%s,%s,%s,%s,%d\n\n";
+		else
+			print = "%d,%s,%s,%s,%s,%s,%d\n";
+
+		fprintf(new_file, print,
 			input_head->group,
 			input_head->name,
 			input_head->surname,
@@ -263,8 +273,6 @@ void save_results(Table* input_head)
 			input_head->Email,
 			input_head->GitHub_account,
 			input_head->exam_result);
-		if (input_head->number == 0)
-			fprintf(new_file, "\n");
 
 		input_head = input_head->next;
 	}
