@@ -2,14 +2,14 @@
     Программа generate.c генерирует в txt-файл входные данные для
     эталонного(refsol.c) и пользовательского решений поставленной задачи.
 
-    By foksen98 17.03.2017 (Last update 18.03.2017).
+    By foksen98 17.03.2017 (Last update 25.03.2017).
 */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 //  размер диапазона чисел для функции rand()
-#define amountBMP 6
+#define amountBMP 10
 #define amountPixels 500
 #define amountLength 7
 #define amountElements 3
@@ -28,20 +28,20 @@ void generator (FILE*, const char*);
 
 int main ()
 {
-//  здесь хранится путь к директории с BMP-файлами
-    const char* pathToBMP = "/ImagesBMP";
+    //  здесь хранится путь к директории с BMP-файлами
+    const char* pathToBMP = "ImagesBMP";
 
-//  инициализация функции rand()
+    //  инициализация функции rand()
     srand(time(NULL));
 
-//  открытие txt-файла для записи
+    //  открытие txt-файла для записи
     FILE* generatedData = fopen("generatedData.txt", "w");
 
-//  генерация amountTests тестов
+    //  генерация amountTests тестов
     for (char i = 0; i < amountTests; ++i)
         generator(generatedData, pathToBMP);
 
-//  закрытие txt-файла
+    //  закрытие txt-файла
     fclose(generatedData);
 
     return 0;
@@ -59,29 +59,30 @@ short generateCoordinates (short amount, short lowLimit)
 
 void generator (FILE* filePtr, const char* path)
 {
-//  генерация индекса BMP-файла для обработки
+    //  генерация индекса BMP-файла для обработки
     char IndexBMP = generateAll(amountBMP);
 
-//  генерация координат (!квадратной!) обрабатываемой области BMP-файла
+    //  генерация координат (!квадратной!) обрабатываемой области BMP-файла
     short x0 = generateCoordinates((3 * (amountPixels / 5)), 0);
     short y0 = generateCoordinates((3 * (amountPixels / 5)), 0);
     short x1 = generateCoordinates((3 * (amountPixels / 5)), (2 * (amountPixels / 5)));
     short y1 = (y0 + (x1 - x0));
 
-//  генерация последовательности функций для обработки BMP-файла
+    //  генерация последовательности функций для обработки BMP-файла
     char commandsLength = generateAll(amountLength);
-    char* commands = (char*)malloc(commandsLength * sizeof(char));
+    char* commands = (char*)malloc((commandsLength + 1) * sizeof(char));
     for (char i = 0; i < commandsLength; ++i)
         commands[i] = generateAll(amountElements);
+    commands[commandsLength] = ((generateAll(amountElements) % 2) + 3);
 
-//  вывод сгенерированных данных в txt-файл
+    //  вывод сгенерированных данных в txt-файл
     fprintf(filePtr, "%s/BMP%hhd.bmp ", path, IndexBMP);
     fprintf(filePtr, "%hd %hd ", x0, y0);
     fprintf(filePtr, "%hd %hd ", x1, y1);
-    for (char i = 0; i < commandsLength; ++i)
+    for (char i = 0; i < (commandsLength + 1); ++i)
         fprintf(filePtr, "%hhd ", commands[i]);
-    fprintf(filePtr, "4\n");
+    fprintf(filePtr, "\n");
 
-//  освобождение динамической памяти
+    //  освобождение динамической памяти
     free(commands);
 }
