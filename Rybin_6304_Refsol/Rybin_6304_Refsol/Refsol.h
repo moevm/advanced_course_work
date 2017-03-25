@@ -214,6 +214,34 @@ void Remove_Repeats(Table* input_head)
 	}
 }
 
+void Get_new_table(Table* input_head)
+{
+	while (input_head->next)
+	{
+		Table* obj = input_head->next;
+		while (obj->next)
+		{
+			if (input_head->group == obj->group)
+			{
+				Table* tmp_obj = obj;
+				while (tmp_obj->next)
+				{
+					if (obj->group == tmp_obj->group)
+					{
+						obj = tmp_obj;
+						break;
+					}
+					else
+					tmp_obj = tmp_obj->next;
+				}
+			}
+			obj = obj->next;
+		}
+		obj->number = 0;
+		input_head = input_head->next;
+	}
+}
+
 /*!
 \brief Save results at new file
 \param[in] input_head Pointer to begin of list
@@ -235,6 +263,8 @@ void save_results(Table* input_head)
 			input_head->Email,
 			input_head->GitHub_account,
 			input_head->exam_result);
+		if (input_head->number == 0)
+			fprintf(new_file, "\n");
 
 		input_head = input_head->next;
 	}
