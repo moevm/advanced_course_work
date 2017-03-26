@@ -25,8 +25,18 @@ Table* Read_Data(FILE* stream_1, FILE* stream_2)
 	int buf;
 
 	/* Skip headers of tables */
-	while ((buf = fgetc(stream_1)) != '\n');
-	while ((buf = fgetc(stream_2)) != '\n');
+	while ((buf = fgetc(stream_1)) != '\n')
+		if (feof(stream_1))
+		{
+			printf("Fail with input_file_1");
+			return NULL;
+		}
+	while ((buf = fgetc(stream_2)) != '\n')
+		if (feof(stream_2))
+		{
+			printf("Fail with input_file_2");
+			return NULL;
+		}
 
 	/* Number of line in table */
 	int number = 1;
@@ -34,6 +44,7 @@ Table* Read_Data(FILE* stream_1, FILE* stream_2)
 	Table* first_element = create_input_element();
 	Table* input_head = first_element;
 
+	/* Reading fields */
 	do
 	{
 		int i = 0;
@@ -87,12 +98,20 @@ Table* Read_Data(FILE* stream_1, FILE* stream_2)
 		i = 0;
 
 		fscanf(stream_1, "%d", &input_head->group);
+		if (feof(stream_1))
+			return first_element;
 
 		/* Skip to fields in second table */
-		while ((buf = fgetc(stream_2)) != ',');
-		while ((buf = fgetc(stream_2)) != ',');
+		while ((buf = fgetc(stream_2)) != ',')
+			if (feof(stream_2))
+				return first_element;;
+		while ((buf = fgetc(stream_2)) != ',')
+			if (feof(stream_2))
+				return first_element;;
 
 		fscanf(stream_2, "%d", &input_head->exam_result);
+		if (feof(stream_2))
+			return first_element;
 
 		input_head->number = ++number;
 
@@ -102,7 +121,11 @@ Table* Read_Data(FILE* stream_1, FILE* stream_2)
 
 		/* Go to new line */
 		while ((buf = fgetc(stream_1)) != '\n');
-		while ((buf = fgetc(stream_2)) != '\n');
+		if (feof(stream_1))
+			return first_element;
+		while ((buf = fgetc(stream_2)) != '\n')
+			if (feof(stream_2))
+				return first_element;
 	} while (true);
 }
 
@@ -225,24 +248,24 @@ void Remove_Repeats(Table* input_head)
 	}
 }
 
-void Get_new_tables(Table* input_head)
-{
-	while (input_head->next)
-	{
-		Table* obj = input_head;
-		while (obj->next)
-		{
-			if (obj->group > obj->next->group)
-			{
-				Table* tmp = obj;
-
-			}
-			else
-				obj = obj->next;
-		}
-		input_head = input_head->next;
-	}
-}
+//void Get_new_tables(Table* input_head)
+//{
+//	while (input_head->next)
+//	{
+//		Table* obj = input_head;
+//		while (obj->next)
+//		{
+//			if (obj->group > obj->next->group)
+//			{
+//				Table* tmp = obj;
+//
+//			}
+//			else
+//				obj = obj->next;
+//		}
+//		input_head = input_head->next;
+//	}
+//}
 
 /*!
 \brief Save results at new file

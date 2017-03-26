@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 	if (argc < 4)
 	{
 		printf("Too few arguments");
-		return 1;
+		return -1;
 	}
 
 	/* Open files */
@@ -43,6 +43,8 @@ int main(int argc, char* argv[])
 
 	/* Read tables to list */
 	Table* input_head = Read_Data(Table1, Table2);
+	if (input_head == NULL)
+		return -1;
 
 	/* Read commands */
 	int* commands_vector = NULL;
