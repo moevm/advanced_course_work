@@ -15,12 +15,12 @@ int CreateWord (FILE * input_file,
 	int length_word;
 			
 	if (nomber_word == 0) {
-		fputc (rand() % 25 + 65, input_file); //Генерация заглавной буквы.
-		length_word = GenerateWord (input_file, 15, 0);
+		fputc (rand() % 25 + 65, input_file); 						//Генерация заглавной буквы.
+		length_word = GenerateWord (input_file, 15, 0); 			// Генерация слова, максимальная длина - 15
 		return length_word + 1;
 	}
 	else {
-		length_word = GenerateWord (input_file, 15, 1);
+		length_word = GenerateWord (input_file, 15, 1);				// Генерация слова, максимальная длина - 15
 		return length_word;
 	}
 }
@@ -30,11 +30,11 @@ int GenerateSentence (FILE * input_file,
 {
 	int quantity_word = rand() % max_quantity_word + 1,
 		length_sentence = 0,
-		length_punctuation, // длина знака окончания предложения
-		length_punctuation_marks, // длина знака препинания в предложении
-		place_second_bracket = max_quantity_word + 1, // месторасположение второй скобки
-		quantity_second_bracket = 0, // количество скобок
-		actual_quantity_word, // текущее количество слов
+		length_punctuation, 										// длина знака окончания предложения
+		length_punctuation_marks, 									// длина знака препинания в предложении
+		place_second_bracket = max_quantity_word + 1,			    // месторасположение второй скобки
+		quantity_second_bracket = 0, 								// количество скобок
+		actual_quantity_word, 										// текущее количество слов
 		j;	
 
 	for (actual_quantity_word = 0; actual_quantity_word < quantity_word; actual_quantity_word++) {
