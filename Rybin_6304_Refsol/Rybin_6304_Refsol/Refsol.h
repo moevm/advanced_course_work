@@ -248,25 +248,6 @@ void Remove_Repeats(Table* input_head)
 	}
 }
 
-//void Get_new_tables(Table* input_head)
-//{
-//	while (input_head->next)
-//	{
-//		Table* obj = input_head;
-//		while (obj->next)
-//		{
-//			if (obj->group > obj->next->group)
-//			{
-//				Table* tmp = obj;
-//
-//			}
-//			else
-//				obj = obj->next;
-//		}
-//		input_head = input_head->next;
-//	}
-//}
-
 /*!
 \brief Save results at new file
 \param[in] input_head Pointer to begin of list
@@ -300,3 +281,28 @@ void save_results(Table* input_head)
 		input_head = input_head->next;
 	}
 }
+
+/*!
+\brief Search uniqe groups and write it as integer in Table.number
+\param[in] input_head Pointer to begin of list
+\return void
+\ingroup Refsol
+*/
+void Get_new_tables(Table* input_head)
+{
+	/* Counter diffrent groups */
+	int count = 0;
+
+	while (input_head->next)
+	{
+		Table* obj = input_head;
+		while (obj->next)
+		{
+			if (input_head->group == obj->group)
+			{
+				obj->number = count;
+			}
+		}
+		input_head = input_head->next;
+		count++;
+	}
