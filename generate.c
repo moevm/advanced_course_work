@@ -12,18 +12,18 @@
 
 int RandCount(int max,int min);		// функция для получения случайного значения
 
-char* MakeName(int index); 	// генератор имён файлов
+char* MakeName(int index,char* name, char* add); 	// генератор имён файлов
 
 int main()
 {	
 	srand(time(NULL));
 	int number_of_files;
-	char* filename = (char*)malloc(sizeof(char)*10);
+	char* filename;
 	int k;
 	FILE* file;
 	for(number_of_files = 0; number_of_files< TestNumber; ++number_of_files)
 	{
-		filename = MakeName(number_of_files+1);
+		filename = MakeName(number_of_files+1,"test",".txt");
 		printf("%s\n",filename);
 		file = fopen(filename,"wt");
 		int number_of_matrix = RandCount(MaxMatrix, 1);
@@ -50,6 +50,7 @@ int main()
 			fprintf(file, "\n");
 		}
 		fclose(file);
+		//free(filename);
 	}
 
 	file = fopen("input","wt");         			//   создадим файл с командами
@@ -59,7 +60,6 @@ int main()
 		fprintf(file, "%d ",RandCount(3,1));
 	}
 	fprintf(file, "4 ");    // добавление завершающей команды
-	fclose(file);
 
 	return 0;
 }
@@ -72,14 +72,16 @@ int RandCount(int max,int min)
 	return result;
 }
 
-char* MakeName(int index)
-{
+char* MakeName(int index,char* name, char* add)
+{	
+	char* result = (char*)malloc(sizeof(char)*20);
 	char str[5];
 	sprintf(str,"%d",index);
-	char name[10] = "test";
-	char add[]=".txt";
-	strcat(name,str);
-	strcat(name,add);
-	return name;
+	/*char name[10] = "test";
+	char add[]=".txt"; */
+	strcat(result,name);
+	strcat(result,str);
+	strcat(result,add);
+	return result;
 }
 
