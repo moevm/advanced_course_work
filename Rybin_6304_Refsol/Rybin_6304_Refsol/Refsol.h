@@ -263,7 +263,7 @@ void save_results(Table* input_head)
 	while (input_head->next)
 	{
 		Table* obj = input_head;
-		while (obj->next)
+		while (obj)
 		{
 			if (input_head->group == obj->group)
 			{
@@ -276,7 +276,8 @@ void save_results(Table* input_head)
 					obj->GitHub_account,
 					obj->exam_result);
 				/* First element is not allowed to remove */
-				if (obj->prev == NULL);
+				if (obj->prev == NULL)
+					obj = obj->next;
 				else
 				{
 					Table* tmp = obj;
