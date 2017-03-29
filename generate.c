@@ -35,7 +35,7 @@ void shuffle(char array[28], int lastElement)
 
 char *func(int strLength, char varsStr[], int level, int *maxLevel, short int finalLine)
 {	
-	char *result = (char *)malloc(602048);
+	char *result = (char *)malloc(256);
 	if (*maxLevel > level)
 	{
 		if (rand()%101 > 40 || level == 1 || *maxLevel == 1)
