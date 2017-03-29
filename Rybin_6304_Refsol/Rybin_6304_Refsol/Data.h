@@ -214,3 +214,55 @@ void Remove_element(Table* head)
 		free(head->GitHub_account);
 		free(head);
 }
+
+/*!
+\brief Swap two elements of list
+\param[in] obj1 Pointer to first object
+\param[in] obj2 Pointer to second object
+\return void
+\ingroup Data
+*/
+void Swap(Table* obj1, Table* obj2)
+{
+	Table* tmp = create_input_element();
+
+	strcpy(tmp->name, obj1->name);
+	strcpy(tmp->surname, obj1->surname);
+	strcpy(tmp->patronymic, obj1->patronymic);
+	strcpy(tmp->Email, obj1->Email);
+	strcpy(tmp->GitHub_account, obj1->GitHub_account);
+
+	tmp->group = obj1->group;
+	tmp->exam_result = obj1->exam_result;
+	tmp->number = obj1->number;
+
+	tmp->next = obj1->next;
+	tmp->prev = obj1->prev;
+
+	strcpy(obj1->name, obj2->name);
+	strcpy(obj1->surname, obj2->surname);
+	strcpy(obj1->patronymic, obj2->patronymic);
+	strcpy(obj1->Email, obj2->Email);
+	strcpy(obj1->GitHub_account, obj2->GitHub_account);
+
+	obj1->group = obj2->group;
+	obj1->exam_result = obj2->exam_result;
+	obj1->number = obj2->number;
+
+	obj1->next = obj2->next;
+	obj1->prev = obj2->prev;
+
+	strcpy(obj2->name, tmp->name);
+	strcpy(obj2->surname, tmp->surname);
+	strcpy(obj2->patronymic, tmp->patronymic);
+	strcpy(obj2->Email, tmp->Email);
+	strcpy(obj2->GitHub_account, tmp->GitHub_account);
+
+	obj2->group = tmp->group;
+	obj2->exam_result = tmp->exam_result;
+	obj2->number = tmp->number;
+
+	obj2->next = tmp->next;
+	obj2->prev = tmp->prev;
+
+}

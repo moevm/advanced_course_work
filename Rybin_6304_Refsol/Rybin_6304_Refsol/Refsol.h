@@ -248,6 +248,26 @@ void Remove_Repeats(Table* input_head)
 	}
 }
 
+void Create_new_tables(Table* input_head)
+{
+	while (input_head->next)
+	{
+		Table* obj = input_head;
+		while (obj)
+		{
+			if (obj->group > obj->next->group)
+			{
+				Table* tmp = obj->next;
+				Swap(obj, obj->next);
+				obj = tmp;
+			}
+			else
+			obj = obj->next;
+		}
+		input_head = input_head->next;
+	}
+}
+
 /*!
 \brief Save results at new file as new tables
 \param[in] input_head Pointer to begin of list
@@ -262,33 +282,15 @@ void save_results(Table* input_head)
 
 	while (input_head->next)
 	{
-		Table* obj = input_head;
-		while (obj)
-		{
-			if (input_head->group == obj->group)
-			{
 				fprintf(new_file, "%d,%s,%s,%s,%s,%s,%d\n",
-					obj->group,
-					obj->name,
-					obj->surname,
-					obj->patronymic,
-					obj->Email,
-					obj->GitHub_account,
-					obj->exam_result);
-				/* First element is not allowed to remove */
-				if (obj->prev == NULL)
-					obj = obj->next;
-				else
-				{
-					Table* tmp = obj;
-					obj = obj->next;
-					Remove_element(tmp);
-				}
-			}
-				obj = obj->next;
-		}
-		/* Add one more \n to parse tables */
-		fprintf(new_file, "\n");
+					input_head->group,
+					input_head->name,
+					input_head->surname,
+					input_head->patronymic,
+					input_head->Email,
+					input_head->GitHub_account,
+					input_head->exam_result);
+
 		input_head = input_head->next;
 	}
 }
