@@ -2,7 +2,7 @@
 \file
 \brief Solving checker task header file
 
-This file contains functions to solve task correctly
+This file contains functions to solve task 
 
 \author Rybin Aleksandr 1 course 2 half
 \date 17.03.2017
@@ -17,7 +17,7 @@ This file contains functions to solve task correctly
 \brief Read data from tables
 \param[in] stream_1 pointer to first table
 \param[in] stream_2 pointer to second table
-\return first_element pointer to begin of readed list
+\return first_element Pointer to begin of readed list
 \ingroup Refsol
 */
 Table* Read_Data(FILE* stream_1, FILE* stream_2)

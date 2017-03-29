@@ -81,7 +81,7 @@ void push(Table* head, Table* new_element)
 /*!
 \brief Crate list of random fields
 \param[in] head Pointer to begin of list
-\param[in] count number of elements that wiil be generate
+\param[in] count Number of elements that wiil be generate
 \return void
 \ingroup Generate
 */
@@ -94,9 +94,9 @@ void create_random_list(Table* head,int count)
 }
 
 /*!
-\brief Printf field by number
+\brief Print field in file by number
 \param[in] head Pointer to begin of list
-\param[in] number number of element that need to print
+\param[in] number Number of element that need to print
 \param[in] table1 Pointer to first file
 \param[in] table 2 Pointer to second file
 \return void
@@ -161,8 +161,8 @@ void free_list(Table* head)
 }
 
 /*!
-\brief creates object of strcut Table
-\return pointer to new object
+\brief Creates object of strcut Table
+\return element Pointer to new object
 \ingroup Data
 */
 Table* create_input_element()
