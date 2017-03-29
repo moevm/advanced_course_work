@@ -62,9 +62,6 @@ int main(int argc, char* argv[])
 		case 1:
 			Remove_Repeats(input_head);
 			break;
-		//case 2:
-			//Get_new_table(input_head);
-			//break;
 		case 3:
 			Check_max_mark(input_head);
 			break;

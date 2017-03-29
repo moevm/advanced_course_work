@@ -187,7 +187,7 @@ Table* create_input_element()
 
 /*!
 \brief Remove element
-\param[in] input_head Pointer to begin of list
+\param[in] head Pointer to removing element
 \return void
 \ingroup Data
 */
