@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
-	/* Read tables to list */
+	/* Read tables to list and check */
 	Table* input_head = Read_Data(Table1, Table2);
 	if (input_head == NULL)
 		return -1;
