@@ -8,13 +8,12 @@
 
 #include "Generator.h"
 
-#define Sizeof_Commands 10
-
+#define Sizeof_Commands 10		//!< Start min lenth of vector reading commands
 
 /*!
 \brief Read commands from file
-\param[in] commands Pointer to file with commands
-\return info Info about vector
+\param[in] commands File with commands
+\return info Info about readed vector
 \ingroup Refsol
 */
 Vector Read_Commands(FILE* commands);

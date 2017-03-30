@@ -33,7 +33,7 @@ Vector Read_Commands(FILE* commands)
 		}
 		else
 		{
-			((int*)info.vector_ptr)[counter_commands] = buf;
+			((int*)info.vector_ptr)[counter_commands++] = buf;
 		}
 	}
 	/* Check when file ends */
@@ -43,7 +43,7 @@ Vector Read_Commands(FILE* commands)
 		info.lenth = -1;
 		return info;
 	}
-	else if (((int*)info.vector_ptr)[counter_commands] != 5)
+	else if (((int*)info.vector_ptr)[counter_commands - 1] != 5)
 	{
 		printf("Fail with last command");
 		info.lenth = -1;
