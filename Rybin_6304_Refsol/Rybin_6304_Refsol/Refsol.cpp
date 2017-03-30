@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
-	Vector Data;
+	Vector Data = Read_Files(Table1,Table2);
 
 	Vector commands = Read_Commands(Commands_File);
 	if (commands.lenth < 0)

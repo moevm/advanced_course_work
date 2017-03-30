@@ -58,5 +58,41 @@ Vector Read_Commands(FILE* commands)
 
 Vector Read_Files(FILE* stream1, FILE* stream2)
 {
+	Vector info;
+	int counter = 0;
+	int buf = 0;
 
+	/* Skip headers and checks files */
+	while (buf = fgetc(stream1) != EOF)
+	{
+		if (buf == '\n')
+			counter++;
+	}
+	if (counter < 2)
+	{
+		printf("Error readinf input_file_1");
+		info.lenth = -1;
+		return info;
+	}
+	counter = 0;
+	while (buf = fgetc(stream1) != EOF)
+	{
+		if (buf == '\n')
+			counter++;
+	}
+	if (counter < 2)
+	{
+		printf("Error reading input_file_2");
+		info.lenth = -1;
+		return info;
+	}
+
+	/* Return to begin of files*/
+	rewind(stream1);
+	rewind(stream2);
+
+	info.lenth = counter;
+	info.vector_ptr = (Table*)malloc(sizeof(Table) * info.lenth);
+
+	return info;
 }
