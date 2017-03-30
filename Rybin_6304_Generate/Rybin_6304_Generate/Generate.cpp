@@ -59,7 +59,6 @@ int main()
 			free(((Table*)info.vector_ptr)[i].GitHub_account);
 		}
 	free(info.vector_ptr);
-
 	fclose(Random_Table1);
 	fclose(Random_Table2);
 
