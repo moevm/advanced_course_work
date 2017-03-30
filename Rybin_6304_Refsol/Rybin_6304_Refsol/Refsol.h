@@ -1,15 +1,12 @@
 /*!
 \file
-\brief Solving checker task header file
-
-This file contains functions to solve task 
-
+\brief Refsol header file
 \author Rybin Aleksandr 1 course 2 half
-\date 17.03.2017
-\version 1.0
+\date 30.03.2017
+\version 2.0
 */
 
-#include "Data.h"
+#include "Generator.h"
 
 #define Sizeof_Commands 10
 
@@ -130,46 +127,6 @@ Table* Read_Data(FILE* stream_1, FILE* stream_2)
 }
 
 /*!
-\brief Check mark
-
-Check marks in second table with defined Max_Exam_result
-\param[in] input_head pointer to begin of list Table
-\return void
-\ingroup Refsol
-*/
-void Check_max_mark(Table* input_head)
-{
-	int count = 0;
-	while (input_head->next)
-	{
-		if (input_head->exam_result == Max_Exam_result)
-			count++;
-		input_head = input_head->next;
-	}
-	printf("%d ", count);
-}
-
-/*!
-\brief Check bad_result
-
-Check exam_results in second table with defined Max_Exam_result*0,6
-\param[in] input_head pointer to begin of list Table
-\return void
-\ingroup Refsol
-*/
-void Check_bad_results(Table* input_head)
-{
-	int count = 0;
-	while (input_head->next)
-	{
-		if (input_head->exam_result < (int)(0.6 * Max_Exam_result))
-			count++;
-		input_head = input_head->next;
-	}
-	printf("%d ", count);
-}
-
-/*!
 \brief Read commands from file
 \param[in] commands Pointer to file with commands
 \param[in]\[out] commands_vector Pointer to vector to write commands
@@ -248,49 +205,3 @@ void Remove_Repeats(Table* input_head)
 	}
 }
 
-void Create_new_tables(Table* input_head)
-{
-	while (input_head->next)
-	{
-		Table* obj = input_head;
-		while (obj)
-		{
-			if (obj->group > obj->next->group)
-			{
-				Table* tmp = obj->next;
-				Swap(obj, obj->next);
-				obj = tmp;
-			}
-			else
-			obj = obj->next;
-		}
-		input_head = input_head->next;
-	}
-}
-
-/*!
-\brief Save results at new file as new tables
-\param[in] input_head Pointer to begin of list
-\return void
-\ingroup Refsol
-*/
-void save_results(Table* input_head)
-{
-	/* Create new file*/
-	FILE* new_file = fopen("new.csv", "w");
-	fprintf(new_file, "Group,Name,Surname,Patronymic,Email,GitHub,Exam\n");
-
-	while (input_head->next)
-	{
-				fprintf(new_file, "%d,%s,%s,%s,%s,%s,%d\n",
-					input_head->group,
-					input_head->name,
-					input_head->surname,
-					input_head->patronymic,
-					input_head->Email,
-					input_head->GitHub_account,
-					input_head->exam_result);
-
-		input_head = input_head->next;
-	}
-}
