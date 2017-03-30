@@ -29,7 +29,6 @@ int main()
 	fprintf(Random_Table2, "Name,Surname,Exam_mark\n");
 
 	Vector info = generate_random_vector(Max_lines, Min_lines);
-	info.vector_ptr = (Table*)(info.vector_ptr);
 
 	/* Write files */
 	for (int i = 0; i < info.lenth; i++)
@@ -38,20 +37,29 @@ int main()
 		int index = rand() % info.lenth;
 		fprintf(Random_Table1, "%s,%s,%s,%s,%s,%d\n",
 
-			info.vector_ptr[index].name,
-			info.vector_ptr[index].surname,
-			info.vector_ptr[index].patronymic,
-			info.vector_ptr[index].GitHub_account,
-			info.vector_ptr[index].Email,
-			info.vector_ptr[index].group);
+			((Table*)(info.vector_ptr))[index].name,
+			((Table*)(info.vector_ptr))[index].surname,
+			((Table*)info.vector_ptr)[index].patronymic,
+			((Table*)info.vector_ptr)[index].GitHub_account,
+			((Table*)info.vector_ptr)[index].Email,
+			((Table*)info.vector_ptr)[index].group);
 
 		fprintf(Random_Table2, "%s,%s,%d\n",
-			info.vector_ptr[index].name,
-			info.vector_ptr[index].surname,
-			info.vector_ptr[index].exam_result);
+			((Table*)info.vector_ptr)[index].name,
+			((Table*)info.vector_ptr)[index].surname,
+			((Table*)info.vector_ptr)[index].exam_result);
 	}
-	
-	Free_vector(info);
+
+	for (int i = 0; i < info.lenth; i++)
+		{
+			free(((Table*)info.vector_ptr)[i].name);
+			free(((Table*)info.vector_ptr)[i].surname);
+			free(((Table*)info.vector_ptr)[i].patronymic);
+			free(((Table*)info.vector_ptr)[i].Email);
+			free(((Table*)info.vector_ptr)[i].GitHub_account);
+		}
+	free(info.vector_ptr);
+
 	fclose(Random_Table1);
 	fclose(Random_Table2);
 

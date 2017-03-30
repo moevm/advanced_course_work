@@ -62,22 +62,7 @@ Vector generate_random_vector(int max, int min)
 
 	Vector info;
 	info.lenth = lenth;
-	info.vector_ptr = (Table*)vector;
+	info.vector_ptr = vector;
 
 	return info;
-}
-
-void Free_vector(Vector info)
-{
-	info.vector_ptr = (Table*)info.vector_ptr;
-	for (int i = 0; i < info.lenth; i++)
-	{
-		free(info.vector_ptr[i].name);
-		free(info.vector_ptr[i].surname);
-		free(info.vector_ptr[i].patronymic);
-		free(info.vector_ptr[i].Email);
-		free(info.vector_ptr[i].GitHub_account);
-	}
-
-	free(info.vector_ptr);
 }

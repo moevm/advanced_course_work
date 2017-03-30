@@ -72,11 +72,3 @@ char* generate_token(int a);
 \ingroup Generate
 */
 Vector generate_random_vector(int max,int min);
-
-/*!
-\brief Free vector
-\param[in] info Struct Vector whith information
-\return void
-\ingroup Data
-*/
-void Free_vector(Vector info);
