@@ -41,45 +41,6 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
-	/* Read tables to list and check */
-	Table* input_head = Read_Data(Table1, Table2);
-	if (input_head == NULL)
-		return -1;
-
-	/* Read commands */
-	int* commands_vector = NULL;
-	int lenth_command = Read_Commands(Commands_File, &commands_vector);
-
-	/* Check reading commands */
-	if (lenth_command < 0)
-		return -1;
-	
-	/* Work with commands */
-	for (int i = 0; i < lenth_command; i++)
-	{
-		switch (commands_vector[i])
-		{
-		case 1:
-			Remove_Repeats(input_head);
-			break;
-		case 2:
-			Create_new_tables(input_head);
-			break;
-		case 3:
-			Check_max_mark(input_head);
-			break;
-		case 4:
-			Check_bad_results(input_head);
-			break;
-		case 5:
-			save_results(input_head);
-			break;
-		default:
-			break;
-		}
-	}
-
-	free_list(input_head);
 
 	fclose(Table1);
 	fclose(Table2);

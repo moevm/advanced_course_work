@@ -129,79 +129,8 @@ Table* Read_Data(FILE* stream_1, FILE* stream_2)
 /*!
 \brief Read commands from file
 \param[in] commands Pointer to file with commands
-\param[in]\[out] commands_vector Pointer to vector to write commands
-\return -1 if any error, or lenth of commands_vector if read correctly
+\return lenth of vector, or -1 if any error
 \ingroup Refsol
 */
-int Read_Commands(FILE* commands,int** commands_vector)
-{
-	*commands_vector = (int*)malloc(sizeof(int) * Sizeof_Commands);
-	int size_commands = Sizeof_Commands;
-	int buf = 0;
-	int counter_commands = 0;
-
-	while (fscanf(commands,"%d",&buf) != EOF)
-	{	
-		/* If commands exists yet */
-		if ((buf < 1) || (buf > 5))
-		{
-			printf("Fail with command %d", counter_commands + 1);
-			return -1;
-		}
-		else if(counter_commands > size_commands - 1)
-		{
-			size_commands *= 2;
-			*commands_vector = (int*)realloc(commands_vector,size_commands);
-		}
-		else
-		{
-			*(*commands_vector + counter_commands++) = buf;
-		}
-	}
-	/* Check when file ends */
-		if (counter_commands < 1)
-		{
-			printf("Too few commands");
-			return -1;
-		}
-		else if (*(*commands_vector + counter_commands - 1) != 5)
-		{
-			printf("Fail with last command");
-			return -1;
-		}
-		else
-			return counter_commands;
-}
-
-/*!
-\brief Removes same fields
-\param[in] input_head Pointer to begin of list
-\return void
-\ingroup Refsol
-*/
-void Remove_Repeats(Table* input_head)
-{
-	while (input_head->next)
-	{
-		Table* obj = input_head->next;
-		while (obj->next)
-		{
-			if ((strcmp(input_head->name, obj->name) == 0) &&
-				(strcmp(input_head->surname, obj->surname) == 0) &&
-				(strcmp(input_head->Email, obj->Email) == 0) &&
-				(strcmp(input_head->GitHub_account, obj->GitHub_account) == 0) &&
-				(strcmp(input_head->patronymic, obj->patronymic) == 0) &&
-				(input_head->exam_result == obj->exam_result) &&
-				(input_head->group == obj->group))
-			{
-				Table* tmp_obj = obj;
-				obj = obj->next;
-				Remove_element(tmp_obj);
-			}
-			else
-				obj = obj->next;
-		}
-		input_head = input_head->next;
-	}
-}
+Vector Read_Commands(FILE* commands);
 
