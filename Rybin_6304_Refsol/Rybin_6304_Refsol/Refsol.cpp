@@ -41,6 +41,9 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
+	Vector commands = Read_Commands(Commands_File);
+	if (commands.lenth < 0)
+		return -1;
 
 	fclose(Table1);
 	fclose(Table2);

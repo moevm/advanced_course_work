@@ -6,16 +6,16 @@
 \version 2.0
 */
 
-#include "Generator.h"
 #include "Refsol.h"
 
 Vector Read_Commands(FILE* commands)
 {
+	Vector info;
 	int size_commands = Sizeof_Commands;
 	int buf = 0;
 	int counter_commands = 0;
 
-	Table* vector = (Table*)malloc(sizeof(Table) * size_commands);
+	info.vector_ptr = (int*)malloc(sizeof(int) * size_commands);
 
 	while (fscanf(commands, "%d", &buf) != EOF)
 	{
@@ -23,29 +23,35 @@ Vector Read_Commands(FILE* commands)
 		if ((buf < 1) || (buf > 5))
 		{
 			printf("Fail with command %d", counter_commands + 1);
-			return -1;
+			info.lenth = -1;
+			return info;
 		}
 		else if (counter_commands > size_commands - 1)
 		{
 			size_commands *= 2;
-			*commands_vector = (int*)realloc(commands_vector, size_commands);
+			info.vector_ptr = (int*)realloc(info.vector_ptr, size_commands);
 		}
 		else
 		{
-			*(*commands_vector + counter_commands++) = buf;
+			((int*)info.vector_ptr)[counter_commands] = buf;
 		}
 	}
 	/* Check when file ends */
 	if (counter_commands < 1)
 	{
 		printf("Too few commands");
-		return -1;
+		info.lenth = -1;
+		return info;
 	}
-	else if (*(*commands_vector + counter_commands - 1) != 5)
+	else if (((int*)info.vector_ptr)[counter_commands] != 5)
 	{
 		printf("Fail with last command");
-		return -1;
+		info.lenth = -1;
+		return info;
 	}
 	else
-		return counter_commands;
+	{
+		info.lenth = counter_commands;
+		return info;
+	}
 }

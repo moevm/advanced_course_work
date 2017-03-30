@@ -19,7 +19,6 @@
 #define Max_Exam_result 5				//!< Max generating exam result
 #define Max_lines 20					//!< Max lines in generating tables
 #define Min_lines 5						//!< Min lines in generating tables
-#define Max_Lenth_field 30				//!< Max lenth of created fields in struct Table 
 
 /*!
 \struct
@@ -34,7 +33,7 @@ typedef struct Table
 	char* Email;			//!< Student's email
 	int group;				//!< Student's group
 	int exam_result;		//!< Mark for exam
-	bool check;			//!< Check repeats in vector
+	bool check;				//!< Check repeats in vector
 
 } Table;
 
@@ -44,8 +43,8 @@ typedef struct Table
 */
 typedef struct Vector
 {
-	int lenth;				//!< Lenth of created random vector of fields
-	Table* random_vector;		//!< Pointer to created random vector of fields
+	int lenth;				//!< Lenth of vector 
+	void* vector_ptr;		//!< Pointer to vector
 }Vector;
 
 /*!
@@ -72,11 +71,3 @@ char* generate_token(int a);
 \ingroup Generate
 */
 Vector generate_random_vector(int max,int min);
-
-/*!
-\brief Free vector
-\param[in] info Struct Vector whith information
-\return void
-\ingroup Data
-*/
-void Free_vector(Vector info);
