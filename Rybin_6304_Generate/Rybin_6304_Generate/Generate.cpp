@@ -29,6 +29,7 @@ int main()
 	fprintf(Random_Table2, "Name,Surname,Exam_mark\n");
 
 	Vector info = generate_random_vector(Max_lines, Min_lines);
+	info.vector_ptr = (Table*)(info.vector_ptr);
 
 	/* Write files */
 	for (int i = 0; i < info.lenth; i++)
@@ -37,17 +38,17 @@ int main()
 		int index = rand() % info.lenth;
 		fprintf(Random_Table1, "%s,%s,%s,%s,%s,%d\n",
 
-			info.random_vector[index].name,
-			info.random_vector[index].surname,
-			info.random_vector[index].patronymic,
-			info.random_vector[index].GitHub_account,
-			info.random_vector[index].Email,
-			info.random_vector[index].group);
+			info.vector_ptr[index].name,
+			info.vector_ptr[index].surname,
+			info.vector_ptr[index].patronymic,
+			info.vector_ptr[index].GitHub_account,
+			info.vector_ptr[index].Email,
+			info.vector_ptr[index].group);
 
 		fprintf(Random_Table2, "%s,%s,%d\n",
-			info.random_vector[index].name,
-			info.random_vector[index].surname,
-			info.random_vector[index].exam_result);
+			info.vector_ptr[index].name,
+			info.vector_ptr[index].surname,
+			info.vector_ptr[index].exam_result);
 	}
 	
 	Free_vector(info);

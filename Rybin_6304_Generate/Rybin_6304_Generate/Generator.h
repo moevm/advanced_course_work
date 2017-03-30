@@ -34,7 +34,7 @@ typedef struct Table
 	char* Email;			//!< Student's email
 	int group;				//!< Student's group
 	int exam_result;		//!< Mark for exam
-	bool check;			//!< Check repeats in vector
+	bool check;				//!< Check repeats in vector
 
 } Table;
 
@@ -44,8 +44,8 @@ typedef struct Table
 */
 typedef struct Vector
 {
-	int lenth;				//!< Lenth of created random vector of fields
-	Table* random_vector;		//!< Pointer to created random vector of fields
+	int lenth;				//!< Lenth of vector 
+	void* vector_ptr;		//!< Pointer to vector
 }Vector;
 
 /*!
