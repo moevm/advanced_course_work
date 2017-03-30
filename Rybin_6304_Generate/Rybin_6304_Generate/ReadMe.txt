@@ -2,8 +2,6 @@
     CONSOLE APPLICATION : Rybin_6304_Generate Project Overview
 ========================================================================
 
-AppWizard has created this Rybin_6304_Generate application for you.
-
 This file contains a summary of what you will find in each of the files that
 make up your Rybin_6304_Generate application.
 
@@ -22,19 +20,19 @@ Rybin_6304_Generate.vcxproj.filters
     "Source Files" filter).
 
 Rybin_6304_Generate.cpp
-    This is the main application source file.
+    This is The main application source file.
 
-/////////////////////////////////////////////////////////////////////////////
-Other standard files:
+Rybin_6304_Generate_Fun.cpp
+    This is Generate Functions source file
 
-StdAfx.h, StdAfx.cpp
-    These files are used to build a precompiled header (PCH) file
-    named Rybin_6304_Generate.pch and a precompiled types file named StdAfx.obj.
+Rybin_6304_Generator.h
+    This is Main Header file of project.
 
-/////////////////////////////////////////////////////////////////////////////
-Other notes:
+Rybin_6304_Commands.txt
+    This is Generated commands file
 
-AppWizard uses "TODO:" comments to indicate parts of the source code you
-should add to or customize.
+Rybin_6304_input_file_1
+    This is Generated first table
 
-/////////////////////////////////////////////////////////////////////////////
+Rybin_6304_input_file_2
+    This is Generated second table
