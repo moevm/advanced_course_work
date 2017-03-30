@@ -8,6 +8,18 @@
 
 #include "Refsol.h"
 
+void Table_Constructor(Table element)
+{
+	element.name = (char*)malloc(sizeof(char)* Max_Lenth_field);
+	element.surname = (char*)malloc(sizeof(char)* Max_Lenth_field);
+	element.patronymic = (char*)malloc(sizeof(char)* Max_Lenth_field);
+	element.GitHub_account = (char*)malloc(sizeof(char)* Max_Lenth_field);
+	element.Email = (char*)malloc(sizeof(char)* Max_Lenth_field);
+	element.group = 0;
+	element.exam_result = 0;
+	element.check = true;
+}
+
 Vector Read_Commands(FILE* commands)
 {
 	Vector info;
@@ -62,7 +74,7 @@ Vector Read_Files(FILE* stream1, FILE* stream2)
 	int counter = 0;
 	int buf = 0;
 
-	/* Skip headers and checks files */
+	/* Count lines and checks files */
 	while ((buf = fgetc(stream1)) != EOF)
 	{
 		if (buf == '\n')
@@ -93,6 +105,19 @@ Vector Read_Files(FILE* stream1, FILE* stream2)
 
 	info.lenth = counter;
 	info.vector_ptr = (Table*)malloc(sizeof(Table) * info.lenth);
+	
+	/*Skip headers*/
+	while ((buf = fgetc(stream1)) != '\n');
+	while ((buf = fgetc(stream2)) != '\n');
+	
+	for (int i = 0; i < info.lenth; i++)
+	{
+		Table_Constructor(((Table*)info.vector_ptr)[i]);
+		char buffer[Max_Lenth_Line];
+
+		fgets(buffer, Max_Lenth_Line, stream1);
+
+	}
 
 	return info;
 }
