@@ -60,6 +60,7 @@ Table* generate_field(int number)
 	return Table_obj;
 }
 
+
 /*!
 \brief Push new object to end of list
 \param[in] head Pointer to begin of list
