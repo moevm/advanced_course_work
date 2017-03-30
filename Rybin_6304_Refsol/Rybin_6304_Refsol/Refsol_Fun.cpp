@@ -55,3 +55,8 @@ Vector Read_Commands(FILE* commands)
 		return info;
 	}
 }
+
+Vector Read_Files(FILE* stream1, FILE* stream2)
+{
+
+}

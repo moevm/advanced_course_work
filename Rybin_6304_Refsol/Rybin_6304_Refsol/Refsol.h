@@ -18,3 +18,12 @@
 */
 Vector Read_Commands(FILE* commands);
 
+/*!
+\brief Read Data from file
+\param[in] steam1 File with table1
+\param[in] steam2 File with table2
+\return info Info about readed vector
+\ingroup Refsol
+*/
+Vector Read_Files(FILE* stream1, FILE* stream2);
+
