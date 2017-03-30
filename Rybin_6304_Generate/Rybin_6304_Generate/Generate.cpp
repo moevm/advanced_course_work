@@ -50,6 +50,7 @@ int main()
 			info.random_vector[index].exam_result);
 	}
 	
+	Free_vector(info);
 	fclose(Random_Table1);
 	fclose(Random_Table2);
 

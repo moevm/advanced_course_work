@@ -76,7 +76,15 @@ void constructor_element(Table element);
 \brief Generates random vector of fields
 \param[in] max Max lines in generating tables
 \param[in] min Min lines in generating tables
-\return info Sturct Vector this information about generated vector
+\return info Sturct Vector whith information about generated vector
 \ingroup Data
 */
 Vector generate_random_vector(int max,int min);
+
+/*!
+\brief Free vector
+\param[in] info Struct Vector whith information
+\return void
+\ingroup Data
+*/
+void Free_vector(Vector info);

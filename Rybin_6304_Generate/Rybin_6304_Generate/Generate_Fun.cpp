@@ -79,3 +79,17 @@ Vector generate_random_vector(int max, int min)
 
 	return info;
 }
+
+void Free_vector(Vector info)
+{
+	for (int i = 0; i < info.lenth; i++)
+	{
+		free(info.random_vector[i].name);
+		free(info.random_vector[i].surname);
+		free(info.random_vector[i].patronymic);
+		free(info.random_vector[i].Email);
+		free(info.random_vector[i].GitHub_account);
+	}
+
+	free(info.random_vector);
+}
