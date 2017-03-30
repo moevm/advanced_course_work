@@ -43,19 +43,6 @@ char* generate_token(int a)
 	return random_token;
 }
 
-void constructor_element(Table element)
-{
-	element.Email = (char*)malloc(sizeof(char) * Max_Lenth_field);
-	element.GitHub_account = (char*)malloc(sizeof(char) * Max_Lenth_field);
-	element.name = (char*)malloc(sizeof(char) * Max_Lenth_field);
-	element.surname = (char*)malloc(sizeof(char) * Max_Lenth_field);
-	element.patronymic = (char*)malloc(sizeof(char) * Max_Lenth_field);
-	element.group = 0;
-	element.exam_result = 0;
-	element.check = true;
-
-}
-
 Vector generate_random_vector(int max, int min)
 {
 	int lenth = min + rand() % (max - min);

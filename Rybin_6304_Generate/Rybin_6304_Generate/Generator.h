@@ -65,19 +65,11 @@ void put_random_commands(FILE* commands_list);
 char* generate_token(int a);
 
 /*!
-\brief Initialize's object of strcut Table
-\param[in] element Object to initialize
-\return void
-\ingroup Data
-*/
-void constructor_element(Table element);
-
-/*!
 \brief Generates random vector of fields
 \param[in] max Max lines in generating tables
 \param[in] min Min lines in generating tables
 \return info Sturct Vector whith information about generated vector
-\ingroup Data
+\ingroup Generate
 */
 Vector generate_random_vector(int max,int min);
 
