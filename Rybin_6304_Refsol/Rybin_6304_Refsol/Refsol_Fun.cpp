@@ -63,7 +63,7 @@ Vector Read_Files(FILE* stream1, FILE* stream2)
 	int buf = 0;
 
 	/* Skip headers and checks files */
-	while (buf = fgetc(stream1) != EOF)
+	while ((buf = fgetc(stream1)) != EOF)
 	{
 		if (buf == '\n')
 			counter++;
@@ -75,7 +75,7 @@ Vector Read_Files(FILE* stream1, FILE* stream2)
 		return info;
 	}
 	counter = 0;
-	while (buf = fgetc(stream1) != EOF)
+	while ((buf = fgetc(stream2)) != EOF)
 	{
 		if (buf == '\n')
 			counter++;
