@@ -21,7 +21,7 @@ int main()
 	FILE* Random_Table1 = fopen("input_file_1.csv", "w");
 	FILE* Random_Table2 = fopen("input_file_2.csv", "w");
 	FILE* Commands_file = fopen("commands.txt", "w");
-
+	/* Write commands file */
 	put_random_commands(Commands_file);
 
 	/* Create table header */
@@ -30,8 +30,10 @@ int main()
 
 	Vector info = generate_random_vector(Max_lines, Min_lines);
 
+	/* Write files */
 	for (int i = 0; i < info.lenth; i++)
 	{
+		/* Take random element from vector */
 		int index = rand() % info.lenth;
 		fprintf(Random_Table1, "%s,%s,%s,%s,%s,%d\n",
 

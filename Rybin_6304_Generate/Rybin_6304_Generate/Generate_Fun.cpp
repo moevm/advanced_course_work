@@ -52,7 +52,7 @@ void constructor_element(Table element)
 	element.patronymic = (char*)malloc(sizeof(char) * Max_Lenth_field);
 	element.group = 0;
 	element.exam_result = 0;
-	element.check = false;
+	element.check = true;
 
 }
 
@@ -70,7 +70,7 @@ Vector generate_random_vector(int max, int min)
 		vector[i].patronymic = generate_token(0);
 		vector[i].group = 1 + rand() % Max_Group;
 		vector[i].exam_result = 1 + rand() % Max_Exam_result;
-		vector[i].check = false;
+		vector[i].check = true;
 	}
 
 	Vector info;
