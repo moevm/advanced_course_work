@@ -48,7 +48,6 @@ int main()
 			info.random_vector[index].exam_result);
 	}
 	
-	
 	fclose(Random_Table1);
 	fclose(Random_Table2);
 
