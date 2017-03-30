@@ -19,7 +19,7 @@
 #define Max_Exam_result 5				//!< Max generating exam result
 #define Max_lines 20					//!< Max lines in generating tables
 #define Min_lines 5						//!< Min lines in generating tables
-#define Max_Lenth_field 30				//!< Max lenth of created fields in struct Table when READ
+#define Max_Lenth_field 30				//!< Max lenth of created fields in struct Table 
 
 /*!
 \struct
@@ -45,7 +45,7 @@ typedef struct Table
 typedef struct Vector
 {
 	int lenth;				//!< Lenth of created random vector of fields
-	int* random_vector;		//!< Pointer to created random vector of fields
+	Table* random_vector;		//!< Pointer to created random vector of fields
 }Vector;
 
 /*!

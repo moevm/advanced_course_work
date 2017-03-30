@@ -31,20 +31,15 @@ char* generate_token(int a)
 	switch (a)
 	{
 	case 1:
-	{
 		strncat(random_token, "@Email", 6);
 		random_token[lenth + 8] = '\0';
 		break;
-	}
 	case 2:
-	{
 		strncat(random_token, "@GitHub", 7);
 		random_token[lenth + 8] = '\0';
 		break;
-	}
 	default: break;
 	}
-
 	return random_token;
 }
 
@@ -55,7 +50,6 @@ void constructor_element(Table element)
 	element.name = (char*)malloc(sizeof(char) * Max_Lenth_field);
 	element.surname = (char*)malloc(sizeof(char) * Max_Lenth_field);
 	element.patronymic = (char*)malloc(sizeof(char) * Max_Lenth_field);
-
 	element.group = 0;
 	element.exam_result = 0;
 	element.check = false;
@@ -64,13 +58,24 @@ void constructor_element(Table element)
 
 Vector generate_random_vector(int max, int min)
 {
-	Table_obj->Email = generate_token(1);
-	Table_obj->GitHub_account = generate_token(2);
-	Table_obj->name = generate_token(0);
-	Table_obj->surname = generate_token(0);
-	Table_obj->patronymic = generate_token(0);
-	Table_obj->group = 1 + rand() % Max_Group;
-	Table_obj->exam_result = 1 + rand() % Max_Exam_result;
-	Table_obj->number = number;
+	int lenth = min + rand() % (max - min);
+	Table* vector = (Table*)malloc(sizeof(Table) * lenth);
 
+	for (int i = 0; i < lenth; i++)
+	{
+		vector[i].Email = generate_token(1);
+		vector[i].GitHub_account = generate_token(2);
+		vector[i].name = generate_token(0);
+		vector[i].surname = generate_token(0);
+		vector[i].patronymic = generate_token(0);
+		vector[i].group = 1 + rand() % Max_Group;
+		vector[i].exam_result = 1 + rand() % Max_Exam_result;
+		vector[i].check = false;
+	}
+
+	Vector info;
+	info.lenth = lenth;
+	info.random_vector = vector;
+
+	return info;
 }
