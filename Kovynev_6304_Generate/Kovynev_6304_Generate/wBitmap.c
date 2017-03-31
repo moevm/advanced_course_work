@@ -24,7 +24,7 @@ void writeToBitmapInfo(FILE* outfile, BITMAPINFOHEADER infoBMP)
 	fwrite(&infoBMP.biXPelsPerMeter, 4,1, outfile);
 	fwrite(&infoBMP.biYPelsPerMeter, 4, 1, outfile);
 	fwrite(&infoBMP.biClrUsed, 4, 1, outfile);
-	fwrite(&infoBMP.biClrImportant, sizeof(unsigned int), 1, outfile);
+	fwrite(&infoBMP.biClrImportant, 4, 1, outfile);
 }
 
 void WriteToBitmapRGB(FILE* outfile, RGBQUAD** arrayRGB, BITMAPINFOHEADER infoBMP)
