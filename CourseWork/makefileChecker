@@ -1,9 +1,0 @@
-checker.out : checkerMain.cpp checkerFunc.cpp
-	g++ checkerMain.cpp checkerFunc.cpp -o checker.out
-main.o : checkerMain.cpp
-	g++ -c checkerMain.cpp
-checkerFunc.o : checkerFunc.cpp checkerFunc.h
-	g++ -c checkerFunc.cpp
-clean : 
-	rm *.o
-
