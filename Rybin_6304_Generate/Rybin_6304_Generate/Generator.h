@@ -4,7 +4,6 @@
 \author Rybin Aleksandr 1 course 2 half
 \date 30.03.2017
 \version 2.0
-
 */
 
 #include <stdio.h>
@@ -19,6 +18,8 @@
 #define Max_Exam_result 5				//!< Max generating exam result
 #define Max_lines 20					//!< Max lines in generating tables
 #define Min_lines 5						//!< Min lines in generating tables
+#define Header1 "Name,Surname,Patronymic,GitHub,Email,Group\n" //!< Header for first table
+#define Header2 "Name,Surname,Exam_mark\n"					   //!< Header for second table
 
 /*!
 \struct

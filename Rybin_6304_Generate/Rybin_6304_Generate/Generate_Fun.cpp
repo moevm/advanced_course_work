@@ -4,7 +4,6 @@
 \author Rybin Aleksandr 1 course 2 half
 \date 30.03.2017
 \version 2.0
-
 */
 
 #include "Generator.h"
@@ -15,6 +14,8 @@ void put_random_commands(FILE* commands_list)
 
 	for (int i = 0; i < lenth; i++)
 		fprintf(commands_list, "%d ", -1 + rand() % 7);
+
+	fprintf(commands_list, "\n");
 }
 
 char* generate_token(int a)
