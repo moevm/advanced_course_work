@@ -9,7 +9,7 @@ This file contains code for generate 2 random tables(csv format)  and commands_f
 \version 2.0
 */
 
-#include "Generator.h"
+#include "Generate_Header.h"
 
 int main()
 {

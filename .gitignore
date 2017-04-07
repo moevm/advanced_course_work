@@ -82,6 +82,7 @@ build/
 *.db
 *.vcxproj
 *.filters
+*.opendb
 
 # Visual C++ cache files
 ipch/

@@ -7,7 +7,7 @@
 \version 2.0
 */
 
-#include "Generator.h"
+#include "Generate_Header.h"
 
 void PutRandomCommands(FILE* commands_list)
 {
