@@ -1,6 +1,7 @@
 /*!
 \file
 \brief Generate Functions
+
 \author Rybin Aleksandr 1 course 2 half
 \date 30.03.2017
 \version 2.0
@@ -8,9 +9,9 @@
 
 #include "Generator.h"
 
-void put_random_commands(FILE* commands_list)
+void PutRandomCommands(FILE* commands_list)
 {
-	int lenth = rand() % Max_Lenth_array_commands;
+	int lenth = rand() % MAX_LENTH_ARRAY_COMMANDS;
 
 	for (int i = 0; i < lenth; i++)
 		fprintf(commands_list, "%d ", -1 + rand() % 7);
@@ -18,9 +19,9 @@ void put_random_commands(FILE* commands_list)
 	fprintf(commands_list, "\n");
 }
 
-char* generate_token(int a)
+char* GenerateToken(int a)
 {
-	int lenth = Min_Lenth_token + rand() % Max_Lenth_token;
+	int lenth = MIN_LENTH_TOKEN + rand() % (MAX_LENTH_TOKEN - MIN_LENTH_TOKEN);
 	char* random_token = (char*)malloc(sizeof(char) * (lenth + 9));
 
 	for (int i = 0; i < lenth - 1; i++)
@@ -44,20 +45,20 @@ char* generate_token(int a)
 	return random_token;
 }
 
-Vector generate_random_vector(int max, int min)
+Vector GenerateRandomVector(int max, int min)
 {
 	int lenth = min + rand() % (max - min);
 	Table* vector = (Table*)malloc(sizeof(Table) * lenth);
 
 	for (int i = 0; i < lenth; i++)
 	{
-		vector[i].Email = generate_token(1);
-		vector[i].GitHub_account = generate_token(2);
-		vector[i].name = generate_token(0);
-		vector[i].surname = generate_token(0);
-		vector[i].patronymic = generate_token(0);
-		vector[i].group = 1 + rand() % Max_Group;
-		vector[i].exam_result = 1 + rand() % Max_Exam_result;
+		vector[i].Email = GenerateToken(1);
+		vector[i].GitHub_account = GenerateToken(2);
+		vector[i].name = GenerateToken(0);
+		vector[i].surname = GenerateToken(0);
+		vector[i].patronymic = GenerateToken(0);
+		vector[i].group = 1 + rand() % MAX_GROUP;
+		vector[i].exam_result = 1 + rand() % MAX_EXAM_RESULT;
 		vector[i].check = true;
 	}
 

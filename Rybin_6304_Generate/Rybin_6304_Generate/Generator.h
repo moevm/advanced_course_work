@@ -11,15 +11,15 @@
 #include <time.h>
 #include <string.h>
 
-#define Max_Lenth_array_commands 10		//!< Max lenth of generating array of commands
-#define Max_Lenth_token 15				//!< Max lenth of generating random token
-#define Min_Lenth_token 5				//!< Min lenth of generating random token
-#define Max_Group 1000					//!< Max generating group number
-#define Max_Exam_result 5				//!< Max generating exam result
-#define Max_lines 20					//!< Max lines in generating tables
-#define Min_lines 5						//!< Min lines in generating tables
-#define Header1 "Name,Surname,Patronymic,GitHub,Email,Group\n" //!< Header for first table
-#define Header2 "Name,Surname,Exam_mark\n"					   //!< Header for second table
+#define MAX_LENTH_ARRAY_COMMANDS 10		//!< Max lenth of generating array of commands
+#define MAX_LENTH_TOKEN 15				//!< Max lenth of generating random token
+#define MIN_LENTH_TOKEN 5				//!< Min lenth of generating random token
+#define MAX_GROUP 1000					//!< Max generating group number
+#define MAX_EXAM_RESULT 5				//!< Max generating exam result
+#define MAX_LINES 20					//!< Max lines in generating tables
+#define MIN_LINES 5						//!< Min lines in generating tables
+#define HEADER1 "Name,Surname,Patronymic,GitHub,Email,Group\n" //!< Header for first table
+#define HEADER2 "Name,Surname,Exam_mark\n"					   //!< Header for second table
 
 /*!
 \struct
@@ -54,7 +54,7 @@ typedef struct Vector
 \return void
 \ingroup Generate
 */
-void put_random_commands(FILE* commands_list);
+void PutRandomCommands(FILE* commands_list);
 
 /*!
 \brief Generates random token
@@ -62,7 +62,7 @@ void put_random_commands(FILE* commands_list);
 \return random_token Pointer to random token
 \ingroup Generate
 */
-char* generate_token(int a);
+char* GenerateToken(int a);
 
 /*!
 \brief Generates random vector of fields
@@ -71,4 +71,4 @@ char* generate_token(int a);
 \return info Sturct Vector whith information about generated vector
 \ingroup Generate
 */
-Vector generate_random_vector(int max,int min);
+Vector GenerateRandomVector(int max,int min);

@@ -22,14 +22,14 @@ int main()
 	FILE* Commands_file = fopen("commands.txt", "w");
 
 	/* Create table header */
-	fprintf(Random_Table1, Header1);
-	fprintf(Random_Table2, Header2);
+	fprintf(Random_Table1, HEADER1);
+	fprintf(Random_Table2, HEADER2);
 
-	Vector info = generate_random_vector(Max_lines, Min_lines);
+	Vector info = GenerateRandomVector(MAX_LINES, MIN_LINES);
 
 	/* Write commands file */
 	for (int i = 0; i < info.lenth; i++)
-		put_random_commands(Commands_file);
+		PutRandomCommands(Commands_file);
 
 	/* Write files */
 	for (int i = 0; i < info.lenth; i++)
