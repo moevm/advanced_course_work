@@ -11,7 +11,7 @@
 Vector Read_Commands(FILE* commands)
 {
 	Vector info;
-	int size_commands = Sizeof_Commands;
+	int size_commands = SIZE_OF_COMMANDS;
 	int buf = 0;
 	int counter_commands = 0;
 

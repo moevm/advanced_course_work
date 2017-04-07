@@ -8,7 +8,7 @@
 
 #include "Generate_Header.h"
 
-#define Sizeof_Commands 10		//!< Start min lenth of vector reading commands
+#define SIZE_OF_COMMANDS 10		//!< Start min lenth of vector reading commands
 
 /*!
 \brief Read commands from file
