@@ -14,7 +14,7 @@ void PutRandomCommands(FILE* commands_list)
 	int lenth = rand() % MAX_LENTH_ARRAY_COMMANDS;
 
 	for (int i = 0; i < lenth; i++)
-		fprintf(commands_list, "%d ", -1 + rand() % 7);
+		fprintf(commands_list, "%d", -1 + rand() % 7);
 
 	fprintf(commands_list, "\n");
 }
