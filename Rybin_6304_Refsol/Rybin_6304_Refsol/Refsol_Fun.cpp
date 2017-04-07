@@ -6,7 +6,7 @@
 \version 2.0
 */
 
-#include "Refsol.h"
+#include "Refsol_Header.h"
 
 Vector Read_Commands(FILE* commands)
 {

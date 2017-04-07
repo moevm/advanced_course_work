@@ -9,7 +9,7 @@ This file contains code for checker task on right way for compare with user solv
 \version 1.0
 */
 
-#include "Refsol.h"
+#include "Refsol_Header.h"
 
 int main(int argc, char* argv[])
 {	

@@ -6,7 +6,7 @@
 \version 2.0
 */
 
-#include "Generator.h"
+#include "Generate_Header.h"
 
 #define Sizeof_Commands 10		//!< Start min lenth of vector reading commands
 
