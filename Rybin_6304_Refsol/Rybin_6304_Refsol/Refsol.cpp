@@ -49,15 +49,6 @@ int main(int argc, char* argv[])
 	if (commands.lenth < 0)
 		return -1;
 
-	for (int i = 0; i < Data.lenth; i++)
-	{
-		free(((Table*)Data.vector_ptr)[i].name);
-		free(((Table*)Data.vector_ptr)[i].surname);
-		free(((Table*)Data.vector_ptr)[i].patronymic);
-		free(((Table*)Data.vector_ptr)[i].Email);
-		free(((Table*)Data.vector_ptr)[i].GitHub_account);
-	}
-	free(Data.vector_ptr);
 	free(commands.vector_ptr);
 	fclose(Table1);
 	fclose(Table2);

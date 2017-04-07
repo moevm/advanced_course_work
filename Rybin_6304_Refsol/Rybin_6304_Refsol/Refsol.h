@@ -9,15 +9,6 @@
 #include "Generator.h"
 
 #define Sizeof_Commands 10		//!< Start min lenth of vector reading commands
-#define Max_Lenth_field 50		//!< Lenth of readed field
-#define Max_Lenth_Line	1000	//!< Max lenth of line in reading tables
-/*!
-\brief Initialize's object of struct Table
-\param[in] element Object to initialize
-\return void
-\ingroup Refsol
-*/
-void Table_Constructor(Table element);
 
 /*!
 \brief Read commands from file
