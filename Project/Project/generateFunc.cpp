@@ -144,15 +144,19 @@ void createCommands(void){
 
 int countOfCommands= 1+rand() % 5;
 int *commands=(int*)malloc(sizeof(int)*countOfCommands);
-
-for (int i=0; i<countOfCommands-1; i++)
-	{
-	*(commands+i)=1+ rand() % 4;
-	}
-*(commands+countOfCommands)=4;
-
 FILE *file=fopen("commands", "w");
-fwrite(commands,sizeof(commands),1, file);
+for (int j=0; j<countOfCommands; j++)
+{
+	for (int i=0; i<countOfCommands-1; i++)
+		{
+		*(commands+i)=1+ rand() % 4;
+		}
+	*(commands+countOfCommands)=4;
+
+	fwrite(commands,sizeof(commands),1, file);
+	if (countOfCommands-1!=j)
+	fprintf(file, "\n");
+}
 fclose(file);
 free(commands);
 }
