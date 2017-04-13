@@ -4,22 +4,20 @@
  #echo "$nameOfStudentsOutFile"
  touch changes.diff
  
- ./generate.out &
- sleep 1
- ./checker.out  & 
+ ./generate.out     
  #place for student's programm
 FILE="./commands"
  while read line ;
 do
-./checker.out &
+./checker.out 
  diff r.csv resultOfStudent.csv >changes.diff
 
  read $main_result<./changes.diff
  if [$main_result == ""]
  then
- echo "true"
+ echo "Decision is correct"
  else
- echo "false"
+ echo "Decision is incorrect"
  fi
 
 echo "$line"

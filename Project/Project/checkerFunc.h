@@ -4,7 +4,7 @@
 #include <locale.h>
 #include <stdbool.h>
 
-struct Person{
+/*struct Person{
 char SecondName[50];
 char FirstName[50];
 char FatherName[50];
@@ -17,7 +17,7 @@ bool ExcellentTasting;
 struct Person *next;
 struct Person *prev;
 };
-
+*/
 typedef struct Person Student;
 Student *createStudent(char *smallString);
 Student *readTheFirstTable(FILE *file);

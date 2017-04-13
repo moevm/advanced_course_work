@@ -19,6 +19,8 @@ struct Person *prev;
 };
 
 typedef struct Person Student;
+
+
 Student *createStudent(char *smallString){
 
     Student *rr=(Student*)malloc(sizeof(Student));
@@ -47,22 +49,22 @@ Student *createStudent(char *smallString){
 }
 
 Student *readTheFirstTable(FILE *file){
-char *string=(char*)malloc(200*sizeof(char)); // ñîçäàåì äâóìåðíûé ìàññèâ, êîòîðûé áóäåò ñ÷èòûâàòü íàøè äàííûå
+
+    char *string=(char*)malloc(200*sizeof(char));
     char **doubleString=(char**)malloc(200*sizeof(char*));
 
     Student *head;
     Student *prev;
     Student *current;
     int i=0;
-while(fgets(string, 1000, file))
+    while(fgets(string, 1000, file))
         {
 
-
-                if(string[strlen(string)-1] == '\n')//ïðîâåðÿåì ÿâëÿåòñÿ ëè ïîñëåäíèé ýëåìåíò â ñòðîêå ñèìâîëîì å¸ îêîí÷àíèÿ
+                if(string[strlen(string)-1] == '\n')
                 {
                         string[strlen(string)-1]='\0';
                 }
-                //printf("%s\n", string);
+                
                 *(doubleString+i)= string;
                 if (i==0){head=createStudent(doubleString[0]); prev= head;}
         else
@@ -91,7 +93,7 @@ void averageGrade(Student *current, char *doubleString){
         current=current->next;
 
     if(!current) return;
-while (doubleString!=NULL){
+    while (doubleString!=NULL){
         if(i<3)
         {
         doubleString=strtok(NULL,",");        }
@@ -137,9 +139,8 @@ void readTheSecondTable(FILE *file, Student *head){
         free(doubleString);
 }
 
-int compare(const void * x1, const void * x2)   // ôóíêöèÿ ñðàâíåíèÿ ýëåìåíòîâ ìàññèâà
-{
-  return ( *(int*)x1 - *(int*)x2 );              // åñëè ðåçóëüòàò âû÷èòàíèÿ ðàâåí 0, òî ÷èñëà ðàâíû, < 0: x1 < x2; > 0: x1 > x2
+int compare(const void * x1, const void * x2) {
+	return ( *(int*)x1 - *(int*)x2 );
 }
 
 int *SortOfGroup(Student *head, int countOfStudents){

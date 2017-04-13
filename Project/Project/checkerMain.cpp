@@ -9,7 +9,7 @@
 
 int main()
 {
-    setlocale(0, ""); // ïîäêëþ÷àåì êèðèëëèöó
+    setlocale(0, ""); 
 
     FILE *file;
    // char *f1name="f1.csv";
@@ -39,9 +39,6 @@ int main()
             }      
         }
      createNewTables(head);   
-   // FILE *outFile=fopen("r.csv", "w");
-   // fputs(createNewTables(head), outFile);
-   // fclose(outFile);
     fclose(file);
     return 0;
 }
