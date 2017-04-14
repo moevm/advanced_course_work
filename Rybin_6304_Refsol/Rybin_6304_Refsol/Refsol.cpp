@@ -14,8 +14,8 @@ This file contains code for checker task on right way for compare with user solv
 int main(int argc, char* argv[])
 {	
 	/* Open files */
-	FILE* Table1 = fopen("input_file_1", "r"); 
-	FILE* Table2 = fopen("input_file_2", "r");
+	FILE* Table1 = fopen("input_file_1.csv", "r"); 
+	FILE* Table2 = fopen("input_file_2.csv", "r");
 
 	if (Table1 == NULL)
 	{
@@ -34,18 +34,18 @@ int main(int argc, char* argv[])
 		printf("Too few commands");
 		return 0;
 	}
-	int* commands = (int*)malloc(sizeof(int) * argc);
+	int* commands = (int*)malloc(sizeof(int) * (argc - 1));
 	for (int i = 1; i < argc; i++)
 	{	
-		commands[i] = atoi(argv[i]);
-		if ((commands[i] < 0) ||
-			(commands[i] > 5))
+		commands[i - 1] = atoi(argv[i]);
+		if ((commands[i - 1] < 0) ||
+			(commands[i - 1] > 5))
 		{
 			printf("Fail with command %d", i);
 				return 0;
 		}
 	}
-	if (!(commands[argc - 1] == 5))
+	if (!(commands[argc - 2] == 5))
 	{
 		printf("Fail with last command");
 		return 0;
