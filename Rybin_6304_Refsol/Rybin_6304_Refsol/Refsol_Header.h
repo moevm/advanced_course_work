@@ -9,6 +9,14 @@
 #include "Generate_Header.h"
 
 /*!
+\brief Creates new object of struct Table
+\param[in] new_element Pointer to object to initialize
+\return void
+\ingroup Refsol
+*/
+void TableCreate(Table* new_element);
+
+/*!
 \brief Read Data from file
 \param[in] steam1 File with table1
 \param[in] steam2 File with table2

@@ -52,8 +52,6 @@ int main(int argc, char* argv[])
 	}
 	
 	Vector Data = Read_Files(Table1,Table2);
-	if (Data.lenth < 0)
-		return -1;
 
 	free(commands);
 	fclose(Table1);

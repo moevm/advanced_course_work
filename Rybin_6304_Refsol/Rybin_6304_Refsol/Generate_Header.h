@@ -11,13 +11,13 @@
 #include <time.h>
 #include <string.h>
 
-#define MAX_LENTH_ARRAY_COMMANDS 10		//!< Max lenth of generating array of commands
-#define MAX_LENTH_TOKEN 15				//!< Max lenth of generating random token
-#define MIN_LENTH_TOKEN 5				//!< Min lenth of generating random token
+#define MAX_LENGTH_ARRAY_COMMANDS 10		//!< Max length of generating array of commands
+#define MAX_LENGTH_TOKEN 15				//!< Max length of generating random token
+#define MIN_LENGTH_TOKEN 5				//!< Min length of generating random token
 #define MAX_GROUP 1000					//!< Max generating group number
 #define MAX_EXAM_RESULT 5				//!< Max generating exam result
 #define MAX_LINES 20					//!< Max lines in generating tables
-#define MIN_LINES 10						//!< Min lines in generating tables
+#define MIN_LINES 15						//!< Min lines in generating tables
 #define HEADER1 "Name,Surname,Patronymic,GitHub,Email,Group\n" //!< Header for first table
 #define HEADER2 "Name,Surname,Exam_mark\n"					   //!< Header for second table
 
@@ -45,7 +45,7 @@ typedef struct Table
 typedef struct Vector
 {
 	int lenth;				//!< Lenth of vector 
-	void* vector_ptr;		//!< Pointer to vector
+	Table* vector_ptr;		//!< Pointer to vector
 }Vector;
 
 /*!
@@ -66,9 +66,7 @@ char* GenerateToken(int a);
 
 /*!
 \brief Generates random vector of fields
-\param[in] max Max lines in generating tables
-\param[in] min Min lines in generating tables
 \return info Sturct Vector whith information about generated vector
 \ingroup Generate
 */
-Vector GenerateRandomVector(int max,int min);
+Vector GenerateRandomVector();
