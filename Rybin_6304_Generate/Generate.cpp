@@ -25,7 +25,7 @@ int main()
 	fprintf(Random_Table1, HEADER1);
 	fprintf(Random_Table2, HEADER2);
 
-	Vector info = GenerateRandomVector(MAX_LINES, MIN_LINES);
+	Vector info = GenerateRandomVector();
 
 	/* Write commands file */
 	for (int i = 0; i < info.lenth; i++)
@@ -38,28 +38,28 @@ int main()
 		int index = rand() % info.lenth;
 		fprintf(Random_Table1, "%s,%s,%s,%s,%s",
 
-			((Table*)(info.vector_ptr))[index].name,
-			((Table*)(info.vector_ptr))[index].surname,
-			((Table*)info.vector_ptr)[index].patronymic,
-			((Table*)info.vector_ptr)[index].GitHub_account,
-			((Table*)info.vector_ptr)[index].Email);
+			info.vector_ptr[index].name,
+			info.vector_ptr[index].surname,
+			info.vector_ptr[index].patronymic,
+			info.vector_ptr[index].GitHub_account,
+			info.vector_ptr[index].Email);
 
 		fprintf(Random_Table2, "%s,%s,%d\n",
-			((Table*)info.vector_ptr)[index].name,
-			((Table*)info.vector_ptr)[index].surname,
-			((Table*)info.vector_ptr)[index].exam_result);
+			info.vector_ptr[index].name,
+			info.vector_ptr[index].surname,
+			info.vector_ptr[index].exam_result);
 		index = rand() % info.lenth;
-		fprintf(Random_Table1, ",%d\n", ((Table*)info.vector_ptr)[index].group);
+		fprintf(Random_Table1, ",%d\n", info.vector_ptr[index].group);
 	}
 
 	/* Free vector and close files */
 	for (int i = 0; i < info.lenth; i++)
 		{
-			free(((Table*)info.vector_ptr)[i].name);
-			free(((Table*)info.vector_ptr)[i].surname);
-			free(((Table*)info.vector_ptr)[i].patronymic);
-			free(((Table*)info.vector_ptr)[i].Email);
-			free(((Table*)info.vector_ptr)[i].GitHub_account);
+			free(info.vector_ptr[i].name);
+			free(info.vector_ptr[i].surname);
+			free(info.vector_ptr[i].patronymic);
+			free(info.vector_ptr[i].Email);
+			free(info.vector_ptr[i].GitHub_account);
 		}
 	free(info.vector_ptr);
 	fclose(Random_Table1);

@@ -11,7 +11,7 @@
 
 void PutRandomCommands(FILE* commands_list)
 {
-	int lenth = rand() % MAX_LENTH_ARRAY_COMMANDS;
+	int lenth = rand() % MAX_LENGTH_ARRAY_COMMANDS;
 
 	for (int i = 0; i < lenth; i++)
 		fprintf(commands_list, "%d", -1 + rand() % 7);
@@ -21,7 +21,7 @@ void PutRandomCommands(FILE* commands_list)
 
 char* GenerateToken(int a)
 {
-	int lenth = MIN_LENTH_TOKEN + rand() % (MAX_LENTH_TOKEN - MIN_LENTH_TOKEN);
+	int lenth = MIN_LENGTH_TOKEN + rand() % (MAX_LENGTH_TOKEN - MIN_LENGTH_TOKEN);
 	char* random_token = (char*)malloc(sizeof(char) * (lenth + 9));
 
 	for (int i = 0; i < lenth - 1; i++)
@@ -45,9 +45,9 @@ char* GenerateToken(int a)
 	return random_token;
 }
 
-Vector GenerateRandomVector(int max, int min)
+Vector GenerateRandomVector()
 {
-	int lenth = min + rand() % (max - min);
+	int lenth = MIN_LINES + rand() % (MAX_LINES - MIN_LINES);
 	Table* vector = (Table*)malloc(sizeof(Table) * lenth);
 
 	for (int i = 0; i < lenth; i++)
