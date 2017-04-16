@@ -6,6 +6,9 @@
 \version 2.0
 */
 
+#define INPUT1 "input_file_1.csv" //!< First table
+#define INPUT2 "input_file_2.csv" //!< Second table
+
 #include "Generate_Header.h"
 
 /*!
@@ -23,5 +26,5 @@ void TableCreate(Table* new_element);
 \return info Info about readed vector
 \ingroup Refsol
 */
-Vector Read_Files(FILE* stream1, FILE* stream2);
+Vector ReadFiles(FILE* stream1, FILE* stream2);
 

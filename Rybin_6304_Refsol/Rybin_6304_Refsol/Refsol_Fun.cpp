@@ -16,21 +16,23 @@ void TableCreate(Table* new_element)
 	new_element->GitHub_account = (char*)malloc(sizeof(char) * MAX_LENGTH_TOKEN);
 	new_element->Email = (char*)malloc(sizeof(char) * MAX_LENGTH_TOKEN);
 	new_element->check = false;
+	new_element->group = 0;
+	new_element->exam_result = 0;
 }
 
-Vector Read_Files(FILE* stream1, FILE* stream2)
+Vector ReadFiles(FILE* stream1, FILE* stream2)
 {
 	Vector info;
 	info.vector_ptr = (Table*)malloc(sizeof(Table) * MAX_LINES);
 	int counter = 0;
-	char buf = 0;
+	char buf ;
 
 	/* Skip headers in tables */
 	while ((buf = fgetc(stream1) != '\n'))
 	{
 		if (feof(stream1))
 		{
-			printf("Fail with input_file_1");
+			printf("Fail with %s",INPUT1);
 			exit(0);
 		}
 	}
@@ -38,7 +40,7 @@ Vector Read_Files(FILE* stream1, FILE* stream2)
 	{
 		if (feof(stream2))
 		{
-			printf("Fail with input_file_2");
+			printf("Fail with %s",INPUT2);
 			exit(0);
 		}
 	}

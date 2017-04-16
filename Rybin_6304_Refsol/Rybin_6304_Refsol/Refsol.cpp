@@ -14,17 +14,17 @@ This file contains code for checker task on right way for compare with user solv
 int main(int argc, char* argv[])
 {	
 	/* Open files */
-	FILE* Table1 = fopen("input_file_1.csv", "r"); 
-	FILE* Table2 = fopen("input_file_2.csv", "r");
+	FILE* Table1 = fopen(INPUT1, "r"); 
+	FILE* Table2 = fopen(INPUT2, "r");
 
 	if (Table1 == NULL)
 	{
-		printf("Fail with input_file_1");
+		printf("Fail with %s",INPUT1);
 		return -1;
 	}
 	else if (Table2 == NULL)
 	{
-		printf("Fail with input_file_2");
+		printf("Fail with %s",INPUT2);
 		return -1;
 	}
 
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 	
-	Vector Data = Read_Files(Table1,Table2);
+	Vector Data = ReadFiles(Table1,Table2);
 
 	free(commands);
 	fclose(Table1);
