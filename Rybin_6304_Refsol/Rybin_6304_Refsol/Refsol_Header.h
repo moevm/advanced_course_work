@@ -12,6 +12,15 @@
 #include "Generate_Header.h"
 
 /*!
+\brief Compare two objects of struct Table
+\param[in] a first ptr
+\param[in] a second ptr
+\return a->group - b->group
+\ingroup Refsol
+*/
+int CompareTable(const Table* a, const Table* b);
+
+/*!
 \brief Creates new object of struct Table
 \param[in] new_element Pointer to object to initialize
 \return void

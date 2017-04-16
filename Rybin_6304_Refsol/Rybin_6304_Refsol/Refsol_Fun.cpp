@@ -8,6 +8,11 @@
 
 #include "Refsol_Header.h"
 
+int CompareTable(const Table* a, const Table* b)
+{
+	return a->group - b->group;
+}
+
 void TableCreate(Table* new_element)
 {
 	new_element->name = (char*)malloc(sizeof(char) * MAX_LENGTH_TOKEN);
@@ -28,7 +33,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 	int buf = 0 ;
 
 	/* Skip headers in tables */
-	while ((buf = fgetc(stream1) != '\n'))
+	while (fscanf(stream1,"%c",&buf) && (buf != '\n'))
 	{
 		if (feof(stream1))
 		{
@@ -36,7 +41,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 			exit(0);
 		}
 	}
-	while ((buf = fgetc(stream2) != '\n'))
+	while (fscanf(stream2, "%c", &buf) && (buf != '\n'))
 	{
 		if (feof(stream2))
 		{
@@ -50,7 +55,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 		int i = 0;
 		TableCreate(&info.vector_ptr[counter]);
 
-		while ((buf = fgetc(stream1) != ','))
+		while (fscanf(stream1, "%c", &buf) && (buf != ','))
 		{
 			if (feof(stream1))
 			{
@@ -62,7 +67,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 		info.vector_ptr[counter].name[i] = '\0';
 		i = 0;
 		
-		while ((buf = fgetc(stream1) != ','))
+		while (fscanf(stream1, "%c", &buf) && (buf != ','))
 		{
 			if (feof(stream1))
 			{
@@ -74,7 +79,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 		info.vector_ptr[counter].surname[i] = '\0';
 		i = 0;
 
-		while ((buf = fgetc(stream1) != ','))
+		while (fscanf(stream1, "%c", &buf) && (buf != ','))
 		{
 			if (feof(stream1))
 			{
@@ -86,7 +91,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 		info.vector_ptr[counter].patronymic[i] = '\0';
 		i = 0;
 
-		while ((buf = fgetc(stream1) != ','))
+		while (fscanf(stream1, "%c", &buf) && (buf != ','))
 		{
 			if (feof(stream1))
 			{
@@ -98,7 +103,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 		info.vector_ptr[counter].GitHub_account[i] = '\0';
 		i = 0;
 
-		while ((buf = fgetc(stream1) != ','))
+		while (fscanf(stream1, "%c", &buf) && (buf != ','))
 		{
 			if (feof(stream1))
 			{
@@ -117,7 +122,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 			return info;
 		}
 		/* Skip same fields "Name,Surname" in second table */
-		while ((buf = fgetc(stream2) != ','))
+		while (fscanf(stream2, "%c", &buf) && (buf != ','))
 		{
 			if (feof(stream2))
 			{
@@ -125,7 +130,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 				return info;
 			}
 		}
-		while ((buf = fgetc(stream2) != ','))
+		while (fscanf(stream2, "%c", &buf) && (buf != ','))
 		{
 			if (feof(stream2))
 			{
@@ -141,7 +146,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 			return info;
 		}
 
-		while ((buf = fgetc(stream1) != '\n'))
+		while (fscanf(stream1, "%c", &buf) && (buf != '\n'))
 		{
 			if (feof(stream1))
 			{
@@ -149,7 +154,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 				return info;
 			}
 		}
-		while ((buf = fgetc(stream2) != '\n'))
+		while (fscanf(stream2, "%c", &buf) && (buf != '\n'))
 		{
 			if (feof(stream2))
 			{

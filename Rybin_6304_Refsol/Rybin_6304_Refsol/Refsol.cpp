@@ -52,6 +52,13 @@ int main(int argc, char* argv[])
 	}
 	
 	Vector Data = ReadFiles(Table1,Table2);
+	if (Data.lenth < 1)
+	{
+		printf("Fail with data");
+		return 0;
+	}
+
+	qsort(Data.vector_ptr, Data.lenth, sizeof(Table), (int (*)(const void*,const void*))CompareTable);
 
 	free(commands);
 	fclose(Table1);
