@@ -38,7 +38,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 		if (feof(stream1))
 		{
 			printf("Fail with %s",INPUT1);
-			exit(0);
+			exit(1);
 		}
 	}
 	while (fscanf(stream2, "%c", &buf) && (buf != '\n'))
@@ -46,7 +46,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 		if (feof(stream2))
 		{
 			printf("Fail with %s",INPUT2);
-			exit(0);
+			exit(1);
 		}
 	}
 

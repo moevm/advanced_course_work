@@ -20,19 +20,19 @@ int main(int argc, char* argv[])
 	if (Table1 == NULL)
 	{
 		printf("Fail with %s",INPUT1);
-		return 0;
+		return 1;
 	}
 	else if (Table2 == NULL)
 	{
 		printf("Fail with %s",INPUT2);
-		return 0;
+		return 1;
 	}
 
 	/* Read commands */
 	if (argc < 3)
 	{
 		printf("Too few commands");
-		return 0;
+		return 1;
 	}
 	int* commands = (int*)malloc(sizeof(int) * (argc - 1));
 	for (int i = 1; i < argc; i++)
@@ -42,13 +42,13 @@ int main(int argc, char* argv[])
 			(commands[i - 1] > 5))
 		{
 			printf("Fail with command %d", i);
-				return 0;
+				return 1;
 		}
 	}
 	if (!(commands[argc - 2] == 5))
 	{
 		printf("Fail with last command");
-		return 0;
+		return 1;
 	}
 	
 	Vector Data = ReadFiles(Table1,Table2);
