@@ -20,12 +20,12 @@ int main(int argc, char* argv[])
 	if (Table1 == NULL)
 	{
 		printf("Fail with %s",INPUT1);
-		return -1;
+		return 0;
 	}
 	else if (Table2 == NULL)
 	{
 		printf("Fail with %s",INPUT2);
-		return -1;
+		return 0;
 	}
 
 	/* Read commands */

@@ -25,7 +25,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 	Vector info;
 	info.vector_ptr = (Table*)malloc(sizeof(Table) * MAX_LINES);
 	int counter = 0;
-	char buf = 0 ;
+	int buf = 0 ;
 
 	/* Skip headers in tables */
 	while ((buf = fgetc(stream1) != '\n'))
