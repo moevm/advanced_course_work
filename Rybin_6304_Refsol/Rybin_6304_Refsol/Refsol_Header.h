@@ -38,3 +38,19 @@ void TableCreate(Table* new_element);
 */
 Vector ReadFiles(FILE* stream1, FILE* stream2);
 
+/*!
+\brief Count students with mark less then 60% of max
+\param[in] data struct Vector with info
+\return void
+\ingroup Refsol
+*/
+void CheckBadResults(Vector data);
+
+/*!
+\brief Count students with max mark
+\param[in] data struct Vector with info
+\return void
+\ingroup Refsol
+*/
+void CheckGoodResults(Vector data);
+

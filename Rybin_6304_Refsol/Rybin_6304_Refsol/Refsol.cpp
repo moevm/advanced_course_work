@@ -60,6 +60,15 @@ int main(int argc, char* argv[])
 
 	qsort(Data.vector_ptr, Data.lenth, sizeof(Table), (int (*)(const void*,const void*))CompareTable);
 
+	for (int i = 0; i < Data.lenth; i++)
+	{
+		free(Data.vector_ptr[i].name);
+		free(Data.vector_ptr[i].surname);
+		free(Data.vector_ptr[i].patronymic);
+		free(Data.vector_ptr[i].GitHub_account);
+		free(Data.vector_ptr[i].Email);
+	}
+	free(Data.vector_ptr);
 	free(commands);
 	fclose(Table1);
 	fclose(Table2);

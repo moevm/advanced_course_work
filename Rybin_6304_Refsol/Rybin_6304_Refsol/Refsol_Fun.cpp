@@ -165,3 +165,25 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 		counter++;
 	}
 }
+
+void CheckBadResults(Vector data)
+{
+	int count = 0;
+	for (int i = 0; i < data.lenth; i++)
+	{
+		if (data.vector_ptr[i].exam_result < 0.6 * MAX_EXAM_RESULT)
+			count++;
+	}
+	printf("Students with mark less then 60% of max %d", count);
+}
+
+void CheckGoodResults(Vector data)
+{
+	int count = 0;
+	for (int i = 0; i < data.lenth; i++)
+	{
+		if (data.vector_ptr[i].exam_result == MAX_EXAM_RESULT)
+			count++;
+	}
+	printf("Students with max mark %d", count);
+}
