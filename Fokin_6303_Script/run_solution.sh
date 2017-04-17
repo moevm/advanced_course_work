@@ -38,12 +38,7 @@ rm_files ()
     then
         rm usersol
     fi
-    rm generatedData.txt
-    rm generate
 }
-
-#gcc -o generate generate.c
-./generate
 
 refoutTXT=refout.txt
 useroutTXT=userout.txt
