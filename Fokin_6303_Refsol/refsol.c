@@ -2,7 +2,7 @@
     Программа refsol.c (эталонное решение поставленной задачи) выполняет
     обработку BMP-файла и записывает результат в новый BMP-файл.
 
-    By foksen98 25.03.2017 (Last update 11.04.17).
+    By foksen98 25.03.2017 (Last update 17.04.17).
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,7 +39,7 @@ int main ()
         }
     //  создание и запись обработанного BMP-файла
     writeBMP(DataBMP);
-    printf("Look OUT.bmp");
+    printf("Look OUT.bmp.");
 
     //  очищение памяти
     free(genDataInfo);
