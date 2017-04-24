@@ -37,7 +37,7 @@ typedef struct Table
 	char* Email;			//!< Student's email
 	int group;				//!< Student's group
 	int exam_result;		//!< Mark for exam
-
+	int check_repeat;		//!< Check repeats
 } Table;
 
 /*!
