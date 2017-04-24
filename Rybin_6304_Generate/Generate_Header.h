@@ -17,9 +17,12 @@
 #define MAX_GROUP 1000					//!< Max generating group number
 #define MAX_EXAM_RESULT 5				//!< Max generating exam result
 #define MAX_LINES 20					//!< Max lines in generating tables
-#define MIN_LINES 15						//!< Min lines in generating tables
+#define MIN_LINES 15					//!< Min lines in generating tables
 #define HEADER1 "Name,Surname,Patronymic,GitHub,Email,Group\n" //!< Header for first table
 #define HEADER2 "Name,Surname,Exam_mark\n"					   //!< Header for second table
+#define INPUT1 "input_file_1.csv"		//!< First table
+#define INPUT2 "input_file_2.csv"		//!< Second table
+#define COMMANDS "commands.txt"			//!< File with commands
 
 /*!
 \struct
