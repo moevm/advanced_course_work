@@ -22,7 +22,7 @@ void TableCreate(Table* new_element)
 	new_element->Email = (char*)malloc(sizeof(char) * MAX_LENGTH_TOKEN);
 	new_element->group = 0;
 	new_element->exam_result = 0;
-	//new_element->check_repeat = 0;
+	new_element->flag = 0;
 }
 
 Vector ReadFiles(FILE* stream1, FILE* stream2)
@@ -199,7 +199,18 @@ void CheckRepeats(Vector data)
 			strcmp(data.vector_ptr[i].GitHub_account, data.vector_ptr[i + 1].GitHub_account) &&
 			data.vector_ptr[i].group == data.vector_ptr[i + 1].group &&
 			data.vector_ptr[i].exam_result == data.vector_ptr[i + 1].exam_result)
-			//data.vector_ptr[i + 1].check_repeat = 1;
+			data.vector_ptr[i + 1].flag = 1;
+	}
+}
+
+void CheckByGroup(Vector data)
+{
+	for (int i = 0; i < data.lenth; i++)
+	{
+		if (data.vector_ptr[i].group != data.vector_ptr[i + 1].group)
+		{
+			data.vector_ptr[i].flag = -1;
+		}
 	}
 }
 
