@@ -20,7 +20,6 @@ void TableCreate(Table* new_element)
 	new_element->patronymic = (char*)malloc(sizeof(char) * MAX_LENGTH_TOKEN);
 	new_element->GitHub_account = (char*)malloc(sizeof(char) * MAX_LENGTH_TOKEN);
 	new_element->Email = (char*)malloc(sizeof(char) * MAX_LENGTH_TOKEN);
-	new_element->check = false;
 	new_element->group = 0;
 	new_element->exam_result = 0;
 }

@@ -6,9 +6,6 @@
 \version 2.0
 */
 
-#define INPUT1 "input_file_1.csv" //!< First table
-#define INPUT2 "input_file_2.csv" //!< Second table
-
 #include "Generate_Header.h"
 
 /*!
