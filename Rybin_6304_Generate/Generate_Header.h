@@ -34,7 +34,6 @@ typedef struct Table
 	char* Email;			//!< Student's email
 	int group;				//!< Student's group
 	int exam_result;		//!< Mark for exam
-	bool check;				//!< Check repeats in vector
 
 } Table;
 

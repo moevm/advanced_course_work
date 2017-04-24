@@ -27,7 +27,7 @@ int main()
 
 	Vector info = GenerateRandomVector();
 
-	/* Write commands file */
+	/* Write commands file as much as lines in generated tables */
 	for (int i = 0; i < info.lenth; i++)
 		PutRandomCommands(Commands_file);
 

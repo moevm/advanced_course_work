@@ -59,7 +59,7 @@ Vector GenerateRandomVector()
 		vector[i].patronymic = GenerateToken(0);
 		vector[i].group = 1 + rand() % MAX_GROUP;
 		vector[i].exam_result = 1 + rand() % MAX_EXAM_RESULT;
-		vector[i].check = true;
+		
 	}
 
 	Vector info;
