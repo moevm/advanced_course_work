@@ -22,6 +22,7 @@ void TableCreate(Table* new_element)
 	new_element->Email = (char*)malloc(sizeof(char) * MAX_LENGTH_TOKEN);
 	new_element->group = 0;
 	new_element->exam_result = 0;
+	//new_element->check_repeat = 0;
 }
 
 Vector ReadFiles(FILE* stream1, FILE* stream2)
@@ -170,10 +171,10 @@ void CheckBadResults(Vector data)
 	int count = 0;
 	for (int i = 0; i < data.lenth; i++)
 	{
-		if (data.vector_ptr[i].exam_result < 0.6 * MAX_EXAM_RESULT)
+		if (data.vector_ptr[i].exam_result <= (int)(0.6 * MAX_EXAM_RESULT))
 			count++;
 	}
-	printf("Students with mark less then 60% of max %d", count);
+	printf("Students with mark less then 60 percents: %d\n", count);
 }
 
 void CheckGoodResults(Vector data)
@@ -184,5 +185,26 @@ void CheckGoodResults(Vector data)
 		if (data.vector_ptr[i].exam_result == MAX_EXAM_RESULT)
 			count++;
 	}
-	printf("Students with max mark %d", count);
+	printf("Students with max mark: %d\n", count);
+}
+
+void CheckRepeats(Vector data)
+{
+	for (int i = 0; i < data.lenth - 1; i++)
+	{
+		if (strcmp(data.vector_ptr[i].name, data.vector_ptr[i + 1].name) &&
+			strcmp(data.vector_ptr[i].surname, data.vector_ptr[i + 1].surname) &&
+			strcmp(data.vector_ptr[i].patronymic, data.vector_ptr[i + 1].patronymic) &&
+			strcmp(data.vector_ptr[i].Email, data.vector_ptr[i + 1].Email) &&
+			strcmp(data.vector_ptr[i].GitHub_account, data.vector_ptr[i + 1].GitHub_account) &&
+			data.vector_ptr[i].group == data.vector_ptr[i + 1].group &&
+			data.vector_ptr[i].exam_result == data.vector_ptr[i + 1].exam_result)
+			//data.vector_ptr[i + 1].check_repeat = 1;
+	}
+}
+
+void SaveResults(Vector data)
+{
+	FILE* Result = fopen(RESULT, "w");
+
 }

@@ -8,6 +8,8 @@
 
 #include "Generate_Header.h"
 
+#define RESULT "results.txt"	//!< New file with results of programm
+
 /*!
 \brief Compare two objects of struct Table
 \param[in] a first ptr
@@ -50,4 +52,12 @@ void CheckBadResults(Vector data);
 \ingroup Refsol
 */
 void CheckGoodResults(Vector data);
+
+/*!
+\brief Check repeats in sorted readed data
+\param[in] data struct Vector with data
+\return void
+\ingroup Refsol
+*/
+void CheckRepeats(Vector data);
 

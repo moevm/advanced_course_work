@@ -60,6 +60,11 @@ int main(int argc, char* argv[])
 
 	qsort(Data.vector_ptr, Data.lenth, sizeof(Table), (int (*)(const void*,const void*))CompareTable);
 
+	/* TEST*/
+	CheckBadResults(Data);
+	CheckGoodResults(Data);
+	CheckRepeats(Data);
+
 	for (int i = 0; i < Data.lenth; i++)
 	{
 		free(Data.vector_ptr[i].name);
