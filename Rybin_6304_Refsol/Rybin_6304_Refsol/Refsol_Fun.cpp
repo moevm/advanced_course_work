@@ -234,6 +234,8 @@ void SaveResults(Vector data)
 			data.vector_ptr[i].exam_result);
 
 		if (data.vector_ptr[i].flag == -1)
-			fprintf(result, "\n");
+			fprintf(result, "\n\n");
 	}
+
+	fclose(result);
 }

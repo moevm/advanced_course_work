@@ -75,5 +75,5 @@ void CheckByGroup(Vector data);
 \return void
 \ingroup Refsol
 */
-void SaveResults(Vector data)
+void SaveResults(Vector data);
 
