@@ -10,7 +10,7 @@
 
 int CompareTable(const Table* a, const Table* b)
 {
-	return a->group - b->group;
+	return (a->group - b->group);
 }
 
 void TableCreate(Table* new_element)
@@ -30,7 +30,7 @@ Vector ReadFiles(FILE* stream1, FILE* stream2)
 	Vector info;
 	info.vector_ptr = (Table*)malloc(sizeof(Table) * MAX_LINES);
 	int counter = 0;
-	int buf = 0 ;
+	char buf = 0 ;
 
 	/* Skip headers in tables */
 	while (fscanf(stream1,"%c",&buf) && (buf != '\n'))
