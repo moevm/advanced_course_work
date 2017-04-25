@@ -59,7 +59,38 @@ int main(int argc, char* argv[])
 	}
 
 	qsort(Data.vector_ptr, Data.lenth, sizeof(Table), (int (*)(const void*,const void*))CompareTable);
-	
+	/* Work with commands */
+	for (int i = 0; i < argc - 1; i++)
+	{
+		switch (commands[i])
+		{
+			case 1:
+				{
+				CheckRepeats(Data);
+				break;
+				}
+			case 2:
+				{
+				CheckByGroup(Data);
+				break;
+				}
+			case 3:
+				{
+				CheckBadResults(Data);
+				break;
+				}
+			case 4:
+				{
+				CheckGoodResults(Data);
+				break;
+				}
+			case 5:
+				{
+				SaveResults(Data);
+				break;
+				}
+		}
+	}
 
 	/* Free Vector with readed data */
 	for (int i = 0; i < Data.lenth; i++)
