@@ -216,6 +216,24 @@ void CheckByGroup(Vector data)
 
 void SaveResults(Vector data)
 {
-	FILE* Result = fopen(RESULT, "w");
+	FILE* result = fopen(RESULT, "w");
+	fprintf(result, RESULT_HEADER);
 
+	for (int i = 0; i < data.lenth; i++)
+	{
+		if (data.vector_ptr[i].flag == 1)
+			continue;
+
+		fprintf(result, "%d,%s,%s,%s,%s,%s,%d\n",
+			data.vector_ptr[i].group,
+			data.vector_ptr[i].name,
+			data.vector_ptr[i].surname,
+			data.vector_ptr[i].patronymic,
+			data.vector_ptr[i].GitHub_account,
+			data.vector_ptr[i].Email,
+			data.vector_ptr[i].exam_result);
+
+		if (data.vector_ptr[i].flag == -1)
+			fprintf(result, "\n");
+	}
 }

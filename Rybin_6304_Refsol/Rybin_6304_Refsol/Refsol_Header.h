@@ -9,6 +9,7 @@
 #include "Generate_Header.h"
 
 #define RESULT "results.txt"	//!< New file with results of programm
+#define RESULT_HEADER "Group,Name,Surname,Patronymic,GitHub,Email,Exam\n"	//!< Header for new file with results
 
 /*!
 \brief Compare two objects of struct Table
@@ -26,7 +27,6 @@ int CompareTable(const Table* a, const Table* b);
 \ingroup Refsol
 */
 void TableCreate(Table* new_element);
-
 
 /*!
 \brief Read Data from file
@@ -60,4 +60,20 @@ void CheckGoodResults(Vector data);
 \ingroup Refsol
 */
 void CheckRepeats(Vector data);
+
+/*!
+\brief Check data by group and marks last stident in group
+\param[in] data struct Vector with data
+\return void
+\ingroup Refsol
+*/
+void CheckByGroup(Vector data);
+
+/*!
+\brief Save results in new file results.txt
+\param[in] data struct Vector with data
+\return void
+\ingroup Refsol
+*/
+void SaveResults(Vector data)
 

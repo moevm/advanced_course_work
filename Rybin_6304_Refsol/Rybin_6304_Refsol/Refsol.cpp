@@ -38,14 +38,14 @@ int main(int argc, char* argv[])
 	for (int i = 1; i < argc; i++)
 	{	
 		commands[i - 1] = atoi(argv[i]);
-		if ((commands[i - 1] < 0) ||
+		if ((commands[i - 1] < 1) ||	// Commands must be {1,2,3,4,5}
 			(commands[i - 1] > 5))
 		{
 			printf("Fail with command %d", i);
 				return 1;
 		}
 	}
-	if (!(commands[argc - 2] == 5))
+	if (!(commands[argc - 2] == 5))	// Last command always 5 - "save results"
 	{
 		printf("Fail with last command");
 		return 1;
@@ -59,12 +59,9 @@ int main(int argc, char* argv[])
 	}
 
 	qsort(Data.vector_ptr, Data.lenth, sizeof(Table), (int (*)(const void*,const void*))CompareTable);
+	
 
-	/* TEST*/
-	CheckBadResults(Data);
-	CheckGoodResults(Data);
-	CheckRepeats(Data);
-
+	/* Free Vector with readed data */
 	for (int i = 0; i < Data.lenth; i++)
 	{
 		free(Data.vector_ptr[i].name);
@@ -74,6 +71,7 @@ int main(int argc, char* argv[])
 		free(Data.vector_ptr[i].Email);
 	}
 	free(Data.vector_ptr);
+
 	free(commands);
 	fclose(Table1);
 	fclose(Table2);
