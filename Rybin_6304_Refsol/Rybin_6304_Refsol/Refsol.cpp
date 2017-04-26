@@ -98,8 +98,8 @@ int main(int argc, char* argv[])
 		free(Data.vector_ptr[i].name);
 		free(Data.vector_ptr[i].surname);
 		free(Data.vector_ptr[i].patronymic);
-		free(Data.vector_ptr[i].GitHub_account);
-		free(Data.vector_ptr[i].Email);
+//		free(Data.vector_ptr[i].GitHub_account);
+//		free(Data.vector_ptr[i].Email);
 	}
 	free(Data.vector_ptr);
 	free(commands);
