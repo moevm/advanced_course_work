@@ -171,7 +171,7 @@ void CheckBadResults(Vector data)
 	int count = 0;
 	for (int i = 0; i < data.lenth; i++)
 	{
-		if (data.vector_ptr[i].exam_result <= (int)(0.6 * MAX_EXAM_RESULT))
+		if ((data.vector_ptr[i].exam_result <= (int)(0.6 * MAX_EXAM_RESULT))&&(data.vector_ptr[i].flag != 1))
 			count++;
 	}
 	printf("Students with mark less then 60 percents: %d\n", count);
@@ -182,7 +182,7 @@ void CheckGoodResults(Vector data)
 	int count = 0;
 	for (int i = 0; i < data.lenth; i++)
 	{
-		if (data.vector_ptr[i].exam_result == MAX_EXAM_RESULT)
+		if ((data.vector_ptr[i].exam_result == MAX_EXAM_RESULT)&&(data.vector_ptr[i].flag != 1))
 			count++;
 	}
 	printf("Students with max mark: %d\n", count);
