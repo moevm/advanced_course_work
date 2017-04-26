@@ -9,7 +9,8 @@
 #include "Generate_Header.h"
 
 #define RESULT "results.txt"	//!< New file with results of programm
-#define RESULT_HEADER "Group,Name,Surname,Patronymic,GitHub,Email,Exam\n"	//!< Header for new file with results
+#define RESULT_HEADER "Group,Name,Surname,Patronymic,GitHub,Email,ExamResult\n"
+/* Header for new file with results */
 
 /*!
 \brief Compare two objects of struct Table

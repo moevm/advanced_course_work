@@ -192,13 +192,13 @@ void CheckRepeats(Vector data)
 {
 	for (int i = 0; i < data.lenth - 1; i++)
 	{
-		if (strcmp(data.vector_ptr[i].name, data.vector_ptr[i + 1].name) &&
-			strcmp(data.vector_ptr[i].surname, data.vector_ptr[i + 1].surname) &&
-			strcmp(data.vector_ptr[i].patronymic, data.vector_ptr[i + 1].patronymic) &&
-			strcmp(data.vector_ptr[i].Email, data.vector_ptr[i + 1].Email) &&
-			strcmp(data.vector_ptr[i].GitHub_account, data.vector_ptr[i + 1].GitHub_account) &&
-			data.vector_ptr[i].group == data.vector_ptr[i + 1].group &&
-			data.vector_ptr[i].exam_result == data.vector_ptr[i + 1].exam_result)
+		if ((strcmp(data.vector_ptr[i].name, data.vector_ptr[i + 1].name) == 0) &&
+			(strcmp(data.vector_ptr[i].surname, data.vector_ptr[i + 1].surname) == 0) &&
+			(strcmp(data.vector_ptr[i].patronymic, data.vector_ptr[i + 1].patronymic) == 0) &&
+			(strcmp(data.vector_ptr[i].Email, data.vector_ptr[i + 1].Email) == 0) &&
+			(strcmp(data.vector_ptr[i].GitHub_account, data.vector_ptr[i + 1].GitHub_account) == 0) &&
+			(data.vector_ptr[i].group == data.vector_ptr[i + 1].group) &&
+			(data.vector_ptr[i].exam_result == data.vector_ptr[i + 1].exam_result))
 			data.vector_ptr[i + 1].flag = 1;
 	}
 }
@@ -209,7 +209,7 @@ void CheckByGroup(Vector data)
 	{
 		if (data.vector_ptr[i].group != data.vector_ptr[i + 1].group)
 		{
-			if (data.vector_ptr[i].flag == 1)
+			if (data.vector_ptr[i].flag == 1) // If repeats flag saves
 				continue;
 			data.vector_ptr[i].flag = -1;
 		}
