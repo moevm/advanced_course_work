@@ -6,6 +6,8 @@ Group,Name,Surname,Patronymic,GitHub,Email,ExamResult
 
 
 351,ylbvtvbpin,edkhadwqah,nthkbttkrgdf,keosludt@GitHub,mtce@Email,2
+
+
 386,fody,ambkashtqm,tmjvxdvqqbijs,mvcpxuptwmb@GitHub,thfbbagnlqsjw@Email,5
 386,ffcrof,kbvxa,xapws,squfopwrc@GitHub,tkbblygu@Email,3
 

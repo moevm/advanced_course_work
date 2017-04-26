@@ -213,6 +213,8 @@ void CheckByGroup(Vector data)
 				continue;
 			data.vector_ptr[i].flag = -1;
 		}
+		else if (data.vector_ptr[i + 1].flag == 1)	//If next is repeat then current student is last
+			data.vector_ptr[i].flag = -1;
 	}
 }
 
