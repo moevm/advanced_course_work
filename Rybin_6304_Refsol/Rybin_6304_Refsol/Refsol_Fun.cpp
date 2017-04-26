@@ -209,6 +209,8 @@ void CheckByGroup(Vector data)
 	{
 		if (data.vector_ptr[i].group != data.vector_ptr[i + 1].group)
 		{
+			if (data.vector_ptr[i].flag == 1)
+				continue;
 			data.vector_ptr[i].flag = -1;
 		}
 	}
