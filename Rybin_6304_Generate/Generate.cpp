@@ -17,9 +17,9 @@ int main()
 	srand(time(NULL));
 
 	/* Create new files */
-	FILE* Random_Table1 = fopen(INPUT1, "w");
-	FILE* Random_Table2 = fopen(INPUT2, "w");
-	FILE* Commands_file = fopen(COMMANDS, "w");
+	FILE* Random_Table1 = fopen("input_file_1.csv", "w");
+	FILE* Random_Table2 = fopen("input_file_2.csv", "w");
+	FILE* Commands_file = fopen("commands.txt", "w");
 
 	/* Create table header */
 	fprintf(Random_Table1, HEADER1);
