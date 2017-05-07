@@ -19,19 +19,19 @@ int main(int argc, char* argv[])
 
 	if (Table1 == NULL)
 	{
-		printf("Fail with %s",INPUT1);
+		printf("Fail with %s\n",INPUT1);
 		return 1;
 	}
 	else if (Table2 == NULL)
 	{
-		printf("Fail with %s",INPUT2);
+		printf("Fail with %s\n",INPUT2);
 		return 1;
 	}
 
 	/* Read commands */
 	if (argc < 3)
 	{
-		printf("Too few commands");
+		printf("Too few commands\n");
 		return 1;
 	}
 	int* commands = (int*)malloc(sizeof(int) * (argc - 1));
@@ -41,21 +41,21 @@ int main(int argc, char* argv[])
 		if ((commands[i - 1] < 1) ||	// Commands must be {1,2,3,4,5}
 			(commands[i - 1] > 5))
 		{
-			printf("Fail with command %d", i);
+			printf("Fail with command %d\n", i);
 				return 1;
 		}
 	}
 	if (!(commands[argc - 2] == 5))	// Last command always 5 - "save results"
 	{
-		printf("Fail with last command");
+		printf("Fail with last command\n");
 		return 1;
 	}
 	
 	Vector Data = ReadFiles(Table1,Table2);
 	if (Data.lenth < 1)
 	{
-		printf("Fail with data");
-		return 0;
+		printf("Fail with data\n");
+		return 1;
 	}
 
 	qsort(Data.vector_ptr, Data.lenth, sizeof(Table), (int (*)(const void*,const void*))CompareTable);
@@ -98,8 +98,8 @@ int main(int argc, char* argv[])
 		free(Data.vector_ptr[i].name);
 		free(Data.vector_ptr[i].surname);
 		free(Data.vector_ptr[i].patronymic);
-//		free(Data.vector_ptr[i].GitHub_account);
-//		free(Data.vector_ptr[i].Email);
+		free(Data.vector_ptr[i].GitHub_account);
+		free(Data.vector_ptr[i].Email);
 	}
 	free(Data.vector_ptr);
 	free(commands);

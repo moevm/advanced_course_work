@@ -8,7 +8,7 @@
 
 #include "Generate_Header.h"
 
-#define RESULT "results.txt"	//!< New file with results of programm
+#define RESULT "results.csv"	//!< New file with results of programm
 #define RESULT_HEADER "Group,Name,Surname,Patronymic,GitHub,Email,ExamResult\n"
 /* Header for new file with results */
 
