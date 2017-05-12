@@ -19,9 +19,12 @@ do
 			usersol_fileout=`cat results.csv`
 	fi
 	
-	if [[ "$refsol_stdout" !=  "$usersol_stdout" ||												 -n "$refsol_fileout" && -n "$usersol_fileout" && "$refsol_fileout" != "$usersol_fileout" ]]
+	if [[ "$refsol_stdout" !=  "$usersol_stdout" ||
+		-n "$refsol_fileout" && -n "$usersol_fileout" && "$refsol_fileout" != "$usersol_fileout" ]]
 	then
 		echo "Fail test $count"
+		echo "Correct out put: $refsol_stdout"
+		echo "Your output: $usersol_stdout"
 		rm Generator Refsol Usersol input_file_1.csv input_file_2.csv commands.txt
 		if [[ -e results.csv ]]			
 		then
