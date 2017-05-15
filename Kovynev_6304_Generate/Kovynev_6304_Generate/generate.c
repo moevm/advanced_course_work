@@ -1,7 +1,7 @@
 /*
-* File generate.c
-* Generate 5 Bitmap Images and Numeric Data Text Document
-* Written by kovinevmv
+* Файл generate.c
+* Создание 5 BMP изображений и текстовый документ с числовыми данными
+* Автор: kovinevmv
 * 15.05.2017
 */
 
