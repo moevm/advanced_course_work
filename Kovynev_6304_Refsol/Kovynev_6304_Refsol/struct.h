@@ -7,7 +7,7 @@
 */
 typedef struct
 {
-	short			bfType;       // Тип файла (должен быть BM)
+	short		bfType;       // Тип файла (должен быть BM)
 	unsigned int	bfSize;       // Размер файла
 	unsigned short	bfReserved1;  // Зарезервирован (должен быть 0)
 	unsigned short	bfReserved2;  // Зарезервирован (должен быть 0)
