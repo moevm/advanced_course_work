@@ -1,3 +1,7 @@
+// Example of user solution
+// Error in 322 line
+// Correct: printf("%d\n%d\n%d\n%d\n", dlj + 1, djmax + 1, drjmax - 1, imax);
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -5,7 +9,7 @@
 
 typedef struct
 {
-	short			bfType; 
+	short		bfType; 
 	unsigned long	bfSize;  
 	unsigned short	bfReserved1; 
 	unsigned short	bfReserved2;
