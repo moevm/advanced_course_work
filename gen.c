@@ -2,7 +2,7 @@
 	gen.c
     Фиалковский Максим
 	Группа 6381
-	makometr@makometr.com
+	makometr@yandex.ru
 */
 
 #include <stdio.h>
@@ -10,49 +10,59 @@
 #include <time.h>
 #define TRUE 1
 #define FALSE 0
+#define FILES_NUMBER 1
 
-void generateCorrectMatrix(FILE *f, int isCorrectMultiplication); // Генерирует и записывает в файл правильную матрицу.
+void generateCorrectMatrix(FILE *f, int isCorrectMultiplication, int i); // Генерирует и записывает в файл правильную матрицу.
 // Каждая строчка начинается с числа и заканчивается числом.
 void generateIncorrectMatrix(FILE *f); // генерирует и записывает в файл неправильную матрицу.
 void generateIndent(FILE *f, int isCorrectIndent, int numberOfMatrix, int currentMatrix); // Вставляют отступ.
 int randIntTuning(); // Настраиваемый генератор чисел от -20 до 20.
 
+char* genFileName(int, char*);
+
 int main(){
     srand(time(NULL));
+    char name[12] = "testcase_";
 
-    int isCorrectMatrix = rand() % 2; // Параметр генерации, отвечающий за генерирование матриц с ошибками или без.
-    int numberOfMatrix = 2 + rand() % 6; // Количество генерируемых матриц. 2 - 7
-    int isCorrectIndent = rand() % 2; // Параметр, отвечающий за отступ между матрицами. 0 - 1
-    int isCorrectMultiplication; // Парметр генерации, отвечающий за генерацию умножаемых матриц. 0 - 1
-    if (isCorrectMatrix == TRUE)
-        isCorrectMultiplication = rand() % 2;
+    for (int i = 0; i < FILES_NUMBER; i++){
+        genFileName(i+1, name);
+        // printf("%s\n", name);
 
-    FILE *f = fopen("input_file", "w");
-    switch (isCorrectMatrix){
-        case TRUE:
-            for (int i = 0; i < numberOfMatrix; i++){
-                generateCorrectMatrix(f, isCorrectMultiplication);
-                generateIndent(f, isCorrectIndent, numberOfMatrix, i);
-            }
-            break;
-        case FALSE:
+        FILE *f = fopen(name, "w");
+        int isCorrectMatrix = rand() % 3; // Параметр генерации, отвечающий за генерирование матриц с ошибками или без.
+        int numberOfMatrix = 2 + rand() % 6; // Количество генерируемых матриц. 2 - 7
+        int isCorrectIndent = rand() % 2; // Параметр, отвечающий за отступ между матрицами. 0 - 1
+        int isCorrectMultiplication; // Парметр генерации, отвечающий за генерацию умножаемых матриц. 0 - 1
+        if (isCorrectMatrix == TRUE)
+            isCorrectMultiplication = rand() % 3;
+
+        switch (isCorrectMatrix){
+            case 1:
+            case 2:
                 for (int i = 0; i < numberOfMatrix; i++){
-                generateIncorrectMatrix(f);
-                generateIndent(f, isCorrectIndent, numberOfMatrix, i);
-            }
+                    generateCorrectMatrix(f, isCorrectMultiplication, i);
+                    generateIndent(f, isCorrectIndent, numberOfMatrix, i);
+                }
+                break;
+            case FALSE:
+                    for (int i = 0; i < numberOfMatrix; i++){
+                    generateIncorrectMatrix(f);
+                    generateIndent(f, isCorrectIndent, numberOfMatrix, i);
+                }
 
+        }
+        fclose(f);
     }
-    fclose(f);
     return 0;
 }
 
-void generateCorrectMatrix(FILE *f, int isCorrectMultiplication){
+void generateCorrectMatrix(FILE *f, int isCorrectMultiplication, int currentNumberOfMatrix){
     static int lines;
     static int cols;
     fpos_t pos;
     fgetpos(f, &pos);
 
-    if (isCorrectMultiplication != TRUE || pos == 0)
+    if (isCorrectMultiplication == FALSE || currentNumberOfMatrix == 0)
         lines = 2 + ((rand() % 100) * (rand() % 100)) % 9;
     else
         lines = cols;
@@ -137,4 +147,11 @@ void generateIncorrectMatrix(FILE *f){
                 fprintf(f," ");
             }
     }
+}
+
+char* genFileName(int number, char* default_name){
+    char adv[2];
+    itoa(number, adv, 10);
+    default_name[9] = adv[0];
+    return default_name;
 }
