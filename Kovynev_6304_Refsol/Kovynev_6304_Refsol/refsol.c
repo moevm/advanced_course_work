@@ -180,13 +180,12 @@ void mirrorReflectionBitmap(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap)
 	for (int i = 0; i < infoBitmap.biHeight; i++)
 	{
 		int k = infoBitmap.biWidth - 1;
-		for (int j = 0; j < k; j++)
+		for (int j = 0; j < infoBitmap.biWidth / 2; j++)
 		{
-			// Обмениваем [i][j] и [i][k] элементы местами
+			// Обмениваем симметричные элементы местами
 			temp = arrayRGB[i][j];
-			arrayRGB[i][j] = arrayRGB[i][k];
-			arrayRGB[i][k] = temp;
-			k--;
+			arrayRGB[i][j] = arrayRGB[i][infoBitmap.biWidth - 1 - j];
+			arrayRGB[i][infoBitmap.biWidth - 1 - j] = temp;
 		}
 	}
 
