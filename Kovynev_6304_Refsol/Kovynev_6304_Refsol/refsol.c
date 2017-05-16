@@ -179,7 +179,6 @@ void mirrorReflectionBitmap(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap)
 
 	for (int i = 0; i < infoBitmap.biHeight; i++)
 	{
-		int k = infoBitmap.biWidth - 1;
 		for (int j = 0; j < infoBitmap.biWidth / 2; j++)
 		{
 			// Обмениваем симметричные элементы местами
