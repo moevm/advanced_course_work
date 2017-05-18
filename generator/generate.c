@@ -43,6 +43,7 @@ int main()
 			 }
 			for(int i = 0; i < m; ++i)
 			{
+				int k = RandCount(10,2);
 				for(int j = 0; j < n; ++j)
 				{
 					if ((number_of_files % 11 != 0) || (i==0))
@@ -52,7 +53,7 @@ int main()
 					}
 				else
 					{
-						fprintf(file, "%d ",2*arr[j]);
+						fprintf(file, "%d ",k*arr[j]);
 					}
 				}
 				fprintf(file, "\n");
