@@ -17,11 +17,13 @@
 
 main()
 {	
+	FILE *output_file;
 	int var_file, var_command, i, n_offset = 0, com_2 = 0, com_3 = 0,
 		nom1 = 0, nom3 = 0, nom4 = 0,
 		arr_command[16], error = 0;
-	char name_input_file[17],
-		 name_commands[11],
+	char name_input_file[25],
+		 name_commands[19],
+		 name_output_file[31],
 		 name_output_file_sort[] = "output_file_sort.txt",
 		 name_output_file_wovel[] = "output_file_wovel.txt",
 		 name_output_file_word[] = "output_file_word.txt",
@@ -29,14 +31,18 @@ main()
 		 
 	for (var_file = 1; var_file <= 20; var_file++)
 	{
-		sprintf(name_input_file,"%s_%d%s", "input_file", var_file, ".txt");	
-		sprintf(name_commands,"%s_%d%s", "commands", var_file, ".txt");	
+		sprintf(name_input_file,"%s_%d%s", "../test/input_file", var_file, ".txt");	
+		sprintf(name_commands,"%s_%d%s", "../test/commands", var_file, ".txt");	
 		for (var_command = 1; var_command <= 5; var_command++)
 		{		
 			n_offset = ReadCommand (name_commands, arr_command, n_offset, & error);
 			if (error == 1)
 			{
 				error = 0;
+				sprintf(name_output_file,"%s_%dx%d%s", "../result/output_file", var_file, var_command, ".txt");	
+				output_file = fopen (name_output_file, "w");
+				fputs("ERROR", output_file);
+				fclose(output_file);
 				continue;
 			}
 			i = 0;

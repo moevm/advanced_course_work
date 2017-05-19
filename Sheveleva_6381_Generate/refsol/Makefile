@@ -1,17 +1,14 @@
 
 all: refsol clean
 
-refsol: refsol.o sortingword.o sort.o wovelsymble.o quantityword.o quantitysent.o readcommand.o runcommand.o finalfile.o
-	gcc refsol.o sortingword.o sort.o wovelsymble.o quantityword.o quantitysent.o readcommand.o runcommand.o finalfile.o -o generate
+refsol: refsol.o sortingword.o wovelsymble.o quantityword.o quantitysent.o readcommand.o runcommand.o finalfile.o
+	gcc refsol.o sortingword.o wovelsymble.o quantityword.o quantitysent.o readcommand.o runcommand.o finalfile.o -o refsol
 
 refsol.o: refsol.c
 	gcc -c refsol.c
 	
 sortingword.o: sortingword.c
 	gcc -c sortingword.c
-
-sort.o: sort.c
-	gcc -c sort.c
 
 wovelsymble.o: wovelsymble.c
 	gcc -c wovelsymble.c

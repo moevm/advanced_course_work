@@ -3,9 +3,6 @@ typedef struct Index{
 	int length;
 } Index;
 
-void Swap (Index *a, Index *b);
-void QuickSortForLength (Index *arr, int first, int last);
-void QuickSortForOffset (Index *arr, int first, int last);
 void SortingWord (char *name_input_file, char *name_output_file);
 void WovelSymble (char *name_input_file, char *name_output_file);
 void QuantityWord (char *name_input_file, char *name_output_file);

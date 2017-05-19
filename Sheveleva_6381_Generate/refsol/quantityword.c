@@ -16,9 +16,10 @@ FILE *input_file, *output_file;
 	char string[20], q_w[10];
 	input_file = fopen (name_input_file, "r");
 	output_file = fopen (name_output_file, "w");
-	while (!feof(input_file))
+	while (1)
 	{
-		fscanf(input_file, "%s", string);
+		fscanf (input_file, "%s", string);
+		if (feof (input_file)) break;
 		if ((string[0] != '-') && (string[0] != '.') && (string[0] != ',') &&
 			(string[0] != '?') && (string[0] != '!') && (string[0] != ':') && 
 			(string[0] != ';') && (string[0] != ')'))

@@ -17,17 +17,14 @@ int ReadCommand (char *name_commands, int *arr_command, int n_offset, int *error
 		{
 			com_2++;
 		}
-		printf("%c ",number);
 		arr_command[i] = number - '0';
 		number = fgetc(commands);
 		n_offset += 2;
 		if ((feof(commands))||(number == '\n')) break;
 		i++;
 	}
-	printf("\n");
 	if (com_2 > 1)
 	{
-		printf ("ERROR\n");
 		*error = 1;
 	}
 	fclose(commands);

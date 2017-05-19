@@ -26,17 +26,17 @@ int main (int argc, char **argv)
 	int quantity_symbol, actual_quantity_symbol, quantity_options,
 		* commands,	i = 0, j, k, actual_quantity_options,
 		use_second_command_2 = 0, length_paragraph, error;
-	char  *name_input_file = (char*)malloc(sizeof(char)*16),
+	char  *name_input_file = (char*)malloc(sizeof(char)*25),
 		  *name_commands;
 
 	for (k = 1; k <= 20; k++) {	
-		sprintf(name_input_file,"%s_%d%s", "input_file", k, ".txt");
-		error = remove(name_input_file);	                                    		// Удаляем файл input_file, если он был уже создан		
+		sprintf(name_input_file,"../test/%s_%d%s", "input_file", k, ".txt");
+		error = remove(name_input_file);	                                    		   // Удаляем файл input_file, если он был уже создан		
 		input_file = fopen (name_input_file, "w");
-		quantity_symbol = rand() % 10000 + 10000;										// Генерация количества символов в пределах 10000-20000
+		quantity_symbol = rand() % 10000 + 10000;						   // Генерация количества символов в пределах 10000-20000
 		actual_quantity_symbol = 0;
 		
-		while (actual_quantity_symbol < quantity_symbol)								// Генерация input файла
+		while (actual_quantity_symbol < quantity_symbol)					   // Генерация input файла
 		{
 			if (actual_quantity_symbol == 0)
 			{
@@ -47,18 +47,18 @@ int main (int argc, char **argv)
 				length_paragraph = GenerateParagraph (input_file, 20, 1);
 			}					// Генерация параграфа, максимальное количество предложений - 20
 			actual_quantity_symbol += length_paragraph;
-		}
+		}	
 		fclose (input_file);
 		
-		sprintf(name_input_file,"%s_%d%s", "input_file", k, ".txt");		
+		sprintf(name_input_file,"../test/%s_%d%s", "input_file", k, ".txt");		
 		for (j = 0; j < 5; j++) {	
-			quantity_options = rand() % 12 + 1;											//Количество команд
+			quantity_options = rand() % 12 + 1;						//Количество команд
 			commands = (int *) malloc (sizeof (int) * quantity_options);
 			actual_quantity_options = quantity_options;	
 			name_commands = (char*)malloc(sizeof(char) * quantity_options);
-			sprintf(name_commands,"%s_%d%s", "commands", k, ".txt");							
+			sprintf(name_commands,"../test/%s_%d%s", "commands", k, ".txt");							
 			if (j==0) {
-				error = remove(name_commands);											// Удаляем файл commands, если он был уже создан	
+				error = remove(name_commands);						// Удаляем файл commands, если он был уже создан	
 			}						
 			commands_file = fopen (name_commands, "a");	            
 								

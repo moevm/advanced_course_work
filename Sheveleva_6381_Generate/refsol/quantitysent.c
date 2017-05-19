@@ -18,16 +18,18 @@ void QuantitySentence (char *name_input_file, char *name_output_file)
 	output_file = fopen (name_output_file, "w");
 	while (1)
 	{
-		fscanf(input_file, "%s", string);
-		if (feof(input_file)) break;
-		if ((((string[strlen(string) - 1] == '.') || (string[strlen(string) - 1] == '!') || (string[strlen(string) - 1] == '?')) && (strlen(string) > 1)) || 
-			((strlen(string) > 2) && (string[strlen(string) - 2] == '?')) ||
-			((strlen(string) > 3) && (string[strlen(string) - 3] == '.')))
+		fscanf (input_file, "%s", string);
+		if (feof (input_file)) break;
+		if ((((string[strlen (string) - 1] == '.') || (string[strlen (string) - 1] == '!') || 
+			  (string[strlen (string) - 1] == '?')) && (strlen (string) > 1)) || 
+			((strlen (string) > 2) && (string[strlen(string) - 2] == '?')) ||
+			((strlen (string) > 3) && (string[strlen(string) - 3] == '.')))
 		{	
 			quantity_s++;
 			last_w = 0;
 		}
-		if (((string[strlen(string) - 1] == '.') || (string[strlen(string) - 1] == '!') || (string[strlen(string) - 1] == '?')) && (last_w != 0))
+		if (((string[strlen (string) - 1] == '.') || (string[strlen (string) - 1] == '!') || 
+			(string[strlen (string) - 1] == '?')) && (last_w != 0))
 		{
 			quantity_s++;
 			last_w = 0;
