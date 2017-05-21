@@ -17,12 +17,15 @@ typedef struct List{
     MATRIX* cur;
 } List;
 
+void openFile(FILE **f, char*);
+void checkFile(FILE *f);
+int checkCommands(char* argv, int* toTrans, int* toMulti, int* toRang);
+
+void createMatrixList(FILE* f, List *List);
 void newMatrix(List*, int**);
 void checkColsMatrix(List* List, int lastCurCol, int CurCol);
-void createMatrixList(FILE* f, List *List);
-void openFile(FILE **f, char*);
-
 int ListCorrect(List* List);
+
 void transpose(List* List);
 
 void rankOfAllMatrices(List* List);
@@ -35,9 +38,7 @@ int min(int, int);
 int checkMulti(List* List);
 void multiAllMatrices(List* List);
 int** multiTwoMatrices(int** totalMatrix, int* totalMatrix_w, int totalMatrix_h, MATRIX*);
-void saveResult(int**, int, int);
 void printMatrixInFile(FILE *f, int**, int w, int h);
-int checkCommands(char* argv, int* toTrans, int* toMulti, int* toRang);
 
 int main(int argc, char** argv){
     // Для каждоай матрицы должен создаваться двумерный массив, 
@@ -46,13 +47,13 @@ int main(int argc, char** argv){
     FILE* f;
 
     openFile(&f, argv[1]);
+    checkFile(f);
     createMatrixList(f, &List);
     if (ListCorrect(&List) == 0)
         exit(1);
 
-    int toTrans = 0;
-    int toMulti = 0;
-    int toRang = 0;
+    int toTrans, toMulti, toRang;
+    toTrans = toMulti = toRang = 0;
 
     if (argc == 3)
         checkCommands(argv[2], &toTrans, &toMulti, &toRang);
@@ -60,15 +61,18 @@ int main(int argc, char** argv){
         printf("Arguments not found!\n");
         return -1;
     }
+    
+    if (toRang != 0)
+        rankOfAllMatrices(&List);
 
     if (toTrans != 0)
         transpose(&List);
     if (toMulti != 0)
         if (checkMulti(&List) != 0)
             multiAllMatrices(&List);
+        else
+            printf("Matrices not multiplied.\n");
 
-    if (toRang != 0)
-        rankOfAllMatrices(&List);
     return 0;
 }
 
@@ -86,6 +90,7 @@ void createMatrixList(FILE *f, List *List){
 
     fgetpos(f, &pos);
     symb = fgetc(f);
+    printf("Open create mtrix\n");
 
     while (1){
     	if (symb >= '0' && symb <= '9'){
@@ -93,6 +98,7 @@ void createMatrixList(FILE *f, List *List){
             switch (indentNumber){
                 case 0: 
         	        CurCol++;
+                    //List->cur->Cols = CurCol + 1;
                     m[CurLine] = (int*)realloc(m[CurLine], (CurCol + 1) * sizeof(int));
                     List->cur->ptr = m;
                     fscanf(f, "%d", &m[CurLine][CurCol]);
@@ -135,8 +141,10 @@ void createMatrixList(FILE *f, List *List){
             symb = fgetc(f);
         }
         else 
-        if (symb == EOF)
+        if (symb == EOF){
+            checkColsMatrix(List, lastCurCol, CurCol+1);
             break;
+        }
     }
 }
 
@@ -167,13 +175,22 @@ void checkColsMatrix(List* List, int lastCurCol, int CurCol){
 }
 
 void openFile(FILE **f, char* file_name){
-        (*f) = fopen(file_name, "r");
-        if ((*f) == NULL){
-            printf("No such file!\n");
-            printf("Opened example!\n");
-            (*f) = fopen("example", "r");
-            // exit(0);
-        }
+    (*f) = fopen(file_name, "r");
+    if ((*f) == NULL){
+        printf("No file.\n");
+        exit(-1);
+    }
+}
+
+void checkFile(FILE *file){
+    fseek(file, 0, SEEK_END);
+    long pos = ftell(file);
+    if (pos > 0)
+        rewind(file);
+    else {
+        printf("File is empty.\n");
+        exit(0);
+    }
 }
 
 int ListCorrect(List* List){
@@ -277,17 +294,17 @@ int findNumber(float **m, int w, int h, int cur_coord){
                     return 0;
                 else
                 if (i == cur_coord && j != cur_coord){
-                    swapLines(m, cur_coord, j, h);
+                    swapLines(m, cur_coord, j, w);
                     return 0; 
                 }
                 else
                 if(i != cur_coord && j == cur_coord){
-                    swapCols(m, cur_coord, i, w);
+                    swapCols(m, cur_coord, i, h);
                     return 0;
                 }
                 if (i != cur_coord && j != cur_coord){
-                    swapLines(m, cur_coord, j, h);
-                    swapCols(m, cur_coord, i, w);
+                    swapLines(m, cur_coord, j, w);
+                    swapCols(m, cur_coord, i, h);
                     return 0;
                 }
             }
@@ -357,19 +374,6 @@ int** multiTwoMatrices(int** totalMatrix, int* totalMatrix_w, int totalMatrix_h,
     return tmp;
 }
 
-void saveResult(int **matrix, int w, int h){
-    FILE *f = fopen("output", "w");
-    for (int i = 0; i < h; i++){
-        for (int j = 0; j < w; j++){
-            fprintf(f, "%d ", matrix[i][j]);
-            if (j == w-1)
-                fprintf(f, "\n");
-        }
-    }
-    fprintf(f,"\n");
-    fclose(f);
-}
-
 void printMatrixInFile(FILE *f, int** matrix, int w, int h){
     for (int i = 0; i < h; i++){
         for (int j = 0; j < w; j++){
@@ -408,7 +412,7 @@ int checkCommands(char* commands, int* toTrans, int* toMulti, int* toRang){
                     *toTrans = 1;
                 break;
             default:
-                printf("Invalid arguments!\n");
+                printf("Invalid arguments.\n");
                 return -1;
         }
     }
