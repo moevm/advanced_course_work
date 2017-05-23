@@ -11,7 +11,7 @@
 #include <time.h>
 #include <string.h>
 
-#define MAX_LENGTH_ARRAY_COMMANDS 10	                           	//!< Max length of generating array of commands
+#define MAX_LENGTH_ARRAY_COMMANDS 10	                         	//!< Max length of generating array of commands
 #define MAX_LENGTH_TOKEN 15				                           	//!< Max length of generating random token
 #define MIN_LENGTH_TOKEN 5				                  			//!< Min length of generating random token
 #define MAX_GROUP 1000					              				//!< Max generating group number
