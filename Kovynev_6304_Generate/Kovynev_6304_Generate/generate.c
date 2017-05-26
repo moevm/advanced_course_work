@@ -1,8 +1,8 @@
 /*
-* Файл generate.c
-* Создание 5 BMP изображений и текстового документа с числовыми данными
-* Автор: kovinevmv
-* 15.05.2017
+* File generate.c
+* Generate 5 Bitmap Images and Numeric Data Text Document
+* Written by kovinevmv
+* 26.05.2017
 */
 
 #include <stdio.h>
@@ -11,6 +11,14 @@
 #include <time.h>
 #include "struct.h"
 #include "rwBitmap.h"
+
+
+#define WIDTH      640        // Ширина изображения
+#define HEIGHT     360        // Высота изображения
+#define TYPE       0x4D42     // Тип файла (должен быть BM)
+#define SIZEINFO   40         // Размер структуры BITMAPINFOHEADER
+#define SIZEHEADER 14         // Размер структуры BITMAPFILEHEADER
+#define BITCOUNT   24         // Число битов на пиксель (24 бита)
 
 
 /*======================================================================
@@ -41,30 +49,26 @@ void addRectangleToBitmap(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBMP,
 /*======================================================================
 
   Функция createBitmapFile создает BMP изображение размерами
-  Width*Height, с номером fileNameIndex и цветом фона desiredColorRed,
+  WIDTH * HEIGHT, с номером fileNameIndex и цветом фона desiredColorRed,
   desiredColorGreen, desiredColorBlue, переданными данной функции
 */
-void createBitmapFile(int Width, int Height, char* fileNameIndex,
-	int desiredColorRed, int desiredColorGreen, int desiredColorBlue);
+void createBitmapFile(char* fileNameIndex, int desiredColorRed,
+	int desiredColorGreen, int desiredColorBlue);
 //======================================================================
 
 
 
 /*======================================================================
   Функция createTxtFile создает файл input.txt с командами.
-  Количество команд - 100.
+  Количество команд - 50.
 */
-void createTxtFile(int Width, int Height);
+void createTxtFile();
 //======================================================================
-
-
 
 int main()
 {
 	srand(time(NULL));
-	int Width = 640;        // Ширина изображения
-	int Height = 360;       // Высота изображения
-
+	
 	unsigned int desiredColorRed, desiredColorGreen, desiredColorBlue;
 
 	char fileNameIndex[3];  // Номер изображения
@@ -79,19 +83,19 @@ int main()
 		desiredColorBlue = rand() % 255;    //
 
 		// Создание изображения
-		createBitmapFile(Width, Height, fileNameIndex,
-			desiredColorRed, desiredColorGreen, desiredColorBlue);
+		createBitmapFile(fileNameIndex, desiredColorRed, desiredColorGreen, 
+			desiredColorBlue);
 	}
 
 	// Создание файла с командами
-	createTxtFile(Width, Height);
+	createTxtFile();
 
 	return 0;
 }
 
 
-void createBitmapFile(int Width, int Height, char* fileNameIndex,
-	int desiredColorRed, int desiredColorGreen, int desiredColorBlue)
+void createBitmapFile(char* fileNameIndex, int desiredColorRed, 
+	int desiredColorGreen, int desiredColorBlue)
 {
 	char fileName[30] = "./input_";   // Создание имени изображения 
 	strcat(fileName, fileNameIndex);  // с учетом его номера
@@ -103,27 +107,27 @@ void createBitmapFile(int Width, int Height, char* fileNameIndex,
 	BITMAPINFOHEADER infoBMP;
 
 	// Количество байтов необходимых для выравнивания изображения
-	int extraBytes = 4 - ((Width * 3) % 4);
+	int extraBytes = 4 - ((WIDTH * 3) % 4);
 	if (extraBytes == 4)
 	{
 		extraBytes = 0;
 	}
 
 	// Полный размер изображения с учетом байтов для выравнивания
-	int paddedSize = ((Width * 3) + extraBytes) * Height;
+	int paddedSize = ((WIDTH * 3) + extraBytes) * HEIGHT;
 
 	// Заполнение структур BMP изображения
-	headerBMP.bfType = 0x4D42;
-	headerBMP.bfSize = 54 + paddedSize;
+	headerBMP.bfType = TYPE;
+	headerBMP.bfSize = SIZEINFO + SIZEHEADER + paddedSize;
 	headerBMP.bfReserved1 = 0;
 	headerBMP.bfReserved2 = 0;
-	headerBMP.bfOffBits = 54;
+	headerBMP.bfOffBits = SIZEINFO + SIZEHEADER;
 
-	infoBMP.biSize = 40;
-	infoBMP.biWidth = Width;
-	infoBMP.biHeight = Height;
+	infoBMP.biSize = SIZEINFO;
+	infoBMP.biWidth = WIDTH;
+	infoBMP.biHeight = HEIGHT;
 	infoBMP.biPlanes = 1;
-	infoBMP.biBitCount = 24;
+	infoBMP.biBitCount = BITCOUNT;
 	infoBMP.biCompression = 0;
 	infoBMP.biSizeImage = paddedSize;
 	infoBMP.biXPelsPerMeter = 0;
@@ -132,10 +136,10 @@ void createBitmapFile(int Width, int Height, char* fileNameIndex,
 	infoBMP.biClrImportant = 0;
 
 	// Инициализация двумерного массива структур
-	RGBPIXEL** arrayRGB = (RGBPIXEL**)malloc(sizeof(RGBPIXEL*)*Height);
-	for (int i = 0; i < Height; i++)
+	RGBPIXEL** arrayRGB = (RGBPIXEL**)malloc(sizeof(RGBPIXEL*)*HEIGHT);
+	for (int i = 0; i < HEIGHT; i++)
 	{
-		arrayRGB[i] = (RGBPIXEL*)malloc(sizeof(RGBPIXEL)*Width);
+		arrayRGB[i] = (RGBPIXEL*)malloc(sizeof(RGBPIXEL)*WIDTH);
 	}
 	
 	// Вызов функции addColorToBitmap
@@ -143,8 +147,8 @@ void createBitmapFile(int Width, int Height, char* fileNameIndex,
 		desiredColorGreen, desiredColorBlue);
 
 	// Вызов функций addRectangleToBitmap
-	addRectangleToBitmap(arrayRGB, infoBMP, 25, 255, 255, 255);
-	addRectangleToBitmap(arrayRGB, infoBMP, 25, desiredColorRed,
+	addRectangleToBitmap(arrayRGB, infoBMP, 15, 255, 255, 255);
+	addRectangleToBitmap(arrayRGB, infoBMP, 15, desiredColorRed,
 		desiredColorGreen, desiredColorBlue);
 
 	// Запись данных BMP изображения
@@ -153,7 +157,7 @@ void createBitmapFile(int Width, int Height, char* fileNameIndex,
 	writeToBitmapRGB(outfileBMP, arrayRGB, infoBMP);
 
 	// Освобождение памяти
-	for (int i = 0; i < Height; i++)
+	for (int i = 0; i < HEIGHT; i++)
 	{
 		free(arrayRGB[i]);
 	}
@@ -213,8 +217,8 @@ void addRectangleToBitmap(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBMP,
 		// Инициализация размеров добавляемых прямоуголников
 		int RectangleX0Coordinates = rand() % (infoBMP.biWidth * 13 / 15 - 1);
 		int RectangleY0Coordinates = rand() % (infoBMP.biHeight * 13 / 15 - 1);
-		int RectangleWidth = rand() % (infoBMP.biWidth / 15) + 1;
-		int RectangleHeight = rand() % (infoBMP.biHeight / 15) + 1;
+		int RectangleWidth = rand() % (infoBMP.biWidth / 10) + 1;
+		int RectangleHeight = rand() % (infoBMP.biHeight / 10) + 1;
 
 		for (int i = RectangleY0Coordinates;
 			i < RectangleY0Coordinates + RectangleHeight; i++)
@@ -231,7 +235,7 @@ void addRectangleToBitmap(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBMP,
 
 }
 
-void createTxtFile(int Width, int Height)
+void createTxtFile()
 {
 	FILE* outfileTXT = fopen("./input.txt", "w");
 
@@ -285,16 +289,16 @@ void createTxtFile(int Width, int Height)
 			// Х0 должен быть больше, чем Х1
 			while (x0 >= x1)
 			{
-				x0 = rand() % Width;
-				x1 = rand() % Height;
+				x0 = rand() % WIDTH;
+				x1 = rand() % HEIGHT;
 			}
 
 			// Генерация коррекнтых координат по Y
 			// Y1 должен быть больше, чем Y0
 			while (y1 >= y0)
 			{
-				y0 = rand() % Width;
-				y1 = rand() % Height;
+				y0 = rand() % WIDTH;
+				y1 = rand() % HEIGHT;
 			}
 
 			// Запись правильных координат области изображения
