@@ -71,7 +71,7 @@ int main(int argc, char** argv){
         if (checkMulti(&List) != 0)
             multiAllMatrices(&List);
         else
-            printf("Matrices not multiplied.\n");
+            printf("Matrices are not multiplied.\n");
 
     return 0;
 }
@@ -90,7 +90,6 @@ void createMatrixList(FILE *f, List *List){
 
     fgetpos(f, &pos);
     symb = fgetc(f);
-    printf("Open create mtrix\n");
 
     while (1){
     	if (symb >= '0' && symb <= '9'){
@@ -209,7 +208,7 @@ int ListCorrect(List* List){
 }
 
 void transpose(List* List){
-    FILE *f = fopen("out_trans", "w");
+    FILE *f = fopen("ref_trans", "w");
     MATRIX* curPtr = List->head;
     while(curPtr){
         int **new = (int**)malloc(curPtr->Cols * sizeof(int*));
@@ -342,7 +341,7 @@ int checkMulti(List* List){
 }
 
 void multiAllMatrices(List* List){
-    FILE *f = fopen("out_multi", "w");
+    FILE *f = fopen("ref_multi", "w");
     MATRIX* curPtr = List->head;
     int **totalMatrix = List->head->ptr;
     int totalMatrix_h = List->head->Lines;
