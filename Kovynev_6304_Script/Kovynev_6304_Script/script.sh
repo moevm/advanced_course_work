@@ -1,8 +1,8 @@
 #!/bin/bash
 
-make -f makefile1
+make -f makefile_generate
 ./generate_main.out
-make -f makefile2
+make -f makefile_refsol
 gcc usersol.c
 
 clear
@@ -42,6 +42,7 @@ do
 			exit 0
 		fi
 	fi
+	echo "Test N$count - completed!"
 	let "count+=1"
 done
 
