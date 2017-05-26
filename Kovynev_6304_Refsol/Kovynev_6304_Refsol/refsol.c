@@ -2,7 +2,7 @@
 * Файл refsol.c
 * Обработка изображения в соответствии с переданными командами
 * Автор: kovinevmv
-* 16.05.2017
+* 26.05.2017
 */
 
 
@@ -10,25 +10,24 @@
 #include <string.h>
 #include <stdlib.h>
 #include "struct.h"
-#include "stack.h"
 #include "rwBitmap.h"
 
 
 /*======================================================================
-  Функция mirrorReflectionBitmap отражает по горизонтали двумерный 
-  массив цветов arrayRGB с учетом размеров изображения BMP из
-  структуры infoBitmap
+Функция mirrorReflectionBitmap отражает по горизонтали двумерный
+массив цветов arrayRGB с учетом размеров изображения BMP из
+структуры infoBitmap
 */
 void mirrorReflectionBitmap(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap);
 //======================================================================
 
 
 /*======================================================================
-  Функция drawBlackTriangle рисует прямоугольный треугольник в массиве
-  arrayRGB в заданной области (x0, y0, x1, y1) черным цветом. Прямой 
-  угол лежит в левом нижнем углу области, длина катетов определяется 
-  длиной стороны области, к которой они прилегают, и равна половине 
-  этой стороны.
+Функция drawBlackTriangle рисует прямоугольный треугольник в массиве
+arrayRGB в заданной области (x0, y0, x1, y1) черным цветом. Прямой
+угол лежит в левом нижнем углу области, длина катетов определяется
+длиной стороны области, к которой они прилегают, и равна половине
+этой стороны.
 */
 void drawBlackTriangle(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap,
 	int x0, int y0, int x1, int y1);
@@ -36,29 +35,54 @@ void drawBlackTriangle(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap,
 
 
 /*======================================================================
-  Функция searchWhiteRectangle находит в массиве arrayRGB самый 
-  большой белый прямоугольник и выводит координаты левого верхнего
-  угла и правого нижнего.
+Функция searchWhiteRectangle находит в массиве arrayRGB самый
+большой белый прямоугольник и выводит координаты левого верхнего
+угла и правого нижнего.
 */
 void searchWhiteRectangle(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap);
 //======================================================================
 
 
 /*======================================================================
-  Функция writeError печатает "Fail with ... " в зависимости от 
-  переданного аргумента errorCode (1 - input_file, 2 - x0, 3 - y0,
-  4 - x1, 5 - y1, 6 - commands)
+Функция writeError печатает "Fail with ... " в зависимости от
+переданного аргумента errorCode (1 - input_file, 2 - x0, 3 - y0,
+4 - x1, 5 - y1, 6 - commands)
 */
 void writeError(int errorCode);
 //======================================================================
 
 
 /*======================================================================
-  Функция isCorrectCommands проверяет корректность введенных данных
-  массива слов (команд) data длиной lenght. В случае ошибки вызывает 
-  функцию writeError и возвращает 1, в противном случае - 0
+Функция isCorrectCommands проверяет корректность введенных данных
+массива слов (команд) data длиной lenght. В случае ошибки вызывает
+функцию writeError и возвращает 1, в противном случае - 0
 */
 int isCorrectCommands(char** data, int lenght, BITMAPINFOHEADER infoBitmap);
+//======================================================================
+
+
+/*======================================================================
+Структура RECTANGWHITEAREAOPTIONS описывает параметры найденной
+прямоугольной белой области: координаты по оси X,Y и площадь
+*/
+typedef struct RECTANGWHITEAREAOPTIONS
+{
+	int x0;
+	int y0;
+	int x1;
+	int y1;
+	int area;
+};
+//======================================================================
+
+
+/*======================================================================
+Функция maxHistogramArea ищет максимальную прямоугольную площадь
+под заданной гистограммой histogram и возвращает структуру
+RECTANGWHITEAREAOPTIONS, заполненную координатами по оси X и
+длину прямоугольника по оси Y
+*/
+RECTANGWHITEAREAOPTIONS maxHistogramArea(int* histogram, int Height);
 //======================================================================
 
 
@@ -128,33 +152,34 @@ int main()
 	{
 		switch (atoi(data[i]))
 		{
-			case 1:
-			{
-				searchWhiteRectangle(arrayRGB, infoBitmap);
-				break;
-			}
-			case 2:
-			{
-				drawBlackTriangle(arrayRGB, infoBitmap,
+		case 1:
+		{
+			searchWhiteRectangle(arrayRGB, infoBitmap);
+			break;
+		}
+		case 2:
+		{
+			drawBlackTriangle(arrayRGB, infoBitmap,
 				atoi(data[1]), atoi(data[2]),
 				atoi(data[3]), atoi(data[4]));
-				break;
-			}
-			case 3:
-			{
-				mirrorReflectionBitmap(arrayRGB, infoBitmap);
-				break;
-			}
-			case 4:
-			{
-				FILE* outFile = fopen("./refsol.bmp", "wb");
+			break;
+		}
+		case 3:
+		{
+			mirrorReflectionBitmap(arrayRGB, infoBitmap);
+			break;
+		}
+		case 4:
+		{
+			FILE* outFile = fopen("./refsol.bmp", "wb");
 
-				// Запись данных BMP изображения
-				writeToBitmapHeader(outFile, headerBitmap);
-				writeToBitmapInfo(outFile, infoBitmap);
-				writeToBitmapRGB(outFile, arrayRGB, infoBitmap);
-				fclose(outFile);
-			}
+			// Запись данных BMP изображения
+			writeToBitmapHeader(outFile, headerBitmap);
+			writeToBitmapInfo(outFile, infoBitmap);
+			writeToBitmapRGB(outFile, arrayRGB, infoBitmap);
+			fclose(outFile);
+			break;
+		}
 		}
 	}
 
@@ -174,7 +199,6 @@ int main()
 
 void mirrorReflectionBitmap(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap)
 {
-
 	RGBPIXEL temp;  // Переменная для обмена пикселями
 
 	for (int i = 0; i < infoBitmap.biHeight; i++)
@@ -222,88 +246,97 @@ void drawBlackTriangle(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap,
 void searchWhiteRectangle(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap)
 {
 
-	Stack* stack = NULL;
-
-	int maximumArea = 0;
-	int y1 = 0;
-	int x1 = 0;
-	int y0 = 0;
-	int x0 = 0;
-	
-
-	int* dl = (int*)malloc(sizeof(int)*infoBitmap.biWidth);
-	int* dr = (int*)malloc(sizeof(int)*infoBitmap.biWidth);
-	int* d  = (int*)malloc(sizeof(int)*infoBitmap.biWidth);
-	for (int i = 0; i < infoBitmap.biWidth; i++)
-	{
-		d[i]  = -1;
-		dr[i] = -1;
-		dl[i] = -1;
-	}
-
-
+	// Создаем вспомогательный двумерный массив с такими же размерами, что и изображение
+	int** addArrayForRGB = (int**)malloc(sizeof(int**)*infoBitmap.biHeight);
 	for (int i = 0; i < infoBitmap.biHeight; i++)
 	{
+		addArrayForRGB[i] = (int*)malloc(sizeof(int)*infoBitmap.biWidth);
+	}
 
 
+	// Заполняем его следующим образом: 1 - если пиксель белый
+	//									0 - если пиксель не белый
+	for (int i = 0; i < infoBitmap.biHeight; i++)
+	{
 		for (int j = 0; j < infoBitmap.biWidth; j++)
 		{
-			if (!((arrayRGB[i][j].rgbBlue  == 255) &&
-				  (arrayRGB[i][j].rgbRed   == 255) &&
-				  (arrayRGB[i][j].rgbGreen == 255)))
+			if (arrayRGB[i][j].rgbBlue == 255 && arrayRGB[i][j].rgbRed == 255
+				&& arrayRGB[i][j].rgbGreen == 255)
 			{
-				d[j] = i;
+				addArrayForRGB[i][j] = 1;
 			}
+			else addArrayForRGB[i][j] = 0;
 		}
-
-		while (!empty(stack))
-		{
-			pop(&stack);
-		}
+	}
 
 
+	// Выполняем поиск области для гистограммы первой строки
+	RECTANGWHITEAREAOPTIONS m_Rectang = maxHistogramArea(addArrayForRGB[0], infoBitmap.biHeight);
+
+
+	int result = m_Rectang.area;
+	for (int i = 1; i < infoBitmap.biHeight; i++)
+	{
+		// Создаем новую гистограмму для новой строки
 		for (int j = 0; j < infoBitmap.biWidth; j++)
+			if (addArrayForRGB[i][j])
+				addArrayForRGB[i][j] += addArrayForRGB[i - 1][j];
+
+		// Выполняем поиск области для текущей гистограммы
+		RECTANGWHITEAREAOPTIONS newRectang =
+			maxHistogramArea(addArrayForRGB[i], infoBitmap.biHeight);
+
+		// Сравниваем результаты и сохраняем структуру с максимальной областью
+		if (newRectang.area >= result)
 		{
-			while (!empty(stack) && d[top(stack)] <= d[j])
+			m_Rectang = newRectang;
+			m_Rectang.y1 = i;
+			result = m_Rectang.area;
+		}
+
+	}
+
+	// Высчитываем координату Y0
+	m_Rectang.y0 = m_Rectang.y1 - m_Rectang.y0 + 1;
+
+	printf("%d\n%d\n%d\n%d\n", m_Rectang.x0, m_Rectang.y0, m_Rectang.x1, m_Rectang.y1);
+
+	// Очистка памяти
+	for (int i = 0; i < infoBitmap.biHeight; i++)
+	{
+		free(addArrayForRGB[i]);
+	}
+	free(addArrayForRGB);
+
+}
+
+RECTANGWHITEAREAOPTIONS maxHistogramArea(int* histogram, int length)
+{
+	RECTANGWHITEAREAOPTIONS m_Rectang;
+	int maxArea = 0;
+
+	// Перебором находим максимальную площадь под гистограммой
+	for (int i = 0; i < length; i++)
+	{
+		int lenghtYSize = histogram[i];
+		for (int j = i; j < length; j++)
+		{
+			if (lenghtYSize > histogram[j])
 			{
-				pop(&stack);
+				lenghtYSize = histogram[j];
 			}
-
-			dl[j] = empty(stack) ? -1 : top(stack);
-			push(&stack, j);
-		}
-
-		while (!empty(stack))
-		{
-			pop(&stack);
-		}
-
-		for (int j = infoBitmap.biWidth - 1; j >= 0; --j)
-		{
-			while (!empty(stack) && d[top(stack)] <= d[j])
+			if ((j - i + 1) * lenghtYSize >= maxArea)
 			{
-				pop(&stack);
-			}
-
-			dr[j] = empty(stack) ? infoBitmap.biHeight : top(stack);
-			push(&stack, j);
-
-		}
-		for (int j = 0; j < infoBitmap.biWidth; ++j)
-		{
-			if ((i - d[j]) * (dr[j] - dl[j] - 1) >= maximumArea)
-			{
-				maximumArea = (i - d[j]) * (dr[j] - dl[j] - 1);
-				y1 = i;
-				y0 = d[j];
-				x1 = dr[j];
-				x0 = dl[j];
+				maxArea = (j - i + 1) * lenghtYSize;
+				m_Rectang.x0 = i;
+				m_Rectang.x1 = j;
+				m_Rectang.y0 = lenghtYSize;
 			}
 		}
 	}
 
-	printf("%d\n%d\n%d\n%d\n", x0 + 1, y0 + 1, x1 - 1, y1);
-
+	m_Rectang.area = maxArea;
+	return m_Rectang;
 }
 
 void writeError(int errorCode)
@@ -325,11 +358,11 @@ int isCorrectCommands(char** data, int lenght, BITMAPINFOHEADER infoBitmap)
 {
 
 	// Имя файла - один из 5 вариантов
-	if (!((data[0] = "./input_1.bmp") ||
-              (data[0] = "./input_2.bmp") ||
-  	      (data[0] = "./input_3.bmp") ||
-	      (data[0] = "./input_4.bmp") ||
-	      (data[0] = "./input_5.bmp")))
+	if (!((data[0] == "./input_1.bmp") ||
+		(data[0] == "./input_2.bmp") ||
+		(data[0] == "./input_3.bmp") ||
+		(data[0] == "./input_4.bmp") ||
+		(data[0] == "./input_5.bmp")))
 	{
 		writeError(1);
 		return 0;
