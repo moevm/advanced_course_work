@@ -4,6 +4,8 @@ make
 ./Generator
 
 count=0
+bad_result=1
+
 cat commands.txt|while read line
 do
 
@@ -22,19 +24,27 @@ do
 	if [[ "$refsol_stdout" !=  "$usersol_stdout" ||
 		-n "$refsol_fileout" && -n "$usersol_fileout" && "$refsol_fileout" != "$usersol_fileout" ]]
 	then
-		echo "Fail test $count"
-		echo "Correct out put: $refsol_stdout"
+		count=$(( $count + 1))
+		echo "Fail test $count "
+		echo "Correct output: $refsol_stdout"
 		echo "Your output: $usersol_stdout"
+	
 		rm Generator Refsol Usersol input_file_1.csv input_file_2.csv commands.txt
 		if [[ -e results.csv ]]
 		then
 			rm results.csv
 		fi
+	
 		exit 1
 	fi
 
 	count=$(( $count + 1 ))
 done
+
+if [[ $? -eq $bad_result ]]
+then
+	exit 1
+fi
 
 rm Generator Refsol Usersol input_file_1.csv input_file_2.csv commands.txt
 if [[ -e results.csv ]]
