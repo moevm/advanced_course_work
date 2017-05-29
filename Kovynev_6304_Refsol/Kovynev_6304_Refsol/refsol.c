@@ -2,7 +2,7 @@
 * Файл refsol.c
 * Обработка изображения в соответствии с переданными командами
 * Автор: kovinevmv
-* 26.05.2017
+* 29.05.2017
 */
 
 
@@ -62,27 +62,28 @@ int isCorrectCommands(char** data, int lenght, BITMAPINFOHEADER infoBitmap);
 
 
 /*======================================================================
-Структура RECTANGWHITEAREAOPTIONS описывает параметры найденной
+Структура RECTANGLECOORDINATES описывает параметры найденной
 прямоугольной белой области: координаты по оси X,Y и площадь
 */
-typedef struct RECTANGWHITEAREAOPTIONS
+typedef struct 
 {
 	int x0;
 	int y0;
 	int x1;
 	int y1;
 	int area;
-};
+	
+} RECTANGLECOORDINATES;
 //======================================================================
 
 
 /*======================================================================
 Функция maxHistogramArea ищет максимальную прямоугольную площадь
 под заданной гистограммой histogram и возвращает структуру
-RECTANGWHITEAREAOPTIONS, заполненную координатами по оси X и
+RECTANGLECOORDINATES, заполненную координатами по оси X и
 длину прямоугольника по оси Y
 */
-RECTANGWHITEAREAOPTIONS maxHistogramArea(int* histogram, int Height);
+RECTANGLECOORDINATES maxHistogramArea(int* histogram, int Height);
 //======================================================================
 
 
@@ -255,7 +256,7 @@ void searchWhiteRectangle(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap)
 
 
 	// Заполняем его следующим образом: 1 - если пиксель белый
-	//									0 - если пиксель не белый
+	//				    0 - если пиксель не белый
 	for (int i = 0; i < infoBitmap.biHeight; i++)
 	{
 		for (int j = 0; j < infoBitmap.biWidth; j++)
@@ -271,8 +272,7 @@ void searchWhiteRectangle(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap)
 
 
 	// Выполняем поиск области для гистограммы первой строки
-	RECTANGWHITEAREAOPTIONS m_Rectang = maxHistogramArea(addArrayForRGB[0], infoBitmap.biHeight);
-
+	RECTANGLECOORDINATES m_Rectang = maxHistogramArea(addArrayForRGB[0], infoBitmap.biWidth);
 
 	int result = m_Rectang.area;
 	for (int i = 1; i < infoBitmap.biHeight; i++)
@@ -283,8 +283,8 @@ void searchWhiteRectangle(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap)
 				addArrayForRGB[i][j] += addArrayForRGB[i - 1][j];
 
 		// Выполняем поиск области для текущей гистограммы
-		RECTANGWHITEAREAOPTIONS newRectang =
-			maxHistogramArea(addArrayForRGB[i], infoBitmap.biHeight);
+		RECTANGLECOORDINATES newRectang =
+			maxHistogramArea(addArrayForRGB[i], infoBitmap.biWidth);
 
 		// Сравниваем результаты и сохраняем структуру с максимальной областью
 		if (newRectang.area >= result)
@@ -310,9 +310,9 @@ void searchWhiteRectangle(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap)
 
 }
 
-RECTANGWHITEAREAOPTIONS maxHistogramArea(int* histogram, int length)
+RECTANGLECOORDINATES maxHistogramArea(int* histogram, int length)
 {
-	RECTANGWHITEAREAOPTIONS m_Rectang;
+	RECTANGLECOORDINATES m_Rectang;
 	int maxArea = 0;
 
 	// Перебором находим максимальную площадь под гистограммой
@@ -358,11 +358,11 @@ int isCorrectCommands(char** data, int lenght, BITMAPINFOHEADER infoBitmap)
 {
 
 	// Имя файла - один из 5 вариантов
-	if (!((data[0] == "./input_1.bmp") ||
-		(data[0] == "./input_2.bmp") ||
-		(data[0] == "./input_3.bmp") ||
-		(data[0] == "./input_4.bmp") ||
-		(data[0] == "./input_5.bmp")))
+	if (!strcmp(data[0], "./input_1.bmp") &&
+		!strcmp(data[0], "./input_2.bmp") &&
+		!strcmp(data[0], "./input_3.bmp") &&
+		!strcmp(data[0], "./input_4.bmp") &&
+		!strcmp(data[0], "./input_5.bmp"))
 	{
 		writeError(1);
 		return 0;
