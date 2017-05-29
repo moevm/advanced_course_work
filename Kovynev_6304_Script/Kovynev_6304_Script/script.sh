@@ -31,21 +31,27 @@ do
 		echo "$usersol"
 		echo "Correct output:"
 		echo "$refsol"
-		rm -f *.txt *.bmp *.out
-		exit 0
+		exit 1
 	else
 		if [[ "$userbmp" != "$refsolbmp" ]]
 		then
 			echo "Fail test N$count"
 			echo "Not correct BMP image"
-			rm -f *.txt *.bmp *out
-			exit 0
+			exit 1
 		fi
 	fi
 	echo "Test N$count - completed!"
 	let "count+=1"
 done
 
+
+
+if [[ $? -ne 1 ]]
+then
+	echo "Successfully!"
+else
+	echo "Error!"
+fi
+
 rm -f *.txt *.out *.bmp
-echo "Test End"
 
