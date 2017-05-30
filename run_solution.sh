@@ -2,7 +2,7 @@
 
 delete_all() 
 {
-rm -f testcase Gen.exe Sol.exe uSol.exe commands
+rm -f testcase Gen.exe Sol.exe uSol.exe GetCommand.exe commands
 rm -f ref_trans ref_multi
 rm -f trans multi
 rm -f console_logs user_console_logs   
@@ -31,7 +31,7 @@ if [ -f "ref_trans" ]
 then
     if [ -f "trans" ]
     then
-        if ! cmp -s multi ref_multi 
+        if ! cmp -s trans ref_trans 
         then
             echo "Failed with test #$current_test"
             echo "Transpose is wrong."
@@ -103,6 +103,10 @@ fi
 
 test_no_file()
 {
+if [ $DEBUG == 1 ]
+then
+    echo "Test $current_test: testing NO FILE..."
+fi
 ./Sol.exe no_file 1234 > console_logs
 ./uSol no_file 1234 > user_console_logs
 check_console
@@ -114,6 +118,10 @@ let "current_test+=1"
 
 test_empty_file()
 {
+if [ $DEBUG == 1 ]
+then
+    echo "Test $current_test: testing EMPTY FILE..."
+fi
 touch empty
 ./Sol.exe empty 1234 > console_logs
 ./uSol.exe empty 1234 > user_console_logs
@@ -134,9 +142,17 @@ let "number_of_tests+=1"
 while [ $current_line -lt $number_of_tests ]
 do
     arg=$( sed -n "$current_line"p commands )
-echo "$1 arguments in test $current_test !"
-echo "Arg is $arg"
-    ./Gen.exe
+    if [ $DEBUG == 1 ]
+    then
+        echo "Test $current_test: testing RANDOM ARG = $arg..."
+    fi
+    let tmp=$current_line%2
+    if [ $tmp == 0 ]
+    then
+        ./Gen.exe 1
+    else
+        ./Gen.exe 0
+    fi
     ./Sol.exe testcase "$arg" > console_logs
     ./uSol.exe testcase "$arg" > user_console_logs
     check_console
@@ -158,44 +174,63 @@ let "max_arg_numb+=1"
 while [ $cur_arg_numb -lt $max_arg_numb ]
 do
     test_arg "$cur_arg_numb"
-    echo
-    echo
     let "cur_arg_numb+=1"
 done
 }
 
+DEBUG=0
 current_test=1
+
+if [ ! -z "$1" ]
+then
+    if [ "$1" == debug ]
+    then 
+        let "DEBUG=1"
+    fi
+fi
+
+if [ $DEBUG == 1 ]
+then
+    echo "Debug mode has been enabled!"
+fi
 
 gcc gencommands.c -o GetCommand.exe
 gcc refsol.c -o Sol.exe
 gcc generate.c -o Gen.exe
-gcc usersol_inc_trans.c -o uSol.exe
+gcc usersol_correct.c -o uSol.exe
 
 test_random_arguments
-echo "test no file test number $current_test"
 test_no_file
-echo "test empty file test number $current_test"
 test_empty_file
 
-REPEATS=5
+REPEATS=20
 let "REPEATS+=current_test"
 while [ $current_test -lt $REPEATS ]
 do
-    echo "testing... test number is $current_test ." 
- ./Gen.exe
+    if [ $DEBUG == 1 ]
+    then
+        echo "Test $current_test: testing NORMAL ARG = 1234..."
+    fi
+    let tmp=$current_test%2
+    if [ $tmp == 0 ]
+    then
+        ./Gen.exe 1
+    else
+        ./Gen.exe 0
+    fi
  ./Sol.exe testcase 1234 > console_logs
- ./uSol.exe testcase 1234 > user_console_logs
+ ./uSol.exe testcase 1234 > user_console_logs   
 
 check_console
 check_multi
 check_trans
 
-rm -f testcase ref_trans ref_multi console_logs user_console_logs
+rm -f testcase ref_trans ref_multi console_logs user_console_logs multi trans
 
 let "current_test+=1"
 done
 
 delete_all
-
+echo "Well done! All tests passed!"
 
 exit 0

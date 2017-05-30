@@ -76,6 +76,40 @@ int main(int argc, char** argv){
     return 0;
 }
 
+int checkCommands(char* commands, int* toTrans, int* toMulti, int* toRang){
+    int length = strlen(commands);
+    int pos_1, pos_2, pos_3, pos_4;
+    pos_1 = pos_2 = pos_3 = pos_4 = -1;
+
+    for (int i = 0; i < length; i++){
+        switch (commands[i]){
+            case '1':
+                if (pos_1 == -1)
+                    pos_1 = i;
+                break;
+            case '2':
+                if (pos_2 == -1)
+                    pos_2 = i;
+                break;
+            case '3':
+                if (pos_3 == -1)
+                    *toRang = 1;
+                break;
+            case '4':
+                pos_4 = i;
+                if (pos_1 < pos_4 && pos_1 != -1)  
+                    *toMulti = 1;
+                if (pos_2 < pos_4 && pos_2 != -1)
+                    *toTrans = 1;
+                break;
+            default:
+                printf("Invalid arguments.\n");
+                return -1;
+        }
+    }
+    return 0;
+}
+
 void createMatrixList(FILE *f, List *List){
     char symb;
     fpos_t pos;
@@ -97,7 +131,6 @@ void createMatrixList(FILE *f, List *List){
             switch (indentNumber){
                 case 0: 
         	        CurCol++;
-                    //List->cur->Cols = CurCol + 1;
                     m[CurLine] = (int*)realloc(m[CurLine], (CurCol + 1) * sizeof(int));
                     List->cur->ptr = m;
                     fscanf(f, "%d", &m[CurLine][CurCol]);
@@ -382,39 +415,4 @@ void printMatrixInFile(FILE *f, int** matrix, int w, int h){
         }
     }
     fprintf(f,"\n");
-}
-
-int checkCommands(char* commands, int* toTrans, int* toMulti, int* toRang){
-    int length = strlen(commands);
-    int pos_1, pos_2, pos_3, pos_4;
-    pos_1 = pos_2 = pos_3 = pos_4 = -1;
-
-    for (int i = 0; i < length; i++){
-        switch (commands[i]){
-            case '1':
-                if (pos_1 == -1)
-                    pos_1 = i;
-                break;
-            case '2':
-                if (pos_2 == -1)
-                    pos_2 = i;
-                break;
-            case '3':
-                if (pos_3 == -1)
-                    *toRang = 1;
-                break;
-            case '4':
-                pos_4 = i;
-                if (pos_1 < pos_4 && pos_1 != -1)  
-                    *toMulti = 1;
-                if (pos_2 < pos_4 && pos_2 != -1)
-                    *toTrans = 1;
-                break;
-            default:
-                printf("Invalid arguments.\n");
-                return -1;
-        }
-    }
-
-    return 0;
 }

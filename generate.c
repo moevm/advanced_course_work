@@ -23,17 +23,15 @@ int main(int argc, char* argv[]){
     int isCorrectMatrix = 0;
     switch (argv[1][0]){
         case '0':
-            printf("Incorrect will be generated\n");
             isCorrectMatrix = 0;
             break;
         case '1':
-            printf("Correct will be generated!\n");
             isCorrectMatrix = 1;
             break;
         default:
             printf("Wrong generation arguments!\n");
-            break; 
             exit(1);
+            break; 
     }
     FILE *f = fopen("testcase", "w");
 
