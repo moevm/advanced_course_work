@@ -24,9 +24,11 @@ int main(int argc, char* argv[]){
     switch (argv[1][0]){
         case '0':
             isCorrectMatrix = 0;
+            printf("Incorrect generated.\n");
             break;
         case '1':
             isCorrectMatrix = 1;
+            printf("Correct generated.\n");
             break;
         default:
             printf("Wrong generation arguments!\n");

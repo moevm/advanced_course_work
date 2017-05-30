@@ -197,11 +197,11 @@ fi
 gcc gencommands.c -o GetCommand.exe
 gcc refsol.c -o Sol.exe
 gcc generate.c -o Gen.exe
-gcc usersol_correct.c -o uSol.exe
+gcc usersol_inc_multi.c -o uSol.exe
 
-test_random_arguments
 test_no_file
 test_empty_file
+test_random_arguments
 
 REPEATS=20
 let "REPEATS+=current_test"
@@ -225,7 +225,9 @@ check_console
 check_multi
 check_trans
 
-rm -f testcase ref_trans ref_multi console_logs user_console_logs multi trans
+rm -f testcase console_logs user_console_logs
+rm -f ref_trans ref_multi
+rm -f multi trans
 
 let "current_test+=1"
 done
