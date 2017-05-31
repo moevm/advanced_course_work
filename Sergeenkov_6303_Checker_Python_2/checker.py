@@ -4,12 +4,15 @@ import os
 import random
 import string
 import fnmatch
+import shutil
 
+#Управление количеством тестов
+TESTS = 20
 #Управление максимальной длиной пути
-MAX_PATH_LEN = 200
+MAX_PATH_LEN = 100
 #Управление размером названия файла
 MIN_FILENAME = 1
-MAX_FILENAME = 20
+MAX_FILENAME = 4
 #Управление количеством директорий на текущем уровне
 MIN_DIRS = 1
 MAX_DIRS = 3
@@ -23,11 +26,11 @@ MAX_FILES = 3
 MIN_TEXT_LEN = 1
 MAX_TEXT_LEN = 3
 #Управление диапазоном чисел
-MIN_NUMBER = -2147483648
-MAX_NUMBER = 2147483647
+MIN_NUMBER = -100
+MAX_NUMBER = 100
 #Управление длиной названий директорий
 MIN_DIR_NAME = 1
-MAX_DIR_NAME = 5
+MAX_DIR_NAME = 4
 
 #Функция генерирует название файла
 def generateFileName():
@@ -46,13 +49,8 @@ def generateString(min, max):
 
 #Функция генерирует случайное число для файла
 def generateNumber():
-    #Выбор, целое или вещественное число возвращать
-    if random.random():
         result = int(random.randint(MIN_NUMBER, MAX_NUMBER))
-    else:
-        result = float(random.uniform(MIN_NUMBER, MAX_NUMBER))
-    return result
-
+        return result
 #Функция генерирует содержимое файла
 def generateFileContent():
     result = str(generateNumber()) + " " + generateString(MIN_TEXT_LEN, MAX_TEXT_LEN)
@@ -111,5 +109,23 @@ def solve(root_dir):
              solution += "\n"
     return solution
 
-def check(reply, clue):
-    return str(reply) == str(clue)
+def clean():
+    shutil.rmtree(os.getcwd()+"/Cases/")
+    os.remove('./solution')
+    os.remove('./result_file')
+
+def check():
+    for x in range(TESTS):
+        generate()
+        clue = solve('./Cases')
+        os.system('gcc solution.c -o solution')
+        os.system('./solution > result_file')
+        result_file = open('./result_file', 'r')
+        reply = str(result_file.read())
+        if (reply != clue):
+            print("Test {} - correct".format(x))
+        else:
+            print('Failed test {}'.format(x))
+            break
+    clean()
+check()
