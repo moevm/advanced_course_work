@@ -2,7 +2,7 @@
 * Файл refsol.c
 * Обработка изображения в соответствии с переданными командами
 * Автор: kovinevmv
-* 29.05.2017
+* 31.05.2017
 */
 
 
@@ -72,7 +72,6 @@ typedef struct
 	int x1;
 	int y1;
 	int area;
-	
 } RECTANGLECOORDINATES;
 //======================================================================
 
@@ -247,44 +246,37 @@ void drawBlackTriangle(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap,
 void searchWhiteRectangle(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap)
 {
 
-	// Создаем вспомогательный двумерный массив с такими же размерами, что и изображение
-	int** addArrayForRGB = (int**)malloc(sizeof(int**)*infoBitmap.biHeight);
-	for (int i = 0; i < infoBitmap.biHeight; i++)
-	{
-		addArrayForRGB[i] = (int*)malloc(sizeof(int)*infoBitmap.biWidth);
-	}
-
+	// Создаем вспомогательный одномерный массив такой же длины, что и изображение
+	int* addArrayForRGB = (int*)malloc(sizeof(int*)*infoBitmap.biWidth);
 
 	// Заполняем его следующим образом: 1 - если пиксель белый
 	//				    0 - если пиксель не белый
-	for (int i = 0; i < infoBitmap.biHeight; i++)
+	for (int i = 0; i < infoBitmap.biWidth; i++)
 	{
-		for (int j = 0; j < infoBitmap.biWidth; j++)
-		{
-			if (arrayRGB[i][j].rgbBlue == 255 && arrayRGB[i][j].rgbRed == 255
-				&& arrayRGB[i][j].rgbGreen == 255)
-			{
-				addArrayForRGB[i][j] = 1;
-			}
-			else addArrayForRGB[i][j] = 0;
-		}
+		if (arrayRGB[0][i].rgbBlue == 255 && arrayRGB[0][i].rgbRed == 255
+			&& arrayRGB[0][i].rgbGreen == 255)
+			addArrayForRGB[i] = 1;
+		else
+			addArrayForRGB[i] = 0;
 	}
 
 
 	// Выполняем поиск области для гистограммы первой строки
-	RECTANGLECOORDINATES m_Rectang = maxHistogramArea(addArrayForRGB[0], infoBitmap.biWidth);
+	RECTANGLECOORDINATES m_Rectang = maxHistogramArea(addArrayForRGB, infoBitmap.biWidth);
 
 	int result = m_Rectang.area;
 	for (int i = 1; i < infoBitmap.biHeight; i++)
 	{
 		// Создаем новую гистограмму для новой строки
 		for (int j = 0; j < infoBitmap.biWidth; j++)
-			if (addArrayForRGB[i][j])
-				addArrayForRGB[i][j] += addArrayForRGB[i - 1][j];
+			if (arrayRGB[i][j].rgbBlue == 255 && arrayRGB[i][j].rgbRed == 255
+				&& arrayRGB[i][j].rgbGreen == 255)
+				addArrayForRGB[j]++;
+			else addArrayForRGB[j] = 0;
 
 		// Выполняем поиск области для текущей гистограммы
 		RECTANGLECOORDINATES newRectang =
-			maxHistogramArea(addArrayForRGB[i], infoBitmap.biWidth);
+			maxHistogramArea(addArrayForRGB, infoBitmap.biWidth);
 
 		// Сравниваем результаты и сохраняем структуру с максимальной областью
 		if (newRectang.area >= result)
@@ -302,10 +294,6 @@ void searchWhiteRectangle(RGBPIXEL** arrayRGB, BITMAPINFOHEADER infoBitmap)
 	printf("%d\n%d\n%d\n%d\n", m_Rectang.x0, m_Rectang.y0, m_Rectang.x1, m_Rectang.y1);
 
 	// Очистка памяти
-	for (int i = 0; i < infoBitmap.biHeight; i++)
-	{
-		free(addArrayForRGB[i]);
-	}
 	free(addArrayForRGB);
 
 }
