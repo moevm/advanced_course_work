@@ -53,7 +53,11 @@ int main()
 					}
 				else
 					{
+<<<<<<< HEAD
 						fprintf(file, "%d.%d ",k*arr[j],RandCount(MAX_ELEMENT,0));
+=======
+						fprintf(file, "%d ",k*arr[j]);
+>>>>>>> a37b62c434765fdf56a9cc0350decc5161ede74e
 					}
 				}
 				fprintf(file, "\n");
