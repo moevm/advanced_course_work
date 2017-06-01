@@ -56,10 +56,7 @@ int main(int argc, char* argv[])
 	ReadTable2(Table2,&Data2);
 	CombineTables(&Data1,&Data2,&Data);
 	if (Data1.len < 1 || Data2.len < 1 || Data.len < 1)
-	{
-		printf("Fail with data\n");
 		return 1;
-	}
 
 	qsort(Data.vector_ptr,Data.len,sizeof(Table),(int (*)(const void*,const void*))CompareTable);
 

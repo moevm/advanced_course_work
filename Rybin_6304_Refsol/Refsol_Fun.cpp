@@ -51,7 +51,7 @@ void ReadTable1(FILE* stream,Vector* data)
 void ReadTable2(FILE* stream,Vector* data)
 {
 	int count = 0;
-	char buf[MAX_LENGTH_TOKEN * 2 + 10]; // Five fields and integer(INT_MAX have 10 signs)
+	char buf[MAX_LENGTH_TOKEN * 2 + 10]; // Two fields and integer(INT_MAX have 10 signs)
 
     memset(data->vector_ptr, 0 , sizeof(data->vector_ptr));
 
@@ -205,7 +205,7 @@ int ParseString(Table* obj,char* buf,int param)
 			obj->exam_result = atoi(buf_ptr);
 
 			buf_ptr = strtok(NULL,",");
-			if(buf_ptr) return -1; // if something extra int buf
+			if(buf_ptr) return -1; // if something extra in buf
 
 			return 1;
 		}
@@ -227,7 +227,7 @@ int ParseString(Table* obj,char* buf,int param)
 		obj->group = atoi(buf_ptr);
 
 		buf_ptr = strtok(NULL,",");
-		if(buf_ptr) return -1; // if something extra int buf
+		if(buf_ptr) return -1; // if something extra in buf
 
 	return 1;
 }
