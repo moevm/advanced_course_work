@@ -31,6 +31,8 @@ void  GenerateToken(char* random_token)
 Vector GenerateRandomVector()
 {
     Vector info;
+	memset(info.vector_ptr, 0, sizeof(info.vector_ptr));
+
 	info.len = MIN_LINES + rand() % (MAX_LINES - MIN_LINES);
 
 	for (int i = 0; i < info.len; i++)
@@ -42,7 +44,6 @@ Vector GenerateRandomVector()
 		GenerateToken(info.vector_ptr[i].patronymic);
 		info.vector_ptr[i].group = 1 + rand() % MAX_GROUP;
 		info.vector_ptr[i].exam_result = 1 + rand() % MAX_EXAM_RESULT;
-		info.vector_ptr[i].flag = 0;
     }
 	return info;
 }
