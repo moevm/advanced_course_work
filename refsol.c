@@ -3,54 +3,77 @@
 #include <string.h>
 #include <math.h>
 #include <float.h>
+#define size_of_new_mem_block 8
 
-typedef struct matrix{
+typedef struct Matrix{
     int Cols;
     int Lines;
     int** ptr;
     int isError;
-    struct matrix *next;
 } MATRIX;
 
+typedef struct Node{
+    MATRIX data;
+    struct Node *next;
+} NODE;
+
 typedef struct List{
-    MATRIX* head;
-    MATRIX* cur;
+    NODE *head;
+    NODE *cur;
 } List;
 
-void openFile(FILE **f, char*);
-void checkFile(FILE *f);
+int openFile(FILE **f, char*);
+int checkFile(FILE *f);
 int checkCommands(char* argv, int* toTrans, int* toMulti, int* toRang);
 
 void createMatrixList(FILE* f, List *List);
-void newMatrix(List*, int**);
-void checkColsMatrix(List* List, int lastCurCol, int CurCol);
+void newNode(List*);
+void initMatrixData(MATRIX* m_data, int** m);
+void changeMatrixDataPtr(MATRIX* m_data, int** m);
+void checkColsMatrix(MATRIX* m_data, int lastCurCol, int CurCol);
 int ListCorrect(List* List);
+int isMatrixCorrect(MATRIX m_data);
 
-void transpose(List* List);
+void transposeAllMatrices(List* List, FILE* f);
+MATRIX* transposeOneMatrix(MATRIX m_data);
 
 void rankOfAllMatrices(List* List);
-void rankOfOneMatrix(MATRIX* curPtr);
+int rankOfOneMatrix(MATRIX curPtr);
 int findNumber(float **m, int w, int h, int cur_coord);
 void swapLines(float** m, int n1, int n2, int);
 void swapCols(float** m, int n1, int n2, int);
 int min(int, int);
 
 int checkMulti(List* List);
-void multiAllMatrices(List* List);
-int** multiTwoMatrices(int** totalMatrix, int* totalMatrix_w, int totalMatrix_h, MATRIX*);
+void multiAllMatrices(List* List, FILE* f);
+MATRIX* multiTwoMatrices(MATRIX* totalMatrix, MATRIX m);
 void printMatrixInFile(FILE *f, int**, int w, int h);
 
 int main(int argc, char** argv){
     // Для каждоай матрицы должен создаваться двумерный массив, 
     // указатель на который лежит в списке матриц в поле ptr. printf
+    char file_names[2][12] = {
+        "ref_trans",
+        "ref_multi",
+    };
     List List;
+    List.head = NULL;
+    List.cur = NULL;
     FILE* f;
 
-    openFile(&f, argv[1]);
-    checkFile(f);
+    if (openFile(&f, argv[1]))
+    {
+        printf("No file.\n");
+        return 1;
+    }
+    if (checkFile(f))
+    {
+        printf("File is empty.\n");
+        return 1;
+    }
     createMatrixList(f, &List);
     if (ListCorrect(&List) == 0)
-        exit(1);
+        return 1;
 
     int toTrans, toMulti, toRang;
     toTrans = toMulti = toRang = 0;
@@ -59,20 +82,28 @@ int main(int argc, char** argv){
         checkCommands(argv[2], &toTrans, &toMulti, &toRang);
     else { 
         printf("Arguments not found!\n");
-        return -1;
+        return 1;
     }
     
-    if (toRang != 0)
+    if (toRang)
         rankOfAllMatrices(&List);
 
-    if (toTrans != 0)
-        transpose(&List);
+    if (toTrans)
+    {
+        FILE *tr = fopen(file_names[0], "w");
+        transposeAllMatrices(&List, tr);
+        fclose(tr);
+    }
     if (toMulti != 0)
-        if (checkMulti(&List) != 0)
-            multiAllMatrices(&List);
+    {
+        if (checkMulti(&List)){
+            FILE *file_mul = fopen(file_names[1], "w");
+            multiAllMatrices(&List, file_mul);
+            fclose(file_mul);
+        }
         else
             printf("Matrices are not multiplied.\n");
-
+    }
     return 0;
 }
 
@@ -112,16 +143,11 @@ int checkCommands(char* commands, int* toTrans, int* toMulti, int* toRang){
 
 void createMatrixList(FILE *f, List *List){
     char symb;
+    int** m;
     fpos_t pos;
-    int CurCol = -1;
-    int lastCurCol = 0;
-    int CurLine = 0;
-    int indentNumber = 0;
-
-    int **m = (int**)malloc(sizeof(int*));
-        m[0] = (int*)malloc(sizeof(int));
-    newMatrix(List, m);
-
+    int CurCol, lastCurCol, CurLine;
+    CurCol = lastCurCol = CurLine = 0;
+    int indentNumber = 2;
     fgetpos(f, &pos);
     symb = fgetc(f);
 
@@ -131,25 +157,27 @@ void createMatrixList(FILE *f, List *List){
             switch (indentNumber){
                 case 0: 
         	        CurCol++;
-                    m[CurLine] = (int*)realloc(m[CurLine], (CurCol + 1) * sizeof(int));
-                    List->cur->ptr = m;
+                    if (CurCol % size_of_new_mem_block == 0)
+                        m[CurLine] = (int*)realloc(m[CurLine], (CurCol + size_of_new_mem_block) * sizeof(int));
+                    changeMatrixDataPtr(&(List->cur->data), m);
                     fscanf(f, "%d", &m[CurLine][CurCol]);
                     break;
                 case 1:
                     CurLine++;
                     lastCurCol = CurCol + 1;
                     CurCol = 0;
-                    List->cur->Lines = CurLine + 1;
-                    m = (int**)realloc(m, (CurLine+1) * sizeof(int*));
-                    m[CurLine] = (int*)malloc(sizeof(int));
-                    List->cur->ptr = m;
+                    List->cur->data.Lines = CurLine + 1;
+                    m = (int**)realloc(m, (CurLine + 1) * sizeof(int*));
+                    m[CurLine] = (int*)malloc(size_of_new_mem_block * sizeof(int));
+                    changeMatrixDataPtr(&(List->cur->data), m);
                     fscanf(f, "%d", &m[CurLine][CurCol]);
                     break;
                 default: 
                     CurCol = CurLine = lastCurCol =  0;
                     m = (int**)malloc(sizeof(int*));
-                    m[CurLine] = (int*)malloc(sizeof(int));
-                    newMatrix(List, m);
+                    m[CurLine] = (int*)malloc(size_of_new_mem_block * sizeof(int));
+                    newNode(List);
+                    initMatrixData(&(List->cur->data), m);
                     fscanf(f, "%d", &m[CurLine][CurCol]);
                     break;
             }
@@ -159,7 +187,7 @@ void createMatrixList(FILE *f, List *List){
         else 
     	if (symb == '\n'){
             indentNumber++;
-            checkColsMatrix(List, lastCurCol, CurCol+1);
+            checkColsMatrix(&(List->cur->data), lastCurCol, CurCol+1);
             fgetpos(f, &pos);
             symb = fgetc(f);
     	}
@@ -174,64 +202,71 @@ void createMatrixList(FILE *f, List *List){
         }
         else 
         if (symb == EOF){
-            checkColsMatrix(List, lastCurCol, CurCol+1);
+            checkColsMatrix(&(List->cur->data), lastCurCol, CurCol+1);
             break;
         }
     }
 }
 
-void newMatrix(List* List, int** m){
-    static int numberOfMatrices = 0;
-    numberOfMatrices++;
-    MATRIX* tmp = (MATRIX*)malloc(sizeof(MATRIX));
-    if (numberOfMatrices == 1)
-        List->head = tmp;
-    else 
-        List->cur->next = tmp;
-    List->cur = tmp;
-    List->cur->next = NULL;
-    List->cur->ptr = m;
-    List->cur->Lines = 1;
+void changeMatrixDataPtr(MATRIX* m_data, int** m){
+    m_data->ptr = m;
 }
 
-void checkColsMatrix(List* List, int lastCurCol, int CurCol){
+void newNode(List* List){
+    NODE* new_node = (NODE*)malloc(sizeof(NODE));
+    new_node->next = NULL;
+    if (List->head == NULL)
+        List->head = new_node;
+    else 
+        List->cur->next = new_node;
+    List->cur = new_node;
+}
+
+void initMatrixData(MATRIX* m_data, int** m){
+    m_data->ptr = m;
+    m_data->Lines = 1;
+    m_data->Cols = 0;
+    m_data->isError = 0;
+}
+
+void checkColsMatrix(MATRIX* cur_m_data, int lastCurCol, int CurCol){
     if (lastCurCol == 0){
-        List->cur->isError = 0;
-        List->cur->Cols = CurCol;
+        cur_m_data->isError = 0;
+        cur_m_data->Cols = CurCol;
     }
     else 
         if (lastCurCol != CurCol){
-            List->cur->isError = 1;
-            List->cur->Cols = -1;
+            cur_m_data->isError = 1;
+            cur_m_data->Cols = -1;
         }
 }
 
-void openFile(FILE **f, char* file_name){
+int openFile(FILE **f, char* file_name){
     (*f) = fopen(file_name, "r");
-    if ((*f) == NULL){
-        printf("No file.\n");
-        exit(-1);
-    }
+    if ((*f) == NULL)
+        return 1;
+    else
+        return 0;
 }
 
-void checkFile(FILE *file){
+int checkFile(FILE *file){
     fseek(file, 0, SEEK_END);
     long pos = ftell(file);
-    if (pos > 0)
+    if (pos > 0){
         rewind(file);
-    else {
-        printf("File is empty.\n");
-        exit(0);
+        return 0;
     }
+    else 
+        return 1;
 }
 
 int ListCorrect(List* List){
-    MATRIX* ptr = List->head;
+    NODE* ptr = List->head;
     int matrixNumber = 0;
     int allMatricesCorrect = 1;
     while (ptr){
         matrixNumber++;
-        if (ptr->isError == 1){
+        if (!isMatrixCorrect(ptr->data)){
             printf("Fail with %d\n", matrixNumber);
             allMatricesCorrect = 0;
         }
@@ -240,45 +275,61 @@ int ListCorrect(List* List){
     return allMatricesCorrect;
 }
 
-void transpose(List* List){
-    FILE *f = fopen("ref_trans", "w");
-    MATRIX* curPtr = List->head;
+int isMatrixCorrect(MATRIX m_data){
+    if (m_data.isError == 1)
+        return 0;
+    else 
+        return 1;
+}
+
+void transposeAllMatrices(List* List, FILE* f){
+    NODE *curPtr = List->head;
     while(curPtr){
-        int **new = (int**)malloc(curPtr->Cols * sizeof(int*));
-        for (int i = 0; i < curPtr->Cols; i++)
-            new[i] = (int*)malloc(curPtr->Lines * sizeof(int));
-            
-        for (int i = 0; i < curPtr->Cols; i++){
-            for (int j = 0; j < curPtr->Lines; j++){
-                new[i][j] = curPtr->ptr[j][i];
-            }
-        }
-        printMatrixInFile(f, new, curPtr->Lines, curPtr->Cols);
-        // for (int i = 0; i < curPtr->Lines; i++)
-            // free(curPtr->ptr[i]);
-        free(new);
+    MATRIX* trans_matrix = transposeOneMatrix(curPtr->data);
+        printMatrixInFile(f, trans_matrix->ptr, trans_matrix->Cols, trans_matrix->Lines);
+        for (int i = 0; i < trans_matrix->Lines; i++)
+            free(trans_matrix->ptr[i]);
+        free(trans_matrix);
         curPtr = curPtr->next;
     }
-    fclose(f);
+}
+
+MATRIX* transposeOneMatrix(MATRIX m_data){
+    MATRIX *tmp = (MATRIX*)malloc(sizeof(m_data));
+    tmp->Cols = m_data.Lines;
+    tmp->Lines = m_data.Cols;
+    tmp->isError = m_data.isError;
+    tmp->ptr = (int**)malloc(tmp->Lines * sizeof(int*));
+    for (int i = 0; i < tmp->Lines; i++)
+        tmp->ptr[i] = (int*)malloc(tmp->Cols * sizeof(int));
+        
+    for (int i = 0; i < tmp->Lines; i++){
+        for (int j = 0; j < tmp->Cols; j++){
+            tmp->ptr[i][j] = m_data.ptr[j][i];
+        }
+    }
+    return tmp;
 }
 
 void rankOfAllMatrices(List* List){
-    MATRIX* curPtr = List->head;
+    int rank = 0;
+    NODE* curPtr = List->head;
     while (curPtr){
-        rankOfOneMatrix(curPtr);
+        rank = rankOfOneMatrix(curPtr->data);
+        printf("Rang = %d\n", rank);
         curPtr = curPtr->next;  
     }
 }
 
-void rankOfOneMatrix(MATRIX* curPtr){
-    int h = curPtr->Lines;
-    int w = curPtr->Cols;
+int rankOfOneMatrix(MATRIX m_data){
+    int h = m_data.Lines;
+    int w = m_data.Cols;
     float **new = (float**)malloc(h * sizeof(float*));
     for (int i = 0; i < h; i++)
         new[i] = (float*)malloc(w * sizeof(float));
     for (int i = 0; i < h; i++)
         for (int j = 0; j < w; j++)
-            new[i][j] = curPtr->ptr[i][j];
+            new[i][j] = m_data.ptr[i][j];
 
     for (int i = 0; i < min(w, h); i++){
         if (findNumber(new, w, h, i) == -1)
@@ -294,7 +345,6 @@ void rankOfOneMatrix(MATRIX* curPtr){
                 new[k][j] += new[k][i] * factor;    
             }
         }
-
         for (int j = i+1; j < h; j++){ //домножение строк можно убрать или просто заменить нулями
             float factor = -new[j][i];
             for (int k = i; k < w; k++){
@@ -307,8 +357,10 @@ void rankOfOneMatrix(MATRIX* curPtr){
         if (fabs(new[i][i]) > FLT_EPSILON)
             rank++;
     }
+    for (int i = 0; i < h; i++)
+        free(new[i]);
     free(new);
-    printf("Rang = %d\n", rank);
+    return rank;
 }
 
 int min(int a, int b){
@@ -346,12 +398,10 @@ int findNumber(float **m, int w, int h, int cur_coord){
 }
 
 void swapLines(float** m, int n1, int n2, int w){
-    float tmp;
-    for (int i = 0; i < w; i++){
-        tmp = m[n1][i];
-        m[n1][i] = m[n2][i];
-        m[n2][i] = tmp;
-    }
+    float *tmp;
+    tmp = m[n1];
+    m[n1] = m[n2];
+    m[n2] = tmp;
 }
 
 void swapCols(float** m, int n1, int n2, int h){
@@ -364,33 +414,43 @@ void swapCols(float** m, int n1, int n2, int h){
 }
 
 int checkMulti(List* List){
-    MATRIX* ptr = List->head;
+    NODE* ptr = List->head;
     while (ptr->next){
-        if(ptr->Cols != ptr->next->Lines)
+        if(ptr->data.Cols != ptr->next->data.Lines)
             return 0;
         ptr = ptr->next;
     }
     return 1;
 }
 
-void multiAllMatrices(List* List){
-    FILE *f = fopen("ref_multi", "w");
-    MATRIX* curPtr = List->head;
-    int **totalMatrix = List->head->ptr;
-    int totalMatrix_h = List->head->Lines;
-    int totalMatrix_w = List->head->Cols;
+void multiAllMatrices(List* List, FILE* f){
+    NODE* curPtr = List->head;
+    MATRIX* totalMatrix = (MATRIX*)malloc(sizeof(MATRIX));
+    totalMatrix->Lines = List->head->data.Lines;
+    totalMatrix->Cols = List->head->data.Cols;
+    totalMatrix->isError = List->head->data.isError;
+    totalMatrix->ptr = (int**)malloc(totalMatrix->Lines * sizeof(int*));
+    for (int i = 0; i < totalMatrix->Lines; i++)
+        totalMatrix->ptr[i] = (int*)malloc(totalMatrix->Cols * sizeof(int));
+    
+    for (int i = 0; i < totalMatrix->Lines; i++)
+        for (int j = 0; j < totalMatrix->Cols; j++)
+            totalMatrix->ptr[i][j] = List->head->data.ptr[i][j];
+
     while (curPtr->next){
-        totalMatrix = multiTwoMatrices(totalMatrix, &totalMatrix_w, totalMatrix_h, curPtr->next);
+        multiTwoMatrices(totalMatrix, curPtr->next->data);
         curPtr = curPtr->next;
     }
-    printMatrixInFile(f, totalMatrix, totalMatrix_w, totalMatrix_h);
-    fclose(f);
+    printMatrixInFile(f, totalMatrix->ptr, totalMatrix->Cols, totalMatrix->Lines);
+    for (int i = 0; i < totalMatrix->Lines; i++)
+        free(totalMatrix->ptr[i]);
+    free(totalMatrix);
 }
 
-int** multiTwoMatrices(int** totalMatrix, int* totalMatrix_w, int totalMatrix_h, MATRIX* m){
-    int h_1 = totalMatrix_h;
-    int w_1 = *totalMatrix_w;
-    int w_2 = m->Cols;
+MATRIX* multiTwoMatrices(MATRIX* totalMatrix, MATRIX m){
+    int h_1 = totalMatrix->Lines;
+    int w_1 = totalMatrix->Cols;
+    int w_2 = m.Cols;
 
     int **tmp = (int**)calloc(h_1, sizeof(int*));
     for (int i = 0; i < h_1; i++)
@@ -399,11 +459,14 @@ int** multiTwoMatrices(int** totalMatrix, int* totalMatrix_w, int totalMatrix_h,
     for (int i = 0; i < h_1; i++)
         for (int j = 0; j < w_2; j++)
             for (int k = 0; k < w_1; k++)
-                tmp[i][j] += totalMatrix[i][k] * m->ptr[k][j];
+                tmp[i][j] += totalMatrix->ptr[i][k] * m.ptr[k][j];
 
-    *totalMatrix_w = m->Cols;
-    free(totalMatrix);
-    return tmp;
+    totalMatrix->Cols = m.Cols;
+    for (int i = 0; i < h_1; i++)
+        free(totalMatrix->ptr[i]);
+    free(totalMatrix->ptr);
+    totalMatrix->ptr = tmp;
+    return totalMatrix;
 }
 
 void printMatrixInFile(FILE *f, int** matrix, int w, int h){
@@ -414,5 +477,5 @@ void printMatrixInFile(FILE *f, int** matrix, int w, int h){
                 fprintf(f, "\n");
         }
     }
-    fprintf(f,"\n");
+    fprintf(f, "\n");
 }

@@ -11,11 +11,11 @@
 #define TRUE 1
 #define FALSE 0
 
-void generateCorrectMatrix(FILE *f, int isCorrectMultiplication, int i); 
+void printCorrectMatrix(FILE *f, int isCorrectMultiplication, int i); 
 // Генерирует и записывает в файл правильную матрицу.
 // Каждая строчка начинается с числа и заканчивается числом.
-void generateIncorrectMatrix(FILE *f); // генерирует и записывает в файл неправильную матрицу.
-void generateIndent(FILE *f, int numberOfMatrix, int currentMatrix); // Вставляют отступ.
+void printIncorrectMatrix(FILE *f); // генерирует и записывает в файл неправильную матрицу.
+void printIndent(FILE *f, int numberOfMatrix, int currentMatrix); // Вставляют отступ.
 int randIntTuning(); // Настраиваемый генератор чисел от -20 до 20.
 
 int main(int argc, char* argv[]){
@@ -23,12 +23,12 @@ int main(int argc, char* argv[]){
     int isCorrectMatrix = 0;
     switch (argv[1][0]){
         case '0':
-            isCorrectMatrix = 0;
-            printf("Incorrect generated.\n");
+            isCorrectMatrix = FALSE;
+            //printf("Incorrect generated.\n");
             break;
         case '1':
-            isCorrectMatrix = 1;
-            printf("Correct generated.\n");
+            isCorrectMatrix = TRUE;
+            //printf("Correct generated.\n");
             break;
         default:
             printf("Wrong generation arguments!\n");
@@ -37,23 +37,24 @@ int main(int argc, char* argv[]){
     }
     FILE *f = fopen("testcase", "w");
 
-    int numberOfMatrix = 2 + rand() % 6; // Количество генерируемых матриц. 2 - 7
+    int numberOfMatrix = 2 + rand() % 5; // Количество генерируемых матриц. 2 - 6
      // isCorrectMatrix Параметр генерации, отвечающий за генерирование матриц с ошибками или без.
     int isCorrectMultiplication; // Парметр генерации, отвечающий за генерацию умножаемых матриц. 0 - 1
     if (isCorrectMatrix != FALSE)
         isCorrectMultiplication = rand() % 3;
 
     switch (isCorrectMatrix){
-        case 1:
-            for (int i = 0; i < numberOfMatrix; i++){
-                generateCorrectMatrix(f, isCorrectMultiplication, i);
-                generateIndent(f, numberOfMatrix, i);
+        case TRUE:
+            for (int i = 0; i <= numberOfMatrix; i++){
+                printCorrectMatrix(f, isCorrectMultiplication, i);
+                if (i != numberOfMatrix)
+                    printIndent(f, numberOfMatrix, i);
             }
             break;
         case FALSE:
                 for (int i = 0; i < numberOfMatrix; i++){
-                generateIncorrectMatrix(f);
-                generateIndent(f, numberOfMatrix, i);
+                printIncorrectMatrix(f);
+                printIndent(f, numberOfMatrix, i);
             }
 
     }
@@ -61,7 +62,7 @@ int main(int argc, char* argv[]){
     return 0;
 }
 
-void generateCorrectMatrix(FILE *f, int isCorrectMultiplication, int currentNumberOfMatrix){
+void printCorrectMatrix(FILE *f, int isCorrectMultiplication, int currentNumberOfMatrix){
     static int lines;
     static int cols;
     fpos_t pos;
@@ -121,13 +122,14 @@ int randIntTuning(){
     return number;
 }
 
-void generateIndent(FILE *f, int numberOfMatrix, int currentMatrix){
-    if (currentMatrix != numberOfMatrix - 1)
-        for (int i = 0; i < (1 + rand() % 4); i++)
+void printIndent(FILE *f, int numberOfMatrix, int currentMatrix){
+    int indent = 2;
+    indent += rand() % 4;
+        for (int i = 0; i < indent; i++)
             fprintf(f,"\n");
 }
 
-void generateIncorrectMatrix(FILE *f){
+void printIncorrectMatrix(FILE *f){
     int lines;
     int cols;
     lines = 2 + ((rand() % 100) * (rand() % 100)) % 9;
