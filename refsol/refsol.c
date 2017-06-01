@@ -1,30 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
+
+#define SORT_CMND 1
+#define RANG_CMND 2
+#define DETERMINAND_CMND 3
+#define END_CMND 4
+#define ZERO_DIGIT 0.0000000000001
+typedef struct Matrix
+{
+	double** data;
+	int size;
+}Matrix;
 
 typedef struct MatrixList
-{
-	int** matrix;   					// матрица
-	int size;							// размер
+{		
+	Matrix* matrix;			
 	int state; 							// корректна или нет
 	struct MatrixList* next; 		// указатель на следующую
 	int number;							// номер матрицы
 } MatrixList;
 
 void MakeList(MatrixList** list);
-int** ReadMatrix(char* buf, int* sizarr);
-int* ReadLine(int n);
+double** ReadMatrix(char* buf, int* sizarr);
+double* ReadLine(int n);
 
-double** MakeCopy(int **arr,int n);
-double MethodGauss(int n, int** matrix,int index);
-void StringSubtractor(double** matrix, int a,int b,int number,int n,double* determinand);
+Matrix* MakeCopy(Matrix* matrix);
+long double MethodGauss(Matrix* matrix,int index);
+void StringSubtractor(Matrix* matrix,int i,int j,long double* determinand);
 void ZeroUpperElements(double** arr, int number,int n);
 void LineSwapDoub(double** arr, int a, int b);
 
-void MatrixSort(int **arr,int n);
-void LineSwapInt(int** arr, int a, int b);
-int LineCmp(int* a, int* b, int n);
-void quickSort(int** arr,int l, int r,int n);
+void MatrixSort(Matrix* matrix);
+double LineCmp(double* a, double* b, int n);
+void quickSort(double** arr,int l, int r,int n);
 
 void SaveResult(MatrixList** list);
 int Check();
@@ -32,10 +42,12 @@ int Check();
 int main()
 {
 	MatrixList* list = (MatrixList*)malloc(sizeof(MatrixList));
+	list->matrix = (Matrix*)malloc(sizeof(Matrix));
 	MatrixList* head = list;				// запоминаем голову списка
 	MakeList(&list);	// создаём список для файла
 	list =head;
 	int total_state = 1;
+	list=head;
 	while(list->next)
 	{
 		if (!list->state)
@@ -51,35 +63,36 @@ int main()
 		{
 			switch (operation_number)
 			{
-				case 1: 
-				while (list->next)
-				{
-					MatrixSort(list->matrix,list->size);
-					list=list->next;
-				}
-				list =head;
-				break;  
-				case 3: 
+				case SORT_CMND: 
 				while(list->next)
 				{
-
-					printf("%d %-10.0lf\n",list->number,MethodGauss(list->size,list->matrix,operation_number));
+					MatrixSort(list->matrix);
+					list=list->next;
+				}
+				list = head;
+				break;  
+				case DETERMINAND_CMND: 
+				while(list->next)
+				{
+					printf("%d %6.2Lf\n",list->number,MethodGauss(list->matrix,operation_number));	// делает интом
 					list=list->next;
 				}
 				list = head;
 				break;
-				case 2:
+				case RANG_CMND:
 				while(list->next)
 				{
 
-					 printf("%d %-10.0lf\n",list->number,MethodGauss(list->size,list->matrix,operation_number));
+					 printf("%d %6.0Lf\n",list->number,MethodGauss(list->matrix,operation_number));
 					 list=list->next;
 				}
 				list = head;
 				break;
-				default : 
+				case END_CMND : 
 				operation_number=0;
 				SaveResult(&list);
+				break;
+				default: printf("Неизвестная команда\n");
 			}
 			if(operation_number)
 		scanf("%d",&operation_number);
@@ -96,82 +109,89 @@ int main()
 		return -1;
 	}
 	list = head;
-	while (list->next)
+	while (list)
 	{
 		MatrixList* ptr = list;
+		Matrix* pmatrix =list->matrix;
+		double** pdata = list->matrix->data;
+		for(int i =0;i<list->matrix->size;++i)
+			free(list->matrix->data[i]);
 		list=list->next;
 		free(ptr);
+		free(pmatrix);
+		free(pdata);
 	}
 	return 0;
 
 }
 
-double MethodGauss(int n, int** matrix, int index)
+long double MethodGauss(Matrix* matrix, int index)
 {
-	double** arr = MakeCopy(matrix, n);
+	Matrix* matrix_copy = MakeCopy(matrix);
 	int i,j;		
-	double determinand=1;
-	for(i=0;i<n;++i)
+	long double determinand=1.0;
+	if(matrix_copy->data)
+	for(i=0;i<matrix->size;++i)
 	{
 		for(j=0;j<i;++j)
 		{
-			StringSubtractor(arr,j,i,j,n,&determinand);				
+			StringSubtractor(matrix_copy,i,j,&determinand);		
 		}
-	}
+	}	
 
 	// На этом шаге имеем матрицу треугольного вида
-	if (index == 3)
+	if (index == DETERMINAND_CMND)
 		{
-			for(i=0;i<n;++i)
+			for(i=0;i<matrix->size;++i)
 			{
-				determinand*=arr[i][i];
+				determinand*=matrix_copy->data[i][i];
 			}
 			return determinand;
 		}
 	else
 		{
-			double rg = (double)n;
-			for(i=n-1;i>=0;--i)
+		long	double rg = (double)(matrix_copy->size);
+			for(i=matrix->size-1;i>=0;--i)
 			{	
-				int not_zero_element = 0;
-				for(j=n-1;j>=i;--j)
+				double not_zero_element = 0.0;
+				for(j=matrix->size-1;j>=i;--j)
 				{
-					if (arr[i][j]!=0.0)
+					if (matrix_copy->data[i][j]!=0.0)
 					{
-						ZeroUpperElements(arr, j, i);
-						not_zero_element = arr[i][j];
+						ZeroUpperElements(matrix_copy->data, j, i);
+						not_zero_element = matrix_copy->data[i][j];
 					}
 					else
 					{
-						arr[i][j] = not_zero_element;
+						matrix_copy->data[i][j] = not_zero_element;
 					}
 				}
 
-				if (arr[i][i] == 0) 
+				if (fabs(matrix_copy->data[i][i])<=ZERO_DIGIT) 
 					--rg;
 			}
 			return rg;
 		}
 }
 
-void StringSubtractor(double** matrix, int a,int b,int number,int n,double* determinand)
+void StringSubtractor(Matrix* matrix,int i,int j,long double* determinand)
 {
-	if ((matrix[a][number])&&(matrix[b][number]))
+	if ((matrix->data[j][j])&&(matrix->data[i][j]))
 	{	
-		double stack1 = matrix[a][number];
-		double stack2 = matrix[b][number];
-		for(int i=0;i<n;++i)
+		double stack1 = matrix->data[j][j];			// элемент, которым занулим следующий
+		double stack2 = matrix->data[i][j];			// элемент, который будет занулён
+		for(int k=0;k<matrix->size;++k)
 		{
-			matrix[a][i]*=stack2;							// алгоритм обнуления элемента 
-			matrix[b][i]*=stack1;							// под номером number
-			matrix[b][i]-=matrix[a][i];
-			matrix[a][i]/=stack2;
-			matrix[b][i]/=stack1;
+			matrix->data[j][k]*=stack2;							
+			matrix->data[i][k]*=stack1;						
+			matrix->data[i][k]-=matrix->data[j][k];
+			matrix->data[j][k]/=stack2;
+			matrix->data[i][k]/=stack1;
 		}
 	}
-	else if (matrix[b][number]!=0)
+	else if (matrix->data[i][j]!=0)
 	{
-		LineSwapDoub(matrix,a,b);
+		LineSwapDoub(matrix->data,i,j);
 		*determinand*=-1;
 	}
 }
@@ -180,59 +200,57 @@ void ZeroUpperElements(double** arr, int number,int n)
 {
 	for(int i = 0;i<n;++i)
 	{
-		arr[i][number] = 0.0;
+		arr[i][number] = ZERO_DIGIT;
 	} 
 
 }
 // создание копии матрицы для работы с методом Гаусса
-double** MakeCopy(int **arr,int n)
+Matrix* MakeCopy(Matrix* matrix)
 {
-	double** matrix_copy =(double**)malloc(sizeof(double*)*n);
-		for(int i =0; i<n;++i)
+	Matrix* return_matrix = (Matrix*)malloc(sizeof(Matrix));
+	return_matrix->size = matrix->size;
+	return_matrix->data =(double**)malloc(sizeof(double*)*return_matrix->size);
+		for(int i =0; i<return_matrix->size;++i)
 		{
-			matrix_copy[i] = (double*)malloc(sizeof(double)*n);
-			for(int j =0;j<n;++j)
-			{
-				matrix_copy[i][j]=arr[i][j];
-			}
+			return_matrix->data[i] = (double*)malloc(sizeof(double)*return_matrix->size);
+			memcpy(return_matrix->data[i],matrix->data[i],sizeof(double)*matrix->size);
 		}
-	return matrix_copy;
+	return return_matrix;
 }
 
-//сортировка строк методом пузырька
 
-void MatrixSort(int **arr,int n)
+void MatrixSort(Matrix* matrix)
 {
-	quickSort(arr,0,n-1,n);
+	quickSort(matrix->data,0,matrix->size-1,matrix->size);
 }
 
 // чтение матрицы и проверка на корректнность 
 
-int** ReadMatrix(char* buf, int* sizarr)
+double** ReadMatrix(char* buf, int* sizarr)
 {
-	int arr[100];
-	int** matrix;
+	double arr[BUFSIZ];
+	double** matrix;
 	int i =0;
 	char c, check;
 	char* bufcheck;
 	bufcheck = strtok(buf," \n");		// чтение из ранее прочитанного буфера
 	while(bufcheck)
 	{
-		sscanf(bufcheck,"%d",&arr[i]);
+		sscanf(bufcheck,"%lf",&arr[i]);
 		++i;
 		bufcheck = strtok(NULL," \n");
 	}
 	*sizarr = i;
-	matrix = (int**)malloc(sizeof(int*)*i);
-	matrix[0] = (int*)malloc(sizeof(int)*i);
+	matrix = (double**)malloc(sizeof(double*)*i);
+	matrix[0] = (double*)malloc(sizeof(double)*i);
 	for (int j=0;j<i;++j)
 		matrix[0][j] = arr[j];        			// копируем 1-ую строку
 	for(int j =1;j<i;++j)
 	{
-		int* line = ReadLine(i);
+		double* line = ReadLine(i);
 		if (line!=NULL)
 		{
-			matrix[j] = (int*)malloc(sizeof(int)*i);
+			matrix[j] = (double*)malloc(sizeof(double)*i);
 			matrix[j] = line;
 		}
 		else 
@@ -243,38 +261,28 @@ int** ReadMatrix(char* buf, int* sizarr)
 		return matrix;
 }
 
-// чтение строки матрицы
-
-int* ReadLine(int n)
+double* ReadLine(int n)
 {
-	int* result = (int*)malloc(sizeof(int)*n);
+	double* result = (double*)malloc(sizeof(double)*n);
 	char* c;
-	char s[200];
+	char s[BUFSIZ];
 	int i =0;
-	fgets(s,199,stdin);
+	fgets(s,BUFSIZ-1,stdin);
 	if (s[0]!='\n')
 	{
 	c = strtok(s," \n");
 	for(i;i<n;++i)
 	{	
-		sscanf(c,"%d ",&result[i]);			// Чтобы данные не затирались
+		sscanf(c,"%lf ",&result[i]);			// Чтобы данные не затирались
 		c = strtok(NULL," \n");
 	}
 	return result;
 	}
 	else return NULL;
 }
-
-void LineSwapInt(int** arr, int a, int b)
+void quickSort(double** arr,int l, int r,int n)
 {
-	int* c;
-	c = arr[a];		
-	arr[a] = arr[b];
-	arr[b] = c;
-}
-void quickSort(int** arr,int l, int r,int n)
-{
-    int* x = arr[l + (r - l) / 2];
+    double* x = arr[l + (r - l) / 2];
     int i = l;
     int j = r;
     while(i <= j)
@@ -283,7 +291,7 @@ void quickSort(int** arr,int l, int r,int n)
         while(LineCmp(arr[j],x,n) > 0) j--;
         if(i <= j)
         {
-            LineSwapInt(arr,i,j);
+            LineSwapDoub(arr,i,j);
             i++;
             j--;
         }
@@ -294,7 +302,7 @@ void quickSort(int** arr,int l, int r,int n)
     if (l<j)   
         quickSort(arr,l, j,n);    
 }
-int LineCmp(int* a, int* b, int n)
+double LineCmp(double* a, double* b, int n)
 {
 	for(int i=0;i<n;++i)
 	{
@@ -317,12 +325,12 @@ void MakeList(MatrixList** list)
 	while(right)
 	{	
 		// проверка на конец файла
-		char buf[200];
-		fgets(buf,199,stdin);
+		char buf[BUFSIZ];
+		fgets(buf,BUFSIZ-1,stdin);
 		if ((buf[0]!=EOF)&&(buf[0]!='\n'))
 		{
-			(*list)->matrix = ReadMatrix(buf,&((*list)->size));
-			if ((*list)->matrix)
+			(*list)->matrix->data = ReadMatrix(buf,&((*list)->matrix->size));
+			if ((*list)->matrix->data)
 			{
 				int k =Check();
 				if(k==1)					// осталось 1 \n 
@@ -331,15 +339,16 @@ void MakeList(MatrixList** list)
 					right =0;
 				else
 				(*list)->state = 0;
-				fgets(buf,19,stdin);     // дочитываем \n
+				fgets(buf,BUFSIZ-1,stdin);     // дочитываем \n
 			}
 			else
 			{									// осталось 1 \n
 				(*list)->state = 0;
-				fgets(buf,199,stdin);
+				fgets(buf,BUFSIZ-1,stdin);
 			}
 			(*list)->next = (MatrixList*)malloc(sizeof(MatrixList));
 			(*list)->number = right;
+			(*list)->next->matrix =(Matrix*)malloc(sizeof(Matrix));
 			*list = (*list)->next;
 			++right;
 		}
@@ -351,10 +360,10 @@ void SaveResult(MatrixList** list)
 	FILE* fo = fopen("MasterAfterSort.txt","wt");
 	while((*list)->next)
 	{
-		for(int i=0;i<(*list)->size;++i)
+		for(int i=0;i<(*list)->matrix->size;++i)
 		{
-			for(int j=0;j<(*list)->size;++j)
-				fprintf(fo,"%d ",(*list)->matrix[i][j]);
+			for(int j=0;j<(*list)->matrix->size;++j)
+				fprintf(fo,"%6.2lf ",(*list)->matrix->data[i][j]);
 			fprintf(fo,"\n");
 		}
 		fprintf(fo,"\n");
@@ -365,14 +374,14 @@ void SaveResult(MatrixList** list)
 }
 int Check()
 {
-	char buf[200];
-	fgets(buf,199,stdin);
+	char buf[BUFSIZ];
+	fgets(buf,BUFSIZ-1,stdin);
 	if (buf[0] =='\n')
 		return 1;
 	else
 	{
 		while(buf[0]!='\n')
-			fgets(buf,199,stdin);
+			fgets(buf,BUFSIZ-1,stdin);
 		return 0;
 	}
 }
