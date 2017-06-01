@@ -18,13 +18,13 @@ void ReadTable1(FILE* stream,Vector* data)
 	int count = 0;
 	char buf[MAX_LENGTH_TOKEN * 5 + 10]; // Five fields and integer(INT_MAX have 10 signs)
 
-    memset(data->vector_ptr, 0 , sizeof(data->vector_ptr));
+    memset(data->vector_ptr, 0, sizeof(data->vector_ptr));
 
-	/* Skip Header,*/
+	/* Skip Header*/
 	fscanf(stream,"%*s");
 	if(feof(stream))
 	{
-		printf("Eror reading first table");
+		printf("Error reading first table");
 		data->len = -1;
 		return ;
 	}
