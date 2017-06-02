@@ -287,6 +287,8 @@ void transposeAllMatrices(List* List, FILE* f){
     while(curPtr){
     MATRIX* trans_matrix = transposeOneMatrix(curPtr->data);
         printMatrixInFile(f, trans_matrix->ptr, trans_matrix->Cols, trans_matrix->Lines);
+        if (curPtr->next != NULL)
+            fprintf(f, "\n\n");
         for (int i = 0; i < trans_matrix->Lines; i++)
             free(trans_matrix->ptr[i]);
         free(trans_matrix);
@@ -473,9 +475,8 @@ void printMatrixInFile(FILE *f, int** matrix, int w, int h){
     for (int i = 0; i < h; i++){
         for (int j = 0; j < w; j++){
             fprintf(f, "%d ", matrix[i][j]);
-            if (j == w-1)
+            if (j == w-1 && i != h-1)
                 fprintf(f, "\n");
         }
     }
-    fprintf(f, "\n");
 }
