@@ -22,7 +22,7 @@ int GenerateParagraph (FILE * input_file, int max_quantity_sentence, int first)
 		if (i == 0) {
 		fputc(9,input_file); 									// Отступ для первого предложения.	
 		}
-		length_paragraph += GenerateSentence(input_file, 15);	// Генерация предложений, максимальное количество слов - 15
+		length_paragraph += GenerateSentence(input_file, MAX_QUANTITY_WORD);
 	}	
 	return length_paragraph;
 }

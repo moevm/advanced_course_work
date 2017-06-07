@@ -19,7 +19,7 @@
 int GenerateWord (FILE * input_file, int max_length_word, int min_length_word)
 {
 	int length_word = rand() % max_length_word + min_length_word,
-		hyphen = rand() % 100 + 1,
+		hyphen = rand() % PERSENT + 1,
 		locatoin_hyphen = max_length_word + 1, i;
 	if (hyphen>80) {
 		if (length_word > 3) {
@@ -32,7 +32,7 @@ int GenerateWord (FILE * input_file, int max_length_word, int min_length_word)
 			length_word++;
 			i++;
 		}
-		fputc (rand() % 25 + 97, input_file);
+		fputc (rand() % ALPHABET + 97, input_file);
 	}	
 	return length_word;
 }

@@ -13,7 +13,7 @@ void QuantityWord (char *name_input_file, char *name_output_file)
 {
 FILE *input_file, *output_file;
 	int quantity_w = 0;
-	char string[20], q_w[10];
+	char string[BUFFER_WORD], q_w[BUFFER_NUMBER];
 	input_file = fopen (name_input_file, "r");
 	output_file = fopen (name_output_file, "w");
 	while (1)

@@ -11,7 +11,7 @@
 int GenerateOption (int percent_command_1, int percent_command_2, int percent_command_3,
 					int percent_command_4, FILE * commands_file)
 {
-	int option = rand() % 100 + 1;
+	int option = rand() % PERSENT + 1;
 	if (option < (percent_command_1 + 1)) {
 		fputs("1 ", commands_file);
 		return 1;

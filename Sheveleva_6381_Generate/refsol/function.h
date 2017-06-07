@@ -1,3 +1,11 @@
+#define BUFFER_WORD 25
+#define BUFFER_NUMBER 10
+#define MAX_QUANT_FILE 20
+#define MAX_QUANT_COMMAND 5
+#define BUFFER_NAME 31
+#define BUFFER_MEMORY 100
+#define BUFFER_ARR_COMMAND 16
+
 typedef struct Index{
 	int offset; // позиция в тексте
 	int length;

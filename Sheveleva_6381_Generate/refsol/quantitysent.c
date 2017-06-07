@@ -13,7 +13,7 @@ void QuantitySentence (char *name_input_file, char *name_output_file)
 {
 	FILE *input_file, *output_file;
 	int quantity_s = 0, last_w = 0;
-	char string[20], q_s[10];
+	char string[BUFFER_WORD], quant_sent[BUFFER_NUMBER];
 	input_file = fopen (name_input_file, "r");
 	output_file = fopen (name_output_file, "w");
 	while (1)
@@ -36,8 +36,8 @@ void QuantitySentence (char *name_input_file, char *name_output_file)
 		}
 		last_w++;
 	}
-	sprintf (q_s, "%d ", quantity_s);
-	fputs (q_s, output_file);
+	sprintf (quant_sent, "%d ", quantity_s);
+	fputs (quant_sent, output_file);
 	fclose (input_file);
 	fclose (output_file);
 }

@@ -20,21 +20,22 @@ main()
 	FILE *output_file;
 	int var_file, var_command, i, n_offset = 0, com_2 = 0, com_3 = 0,
 		nom1 = 0, nom3 = 0, nom4 = 0,
-		arr_command[16], error = 0;
-	char name_input_file[25],
-		 name_commands[19],
-		 name_output_file[31],
+		arr_command[BUFFER_ARR_COMMAND], error = 0;
+	char name_input_file[BUFFER_NAME],
+		 name_commands[BUFFER_NAME],
+		 name_output_file[BUFFER_NAME],
 		 name_output_file_sort[] = "output_file_sort.txt",
 		 name_output_file_wovel[] = "output_file_wovel.txt",
 		 name_output_file_word[] = "output_file_word.txt",
 		 name_output_file_sent[] = "output_file_sent.txt";
 		 
-	for (var_file = 1; var_file <= 20; var_file++)
+	for (var_file = 1; var_file <= MAX_QUANT_FILE; var_file++)
 	{
 		sprintf(name_input_file,"%s_%d%s", "../test/input_file", var_file, ".txt");	
 		sprintf(name_commands,"%s_%d%s", "../test/commands", var_file, ".txt");	
-		for (var_command = 1; var_command <= 5; var_command++)
+		for (var_command = 1; var_command <= MAX_QUANT_COMMAND; var_command++)
 		{		
+			i = 0;
 			n_offset = ReadCommand (name_commands, arr_command, n_offset, & error);
 			if (error == 1)
 			{
@@ -45,13 +46,12 @@ main()
 				fclose(output_file);
 				continue;
 			}
-			i = 0;
-		
 		
 			remove(name_output_file_sort);
 			remove(name_output_file_wovel);
 			remove(name_output_file_word);
 			remove(name_output_file_sent);
+			
 			while (1)
 			{
 				if(arr_command[i] == 3)

@@ -17,7 +17,7 @@
  
 int GeneratePunctuation (FILE * input_file)
 {
-	int generate_punctuation = rand() % 100 + 1;
+	int generate_punctuation = rand() % PERSENT + 1;
 
 	if (generate_punctuation < 63) {
 			fputs (". ", input_file);

@@ -1,17 +1,16 @@
+/*
+ * записываем кол-во слов, кол-во предложений и сам файл
+ */
+ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "function.h"
 
-
-/*
- * записываем кол-во слов, кол-во предложений и сам файл
- */
- 
  void PrintFirstString (char *file_open, FILE *output_file)
  {
 	 FILE *file;
-	 char str_input[10];
+	 char str_input[BUFFER_NUMBER];
 	 file = fopen (file_open, "r");
 	 if (file != NULL) 
 	{
@@ -20,12 +19,13 @@
 		fputc ('\n', output_file);
 		fclose (file);
 	}
+	
  }
  
   void PrintText (char *file_open, FILE *output_file)
  {
 	 FILE *file;
-	 char str_input[10];
+	 char str_input[BUFFER_WORD];
 	 file = fopen (file_open, "r");
 	 while (!feof(file))
 		{
@@ -41,11 +41,12 @@ void CreatingFinalFile (int var_file, int var_command, char *file_sort, char *fi
 						void (*funk)(char *,char *))
 {
 	FILE *output_file, *file;
-	char name_output_file[31], str[10];
+	char name_output_file[BUFFER_NAME];
 	
 	sprintf(name_output_file,"%s_%dx%d%s", "../result/output_file", var_file, var_command, ".txt");	
 	remove(name_output_file);
 	output_file = fopen (name_output_file, "w");	
+	
 	PrintFirstString (file_word, output_file);
 	PrintFirstString (file_sent, output_file);
 	if (com_2 != 0)

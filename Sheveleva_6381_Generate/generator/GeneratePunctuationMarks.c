@@ -22,7 +22,7 @@ int GeneratePunctuationMarks (FILE * input_file, int quantity_word)
 	int generate_punctuation_marks;
 	
 	if (quantity_word > 1) {
-		generate_punctuation_marks = rand() % 100 + 1;
+		generate_punctuation_marks = rand() % PERSENT + 1;
 		if (generate_punctuation_marks < 60) {
 			fputc (' ', input_file);
 			return 1;

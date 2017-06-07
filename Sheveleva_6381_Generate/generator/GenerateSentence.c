@@ -19,12 +19,12 @@ int CreateWord (FILE * input_file, int nomber_word)
 	int length_word;
 			
 	if (nomber_word == 0) {
-		fputc (rand() % 25 + 65, input_file); 						//Генерация заглавной буквы.
-		length_word = GenerateWord (input_file, 15, 0); 			// Генерация слова, максимальная длина - 15
+		fputc (rand() % ALPHABET + 65, input_file); 						//Генерация заглавной буквы.
+		length_word = GenerateWord (input_file, MAX_QUANTITY_SYMBLE, 0); 			
 		return length_word + 1;
 	}
 	else {
-		length_word = GenerateWord (input_file, 15, 1);				// Генерация слова, максимальная длина - 15
+		length_word = GenerateWord (input_file, MAX_QUANTITY_SYMBLE, 1);			
 		return length_word;
 	}
 }

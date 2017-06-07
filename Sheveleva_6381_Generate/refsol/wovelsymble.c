@@ -18,17 +18,12 @@ void WovelSymble (char *name_input_file, char *name_output_file)
 	input_file = fopen (name_input_file, "r");
 	output_file = fopen (name_output_file, "w");
 	while ((symble = fgetc(input_file)) != EOF)
-	{	
-	    if (symble == ' ')
-	    {
-			if ((symble = fgetc(input_file)) == EOF) break;
-			fputc(' ', output_file);
-		}		
+	{		
 		fputc(symble, output_file);
 		if ((symble == '	') || (symble == '.') || (symble == ',') || 
 			(symble == ';') || (symble == ':') || (symble == '(') || 
 			(symble == ')') || (symble == ' ') || (symble == '?') || 
-			(symble == '!') || (symble == 10))
+			(symble == '!') || (symble == 10) || (symble == '\n'))
 		{	
 			offset_w++;		
 			if ((length_word != 0) && (q_wovel > (length_word - q_wovel)))
