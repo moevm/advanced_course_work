@@ -1,0 +1,8 @@
+generate.out : generateMain.cpp generateFunc.cpp
+	g++ generateMain.cpp generateFunc.cpp -o generate.out
+generateMain.o : generateMain.cpp
+	g++ -c generateMain.cpp
+generateFunc.o : generateFunc.cpp generateFunc.h
+	g++ -c generateFunc.cpp
+clean :
+	rm -rf *.o
